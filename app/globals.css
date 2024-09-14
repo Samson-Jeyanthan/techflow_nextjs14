@@ -2,26 +2,156 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+@import url("../styles/theme.css");
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  .flex-center {
+    @apply flex justify-center items-center;
+  }
+
+  .flex-between {
+    @apply flex justify-between items-center;
+  }
+
+  .flex-start {
+    @apply flex justify-start items-center;
+  }
+
+  .flex-end {
+    @apply flex justify-end items-center;
+  }
+
+  .no-focus {
+    @apply focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0 !important;
+  }
+
+  /* cc - color code */
+  /* uc - utility classes */
+
+  /* ------------------------------------------------------------------------------- */
+  /* primary bg & text color uc - (1st cc is for light and 2nd cc is for dark theme) */
+  /* ------------------------------------------------------------------------------- */
+
+  .bg-primary-100_primary-500 {
+    @apply bg-primary-100 dark:bg-primary-500;
+  }
+
+  .text-primary-100_primary-500 {
+    @apply text-primary-100 dark:text-primary-500;
+  }
+
+  /* inverse background & text color uc */
+  .bg-primary-500_primary-100 {
+    @apply bg-primary-500 dark:bg-primary-100;
+  }
+
+  .text-primary-500_primary-100 {
+    @apply text-primary-500 dark:text-primary-100;
+  }
+
+  /* ----------------------------------------------------------------- */
+  /* background uc - (1st cc is for light and 2nd cc is for dark theme)*/
+  /* ----------------------------------------------------------------- */
+
+  .bg-light-900_dark-100 {
+    @apply bg-light-900 dark:bg-dark-100;
+  }
+
+  .bg-light-900_dark-200 {
+    @apply bg-light-900 dark:bg-dark-200;
+  }
+
+  .bg-light-900_dark-300 {
+    @apply bg-light-900 dark:bg-dark-300;
+  }
+
+  .bg-light-850_dark-100 {
+    @apply bg-light-850 dark:bg-dark-100;
+  }
+
+  .bg-light-850_dark-200 {
+    @apply bg-light-850 dark:bg-dark-200;
+  }
+
+  .bg-light-850_dark-300 {
+    @apply bg-light-850 dark:bg-dark-300;
+  }
+
+  .bg-light-800_dark-300 {
+    @apply bg-light-800 dark:bg-dark-300;
+  }
+
+  /* inverse background uc */
+
+  .bg-dark-100_light-900 {
+    @apply bg-dark-100 dark:bg-light-900;
+  }
+
+  .bg-dark-200_light-800 {
+    @apply bg-dark-200 dark:bg-light-800;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* text color uc - (1st cc is for light and 2nd cc is for dark theme) */
+  /* ------------------------------------------------------------------ */
+
+  .text-dark-100_light-900 {
+    @apply text-dark-100 dark:text-light-900;
+  }
+
+  .text-dark-400_light-500 {
+    @apply text-dark-400 dark:text-light-500;
+  }
+
+  .text-light-500_dark-500 {
+    @apply text-light-500 dark:text-dark-500;
+  }
+
+  .text-dark-600_light-600 {
+    @apply text-dark-600 dark:text-light-500;
+  }
+
+  /* inverse text color uc */
+
+  .text-light-900_dark-100 {
+    @apply text-light-900 dark:text-dark-100;
+  }
+
+  .text-light-800_dark-200 {
+    @apply text-light-800 dark:text-dark-200;
+  }
+
+  /* ----------------------------------------------------------- */
+  /* fill uc - (1st cc is for light and 2nd cc is for dark theme)*/
+  /* ----------------------------------------------------------- */
+
+  .fill-dark-100_light-900 {
+    @apply fill-dark-100 dark:fill-light-900;
+  }
+
+  .fill-light-500_dark-500 {
+    @apply fill-light-500 dark:fill-dark-500;
+  }
+}
+
+@layer base {
+  :root {
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+  }
+  .dark {
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
   }
 }
