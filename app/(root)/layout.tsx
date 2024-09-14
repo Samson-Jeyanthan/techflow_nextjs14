@@ -1,16 +1,17 @@
-import Navbar from "@/components/shared/Navbar";
 import React from "react";
+import { LeftSidebar, Navbar } from "@/components/shared";
+import { Toaster } from "@/components/ui/toaster";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <main className="bg-light-800_dark-100 relative flex min-h-screen w-full flex-col">
+    <main className="bg-light-850_dark-100 relative flex min-h-screen w-full flex-col">
       <Navbar />
-      <section>
-        LeftSidebar
+      <section className="flex min-h-screen w-full">
+        <LeftSidebar />
         {children}
         RightSidebar
       </section>
-      Toaster
+      <Toaster />
     </main>
   );
 };

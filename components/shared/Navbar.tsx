@@ -2,13 +2,14 @@ import { SignedIn, UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 import { DiAtom } from "react-icons/di";
 import { Theme } from "../options";
+import MobileNav from "./MobileNav";
 
 const Navbar = () => {
   return (
-    <nav className="text-dark-100_light-900 bg-light-900_dark-200 flex-between sticky top-0 z-50 px-8 py-4 shadow-sm dark:shadow-none">
+    <nav className="text-dark-100_light-900 bg-light-900_dark-200 flex-between fixed top-0 z-50 w-full px-8 py-4 shadow-sm dark:shadow-none">
       <Link
         href="/"
-        className="text-primary-100_primary-500 flex-start gap-2 text-xl font-bold"
+        className="text-primary-100_primary-500 flex-start w-max gap-2 text-xl font-bold"
       >
         <DiAtom className="text-3xl" />
         <h1 className="flex-start gap-2">
@@ -19,7 +20,7 @@ const Navbar = () => {
         </h1>
       </Link>
 
-      <p>Global Search</p>
+      <p className="max-lg:hidden">Global Search</p>
 
       <div className="flex-between gap-2">
         <Theme />
@@ -27,7 +28,7 @@ const Navbar = () => {
           <UserButton
             appearance={{
               elements: {
-                avatarBox: "h-10 w-10",
+                avatarBox: "h-8 w-8",
               },
               variables: {
                 colorPrimary: "#000000",
@@ -35,6 +36,7 @@ const Navbar = () => {
             }}
           />
         </SignedIn>
+        <MobileNav />
       </div>
     </nav>
   );

@@ -23,7 +23,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
+    <ClerkProvider
+      appearance={{
+        elements: {
+          formButtonPrimary: "#000000",
+          footerActionLink: "#000000 hover:text-primary-500",
+        },
+      }}
+    >
       <html lang="en">
         <body className={`${poppins.variable}`}>
           <ThemeProvider>{children}</ThemeProvider>
