@@ -26,7 +26,7 @@ const ThemeOptions = () => {
         <MenubarContent className="bg-light-850_dark-200 absolute -right-5 z-[99] min-w-32 gap-10 rounded-lg border border-solid p-2 shadow-md shadow-dark-100/25 dark:border-dark-300">
           {THEME_OPTIONS.map((item, index) => (
             <MenubarItem
-              className={`${index === 0 ? "" : "mt-1"} bg-light-850_dark-200  hover:bg-light-800_dark-300 hover:text-dark-100_light-900 hover:fill-dark-100_light-900 w-32 cursor-pointer gap-3 rounded fill-light-500 text-light-500`}
+              className={`${index === 0 ? "" : "mt-1"} bg-light-850_dark-200 hover:bg-light-800_dark-300 hover:text-dark-100_light-900 hover:fill-dark-100_light-900 w-32 cursor-pointer gap-3 rounded fill-light-500 text-light-500`}
               key={index}
               onClick={() => {
                 setMode(item.value);
