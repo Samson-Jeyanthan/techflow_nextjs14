@@ -1,4 +1,4 @@
-import { HomeFilters, LocalSearchbar } from "@/components/shared";
+import { QandAFilters, LocalSearchbar } from "@/components/shared";
 import { Button } from "@/components/ui/button";
 import { Metadata } from "next";
 import Link from "next/link";
@@ -13,7 +13,7 @@ const QandAs = () => {
       <h1 className="text-dark-100_light-900 flex-between text-3xl font-semibold">
         All Questions
         <Link href="/ask-question">
-          <Button className="text-light-900_dark-100 bg-primary-100_primary-500 text-sm font-medium">
+          <Button className="bg-primary-100_primary-500 text-sm font-medium text-light-900">
             Ask Question
           </Button>
         </Link>
@@ -32,7 +32,7 @@ const QandAs = () => {
           containerClasses="hidden max-md:flex"
         /> */}
       </div>
-      <HomeFilters />
+      <QandAFilters />
       <div className="mt-10 flex w-full flex-col gap-6">
         fetch questions array
       </div>

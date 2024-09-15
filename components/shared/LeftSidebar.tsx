@@ -11,7 +11,7 @@ const LeftSidebar = () => {
   const pathname = usePathname();
 
   return (
-    <aside className="bg-light-900_dark-200 sticky left-0 top-0 z-10 flex h-screen flex-col justify-between overflow-y-auto p-4 pt-24 text-light-900 shadow-sm dark:shadow-none max-sm:hidden lg:w-60 2xl:w-64 2xl:p-6 2xl:pt-28">
+    <aside className="bg-light-900_dark-200 sticky left-0 top-0 z-10 flex h-screen flex-col justify-between overflow-y-auto p-4 pt-20 text-light-900 shadow-sm dark:shadow-none max-sm:hidden lg:w-60 2xl:w-64 2xl:p-6 2xl:pt-24">
       <ul className="flex flex-1 flex-col gap-[10px] 2xl:gap-4">
         {SIDEBAR_LINKS.map((item, index) => {
           const isActive = item.isLink

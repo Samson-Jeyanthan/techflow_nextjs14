@@ -145,6 +145,10 @@ body {
     @apply text-dark-100 dark:text-light-900;
   }
 
+  .text-dark-100_light-800 {
+    @apply text-dark-100 dark:text-light-800;
+  }
+
   .text-dark-300_light-750 {
     @apply text-dark-300 dark:text-light-750;
   }

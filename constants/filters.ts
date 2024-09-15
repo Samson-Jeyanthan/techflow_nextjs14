@@ -20,7 +20,7 @@ export const TagFilters = [
   { name: "Old", value: "old" },
 ];
 
-export const HomePageFilters = [
+export const QANDAS_FILTERS = [
   { name: "Newest", value: "newest" },
   { name: "Recommended", value: "recommended" },
   { name: "Frequent", value: "frequent" },
