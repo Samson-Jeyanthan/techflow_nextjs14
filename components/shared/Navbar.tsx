@@ -3,6 +3,7 @@ import Link from "next/link";
 import { DiAtom } from "react-icons/di";
 import { Theme } from "../options";
 import MobileNav from "./MobileNav";
+import GlobalSearch from "./search/GlobalSearch";
 
 const Navbar = () => {
   return (
@@ -13,14 +14,14 @@ const Navbar = () => {
       >
         <DiAtom className="text-3xl" />
         <h1 className="flex-start gap-2">
-          Tech
-          <span className="text-primary-500_primary-100 bg-primary-100_primary-500 rounded-lg p-[2px] px-2">
+          TechFlow
+          {/* <span className="text-primary-500_primary-100 bg-primary-100_primary-500 rounded-lg p-[2px] px-2">
             Flow
-          </span>
+          </span> */}
         </h1>
       </Link>
 
-      <p className="max-lg:hidden">Global Search</p>
+      <GlobalSearch />
 
       <div className="flex-between gap-2">
         <Theme />

@@ -29,6 +29,40 @@ body {
     @apply focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0 !important;
   }
 
+  .placeholder {
+    @apply placeholder:text-light-500 dark:placeholder:text-light-500;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 3px;
+    height: 3px;
+    border-radius: 2px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: #ffffff;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 50px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
   /* cc - color code */
   /* uc - utility classes */
 
@@ -77,8 +111,16 @@ body {
     @apply bg-light-850 dark:bg-dark-200;
   }
 
+  .bg-light-850_dark-250 {
+    @apply bg-light-850 dark:bg-dark-250;
+  }
+
   .bg-light-850_dark-300 {
     @apply bg-light-850 dark:bg-dark-300;
+  }
+
+  .bg-light-800_dark-250 {
+    @apply bg-light-800 dark:bg-dark-250;
   }
 
   .bg-light-800_dark-300 {
@@ -103,16 +145,16 @@ body {
     @apply text-dark-100 dark:text-light-900;
   }
 
+  .text-dark-300_light-750 {
+    @apply text-dark-300 dark:text-light-750;
+  }
+
   .text-dark-400_light-500 {
     @apply text-dark-400 dark:text-light-500;
   }
 
   .text-light-500_dark-500 {
     @apply text-light-500 dark:text-dark-500;
-  }
-
-  .text-dark-600_light-600 {
-    @apply text-dark-600 dark:text-light-500;
   }
 
   /* inverse text color uc */
