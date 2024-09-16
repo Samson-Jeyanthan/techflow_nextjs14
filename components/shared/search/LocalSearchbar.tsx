@@ -38,7 +38,7 @@ const LocalSearchbar = ({
         placeholder={placeholder}
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        className="no-focus placeholder border-none bg-transparent text-light-700 shadow-none outline-none"
+        className="no-focus placeholder text-dark-100_light-850 border-none bg-transparent shadow-none outline-none"
       />
       {iconPosition === "right" && (
         <CiSearch className="text-2xl text-light-500" />

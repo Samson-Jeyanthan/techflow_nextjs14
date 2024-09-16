@@ -119,12 +119,20 @@ body {
     @apply bg-light-850 dark:bg-dark-300;
   }
 
+  .bg-light-800_dark-300 {
+    @apply bg-light-800 dark:bg-dark-300;
+  }
+
   .bg-light-800_dark-250 {
     @apply bg-light-800 dark:bg-dark-250;
   }
 
-  .bg-light-800_dark-300 {
-    @apply bg-light-800 dark:bg-dark-300;
+  .bg-light-800_dark-250 {
+    @apply bg-light-800 dark:bg-dark-250;
+  }
+
+  .bg-light-750_dark-350 {
+    @apply bg-light-750 dark:bg-dark-300;
   }
 
   /* inverse background uc */
@@ -145,8 +153,16 @@ body {
     @apply text-dark-100 dark:text-light-900;
   }
 
+  .text-dark-100_light-850 {
+    @apply text-dark-100 dark:text-light-850;
+  }
+
   .text-dark-100_light-800 {
     @apply text-dark-100 dark:text-light-800;
+  }
+
+  .text-dark-200_light-700 {
+    @apply text-dark-200 dark:text-light-700;
   }
 
   .text-dark-300_light-750 {

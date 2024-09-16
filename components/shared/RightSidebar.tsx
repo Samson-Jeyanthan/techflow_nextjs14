@@ -44,7 +44,11 @@ const RightSidebar = () => {
           ))}
         </div>
       </div>
-      <div>Popular tags</div>
+      <div>
+        <h3 className="font-semibold text-dark-250 dark:text-light-750">
+          Popular tags
+        </h3>
+      </div>
     </aside>
   );
 };

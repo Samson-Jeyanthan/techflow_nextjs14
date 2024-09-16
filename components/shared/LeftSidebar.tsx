@@ -31,7 +31,7 @@ const LeftSidebar = () => {
               {item.isLink ? (
                 <Link
                   href={item.route}
-                  className={`${isActive ? "bg-light-800_dark-300 text-dark-100_light-900 fill-dark-100_light-900" : "fill-light-600 text-light-600"} flex-start hover:bg-light-800_dark-300 hover:fill-dark-100_light-900 hover:text-dark-100_light-900 w-full cursor-pointer gap-4 rounded-lg p-3 text-sm`}
+                  className={`${isActive ? "text-dark-100_light-900 fill-dark-100_light-900 bg-light-800 dark:bg-dark-300" : "fill-light-600 text-light-600"} flex-start  hover:fill-dark-100_light-900 hover:text-dark-100_light-900 w-full cursor-pointer gap-4 rounded-lg p-3 text-sm hover:bg-light-800 hover:dark:bg-dark-300`}
                 >
                   <item.icon width="20px" height="20px" />
                   <p className="max-lg:hidden">{item.name}</p>

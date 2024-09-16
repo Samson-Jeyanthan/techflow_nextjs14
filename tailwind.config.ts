@@ -18,8 +18,8 @@ const config: Config = {
     extend: {
       colors: {
         primary: {
-          "100": "#5E5BAB",
-          "500": "#5E5BAB",
+          "100": "#1D82DF",
+          "500": "#1D82DF",
         },
         dark: {
           "100": "#000000",
@@ -40,8 +40,8 @@ const config: Config = {
           "900": "#ffffff",
         },
         custom: {
-          "100": "#C92437",
-          "200": "#ffb100",
+          red: "#C92437",
+          yellow: "#ffb100",
         },
         chart: {
           "1": "hsl(var(--chart-1))",
