@@ -1,5 +1,6 @@
-import { QandAFilters, LocalSearchbar } from "@/components/shared";
+import { QandAFilters, LocalSearchbar, Filter } from "@/components/shared";
 import { Button } from "@/components/ui/button";
+import { QANDAS_FILTERS } from "@/constants/filters";
 import { Metadata } from "next";
 import Link from "next/link";
 
@@ -26,11 +27,11 @@ const QandAs = () => {
           otherClasses="flex-1"
         />
 
-        {/* <Filter
-          filters={HomePageFilters}
-          otherClasses="min-h-[56px] sm:min-w-[170px]"
+        <Filter
+          filters={QANDAS_FILTERS}
+          otherClasses="min-h-[48px] sm:min-w-[160px]"
           containerClasses="hidden max-md:flex"
-        /> */}
+        />
       </div>
       <QandAFilters />
       <div className="mt-10 flex w-full flex-col gap-6">

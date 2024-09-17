@@ -5,3 +5,4 @@ export { default as RightSidebar } from "./RightSidebar";
 export { default as GlobalSearch } from "./search/GlobalSearch";
 export { default as LocalSearchbar } from "./search/LocalSearchbar";
 export { default as QandAFilters } from "./filters/QandAFilters";
+export { default as Filter } from "./filters/Filter";
