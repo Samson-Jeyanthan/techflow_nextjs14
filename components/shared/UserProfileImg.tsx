@@ -13,12 +13,12 @@ const UserProfileImg = ({ src, userName, userId, className }: Props) => {
   return (
     <Link href={`/profile/${userId}`} className="flex items-center gap-1">
       <Image
-        src={src || "/assets/images/default_profile_pic_2.png"}
+        src={src || "/images/default_profile_pic.png"}
         alt={userId + "profilePic"}
         width={512}
         height={512}
         className={cn(
-          "text-sm text-muted-foreground size-10 bg-dark-400 object-cover",
+          "text-sm rounded-full size-10 bg-dark-400 object-cover",
           className
         )}
       />
