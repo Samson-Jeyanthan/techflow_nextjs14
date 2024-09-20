@@ -6,3 +6,7 @@ export { default as GlobalSearch } from "./search/GlobalSearch";
 export { default as LocalSearchbar } from "./search/LocalSearchbar";
 export { default as QandAFilters } from "./filters/QandAFilters";
 export { default as Filter } from "./filters/Filter";
+export { default as NoResult } from "./NoResult";
+export { default as RenderTag } from "./RenderTag";
+export { default as Metric } from "./Metric";
+export { default as UserProfileImg } from "./UserProfileImg";
