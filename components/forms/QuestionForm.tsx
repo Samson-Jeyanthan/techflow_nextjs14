@@ -19,6 +19,9 @@ import { Editor } from "@tinymce/tinymce-react";
 import React, { useRef } from "react";
 import { Badge } from "../ui/badge";
 import { IoClose } from "react-icons/io5";
+import { createQuestion } from "@/lib/actions/question.action";
+
+const type: any = "edit";
 
 const QuestionForm = () => {
   const editorRef = useRef(null);
@@ -66,8 +69,15 @@ const QuestionForm = () => {
     form.setValue("tags", newTags);
   };
 
-  function onSubmit(values: z.infer<typeof QuestionsSchema>) {
+  async function onSubmit(values: z.infer<typeof QuestionsSchema>) {
     console.log(values);
+
+    try {
+      // make an async API call
+      await createQuestion({});
+    } catch (error) {
+      // handle errors
+    }
   }
 
   return (
@@ -114,6 +124,8 @@ const QuestionForm = () => {
                     // @ts-ignore
                     (editorRef.current = editor)
                   }
+                  onBlur={field.onBlur} // save the value on the exit
+                  onEditorChange={(content) => field.onChange(content)}
                   initialValue=""
                   init={{
                     height: 400,
@@ -194,7 +206,17 @@ const QuestionForm = () => {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button
+          type="submit"
+          className="bg-primary-100_primary-500 text-sm font-medium text-light-900"
+          disabled={form.formState.isSubmitting}
+        >
+          {form.formState.isSubmitting ? (
+            <>{type === "edit" ? "Updating..." : "Posting..."}</>
+          ) : (
+            <>{type === "edit" ? "Edit Question" : "Ask Question"}</>
+          )}
+        </Button>
       </form>
     </Form>
   );
