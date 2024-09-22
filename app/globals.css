@@ -99,10 +99,15 @@ body {
     @apply bg-light-900 dark:bg-dark-200;
   }
 
+  .bg-light-900_dark-250 {
+    @apply bg-light-900 dark:bg-dark-250;
+  }
+
   .bg-light-900_dark-300 {
     @apply bg-light-900 dark:bg-dark-300;
   }
 
+  /* 850 */
   .bg-light-850_dark-100 {
     @apply bg-light-850 dark:bg-dark-100;
   }
@@ -123,22 +128,24 @@ body {
     @apply bg-light-850 dark:bg-dark-350;
   }
 
+  /* 800 */
+  .bg-light-800_dark-250 {
+    @apply bg-light-800 dark:bg-dark-250;
+  }
+
+  .bg-light-800_dark-250 {
+    @apply bg-light-800 dark:bg-dark-250;
+  }
+
   .bg-light-800_dark-300 {
     @apply bg-light-800 dark:bg-dark-300;
-  }
-
-  .bg-light-800_dark-250 {
-    @apply bg-light-800 dark:bg-dark-250;
-  }
-
-  .bg-light-800_dark-250 {
-    @apply bg-light-800 dark:bg-dark-250;
   }
 
   .bg-light-800_dark-350 {
     @apply bg-light-800 dark:bg-dark-300;
   }
 
+  /* 750 */
   .bg-light-750_dark-350 {
     @apply bg-light-750 dark:bg-dark-300;
   }
