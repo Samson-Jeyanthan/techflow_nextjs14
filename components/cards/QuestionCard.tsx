@@ -33,18 +33,16 @@ const QuestionCard = ({
   createdAt,
 }: QuestionProps) => {
   return (
-    <div className="rounded-2xl bg-dark-250 p-9 sm:px-11">
+    <div className="rounded-2xl bg-light-900 p-9 shadow-sm dark:bg-dark-250 sm:px-11">
       <div className="flex flex-col-reverse items-start justify-between gap-5 sm:flex-row">
-        <div>
-          <span className="line-clamp-1 flex text-xs text-light-500 sm:hidden">
-            {getTimestamp(createdAt)}
-          </span>
-          <Link href={`/question/${_id}`}>
-            <h3 className="line-clamp-1 flex-1 text-dark-200 dark:text-light-800 sm:text-xl sm:font-semibold">
-              {title}
-            </h3>
-          </Link>
-        </div>
+        <span className="line-clamp-1 flex text-xs text-light-500 sm:hidden">
+          {getTimestamp(createdAt)}
+        </span>
+        <Link href={`/question/${_id}`}>
+          <h3 className="line-clamp-1 flex-1 text-dark-200 dark:text-light-800 sm:text-xl sm:font-semibold">
+            {title}
+          </h3>
+        </Link>
       </div>
       <div className="mt-3.5 flex flex-wrap gap-2">
         {tags.map((tag) => (

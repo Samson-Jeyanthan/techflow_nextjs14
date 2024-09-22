@@ -33,7 +33,7 @@ const Metric = ({
             src={imgUrl}
             userName={userName}
             userId={userId}
-            className="size-8"
+            className="size-7"
           />
           <p>{title}</p>
         </div>

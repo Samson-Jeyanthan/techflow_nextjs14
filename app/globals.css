@@ -119,6 +119,10 @@ body {
     @apply bg-light-850 dark:bg-dark-300;
   }
 
+  .bg-light-850_dark-350 {
+    @apply bg-light-850 dark:bg-dark-350;
+  }
+
   .bg-light-800_dark-300 {
     @apply bg-light-800 dark:bg-dark-300;
   }
@@ -129,6 +133,10 @@ body {
 
   .bg-light-800_dark-250 {
     @apply bg-light-800 dark:bg-dark-250;
+  }
+
+  .bg-light-800_dark-350 {
+    @apply bg-light-800 dark:bg-dark-300;
   }
 
   .bg-light-750_dark-350 {

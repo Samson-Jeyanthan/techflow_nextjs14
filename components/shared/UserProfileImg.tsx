@@ -18,7 +18,7 @@ const UserProfileImg = ({ src, userName, userId, className }: Props) => {
         width={512}
         height={512}
         className={cn(
-          "text-sm rounded-full size-10 bg-dark-400 object-cover",
+          "text-sm rounded-full size-10 bg-light-700 dark:bg-dark-400 object-cover",
           className
         )}
       />
