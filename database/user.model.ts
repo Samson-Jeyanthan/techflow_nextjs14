@@ -10,6 +10,24 @@ export interface IUser extends Document {
   bio: string;
   avatar?: string;
   reputation?: number;
+  socialLinks?: {
+    name:
+      | "FACEBOOK"
+      | "TWITTER"
+      | "INSTAGRAM"
+      | "LINKEDIN"
+      | "GITHUB"
+      | "YOUTUBE"
+      | "PORTFOLIO"
+      | "OTHER";
+    url: string;
+  }[];
+  saved: Schema.Types.ObjectId[];
+  followers: {
+    userId: Schema.Types.ObjectId;
+    followedAt: Date;
+  }[];
+  followings: Schema.Types.ObjectId[];
   joinedAt: Date;
 }
 
@@ -23,6 +41,32 @@ const UserSchema = new Schema({
   bio: { type: String },
   avatar: { type: String },
   reputation: { type: Number, default: 0 },
+  socialLinks: [
+    {
+      name: {
+        type: String,
+        enum: [
+          "FACEBOOK",
+          "TWITTER",
+          "INSTAGRAM",
+          "LINKEDIN",
+          "GITHUB",
+          "YOUTUBE",
+          "PORTFOLIO",
+          "OTHER",
+        ],
+      },
+      url: { type: String },
+    },
+  ],
+  saved: [{ type: Schema.Types.ObjectId, ref: "Save" }],
+  followers: [
+    {
+      userId: { type: Schema.Types.ObjectId, ref: "User" },
+      followedAt: { type: Date, default: Date.now },
+    },
+  ],
+  followings: [{ type: Schema.Types.ObjectId, ref: "User" }],
   joinedAt: { type: Date, default: Date.now },
 });
 
