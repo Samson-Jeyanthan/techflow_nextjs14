@@ -109,7 +109,7 @@ export const metadata: Metadata = {
   title: "All Questions | Techflow",
 };
 
-export async function QandAs() {
+const QandAs = async () => {
   const result = await getQuestions({});
   console.log(result.questions);
 
@@ -180,6 +180,6 @@ export async function QandAs() {
       {questions?.length > 0 && <div className="mt-10">pagination</div>}
     </section>
   );
-}
+};
 
 export default QandAs;
