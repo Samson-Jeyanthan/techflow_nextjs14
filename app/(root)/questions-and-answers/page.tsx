@@ -108,7 +108,8 @@ export const metadata: Metadata = {
   title: "All Questions | Techflow",
 };
 
-const QandAs = () => {
+const QandAs = async () => {
+  // const result = await getQuestions();
   return (
     <section>
       <h1 className="text-dark-100_light-900 flex-between text-3xl font-semibold">

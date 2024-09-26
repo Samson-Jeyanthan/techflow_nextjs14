@@ -3,11 +3,11 @@ import { Schema, model, models, Document } from "mongoose";
 export interface ITag extends Document {
   name: string;
   description: string;
-  questions: Schema.Types.ObjectId[];
-  posts: Schema.Types.ObjectId[];
-  resources: Schema.Types.ObjectId[];
-  jobs: Schema.Types.ObjectId[];
-  followers: Schema.Types.ObjectId[];
+  questions?: Schema.Types.ObjectId[];
+  posts?: Schema.Types.ObjectId[];
+  resources?: Schema.Types.ObjectId[];
+  jobs?: Schema.Types.ObjectId[];
+  followers?: Schema.Types.ObjectId[];
   createdOn: Date;
 }
 

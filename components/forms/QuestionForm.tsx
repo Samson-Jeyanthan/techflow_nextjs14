@@ -20,11 +20,18 @@ import React, { useRef } from "react";
 import { Badge } from "../ui/badge";
 import { IoClose } from "react-icons/io5";
 import { createQuestion } from "@/lib/actions/question.action";
+import { usePathname, useRouter } from "next/navigation";
 
 const type: any = "edit";
 
-const QuestionForm = () => {
+interface Props {
+  mongoUserId: string;
+}
+
+const QuestionForm = ({ mongoUserId }: Props) => {
   const editorRef = useRef(null);
+  const router = useRouter();
+  const pathname = usePathname();
 
   const form = useForm<z.infer<typeof QuestionsSchema>>({
     resolver: zodResolver(QuestionsSchema),
@@ -74,7 +81,15 @@ const QuestionForm = () => {
 
     try {
       // make an async API call
-      await createQuestion({});
+      await createQuestion({
+        title: values.title,
+        content: values.explanation,
+        tags: values.tags,
+        author: JSON.parse(mongoUserId),
+        path: "",
+      });
+
+      router.push("/questions-and-answers");
     } catch (error) {
       // handle errors
     }

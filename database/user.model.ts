@@ -22,12 +22,14 @@ export interface IUser extends Document {
       | "OTHER";
     url: string;
   }[];
-  saved: Schema.Types.ObjectId[];
-  followers: {
+  saved?: Schema.Types.ObjectId[];
+  followers?: {
     userId: Schema.Types.ObjectId;
     followedAt: Date;
   }[];
-  followings: Schema.Types.ObjectId[];
+  followings?: Schema.Types.ObjectId[];
+  // communities: Schema.Types.ObjectId[];
+  // createdCommunities: Schema.Types.ObjectId[];
   joinedAt: Date;
 }
 
@@ -67,6 +69,8 @@ const UserSchema = new Schema({
     },
   ],
   followings: [{ type: Schema.Types.ObjectId, ref: "User" }],
+  // communities: [{ type: Schema.Types.ObjectId, ref: "Community" }],
+  // createdCommunities: [{ type: Schema.Types.ObjectId, ref: "Community" }],
   joinedAt: { type: Date, default: Date.now },
 });
 
