@@ -15,3 +15,21 @@ export type TCreateQuestionParams = {
   author: Schema.Types.ObjectId | IUser;
   path: string;
 };
+
+export type TCreateUserParams = {
+  clerkId: string;
+  name: string;
+  username: string;
+  email: string;
+  avatar: string;
+};
+
+export type TUpdatateUserParams = {
+  clerkId: string;
+  updateData: Partial<IUser>;
+  path: string;
+};
+
+export type TDeleteUserParams = {
+  clerkId: string;
+};
