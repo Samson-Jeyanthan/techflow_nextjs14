@@ -33,8 +33,20 @@ export const SIDEBAR_LINKS: ISidebarLinks[] = [
     isLink: true,
   },
   {
+    name: "Q&As Hub",
+    route: "/questions-and-answers",
+    icon: HomeIcon,
+    isLink: true,
+  },
+  {
     name: "Community",
     route: "/community",
+    icon: CommunityIcon,
+    isLink: true,
+  },
+  {
+    name: "Profile",
+    route: "/profile",
     icon: CommunityIcon,
     isLink: true,
   },
