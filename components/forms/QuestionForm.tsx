@@ -86,7 +86,7 @@ const QuestionForm = ({ mongoUserId }: Props) => {
         content: values.explanation,
         tags: values.tags,
         author: JSON.parse(mongoUserId),
-        path: "",
+        path: pathname,
       });
 
       router.push("/questions-and-answers");
