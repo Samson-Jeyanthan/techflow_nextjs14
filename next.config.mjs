@@ -10,10 +10,12 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "*",
+        pathname: "/**",
       },
       {
         protocol: "http",
         hostname: "*",
+        pathname: "/**",
       },
     ],
   },
