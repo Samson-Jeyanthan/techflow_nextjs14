@@ -7,6 +7,7 @@ import {
 } from "@/components/shared";
 import { Button } from "@/components/ui/button";
 import { QANDAS_FILTERS } from "@/constants/filters";
+import { getQuestions } from "@/lib/actions/question.action";
 import { Metadata } from "next";
 import Link from "next/link";
 
@@ -108,8 +109,10 @@ export const metadata: Metadata = {
   title: "All Questions | Techflow",
 };
 
-const QandAs = async () => {
-  // const result = await getQuestions();
+export async function QandAs() {
+  const result = await getQuestions({});
+  console.log(result.questions);
+
   return (
     <section>
       <h1 className="text-dark-100_light-900 flex-between text-3xl font-semibold">
@@ -136,6 +139,20 @@ const QandAs = async () => {
       </div>
       <QandAFilters />
       <div className="mt-10 flex w-full flex-col gap-6">
+        {result.questions.map((question, index) => (
+          <QuestionCard
+            key={index}
+            _id={question._id}
+            title={question.title}
+            tags={question.tags}
+            author={question.author}
+            upvotes={question.upvotes}
+            views={question.views}
+            answers={question.answers}
+            createdAt={question.createdAt}
+          />
+        ))}
+
         {questions.length > 0 ? (
           questions.map((question, index) => (
             <QuestionCard
@@ -163,6 +180,6 @@ const QandAs = async () => {
       {questions?.length > 0 && <div className="mt-10">pagination</div>}
     </section>
   );
-};
+}
 
 export default QandAs;
