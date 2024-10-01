@@ -11,6 +11,7 @@ const isPublicRoute = createRouteMatcher([
 export default clerkMiddleware((auth, request) => {
   if (!isPublicRoute(request)) {
     auth().protect();
+    console.log(process.env.NEXT_CLERK_WEBHOOK_SECRET, "key-webhook");
   }
 });
 
