@@ -53,6 +53,8 @@ export async function POST(req: Request) {
 
   const eventType = evt.type;
 
+  console.log(eventType, "eventtype");
+
   if (eventType === "user.created") {
     const { id, email_addresses, image_url, username, first_name, last_name } =
       evt.data;
@@ -66,6 +68,7 @@ export async function POST(req: Request) {
       avatar: image_url,
     });
 
+    console.log(mongoUser, "user created");
     return NextResponse.json({ message: "OK", user: mongoUser });
   }
 
@@ -85,6 +88,7 @@ export async function POST(req: Request) {
       path: `/profile/${id}`,
     });
 
+    console.log(mongoUser, "user updated");
     return NextResponse.json({ message: "OK", user: mongoUser });
   }
 
