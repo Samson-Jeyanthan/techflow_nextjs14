@@ -15,7 +15,7 @@ export default clerkMiddleware((auth, request) => {
   }
 
   if (ignoredRoutes(request)) {
-    auth().getToken();
+    console.log("ignored-route", ignoredRoutes);
   }
 });
 
