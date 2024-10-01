@@ -7,9 +7,15 @@ const isPublicRoute = createRouteMatcher([
   "/api/webhook",
 ]);
 
+const ignoredRoutes = createRouteMatcher(["/api/webhook"]);
+
 export default clerkMiddleware((auth, request) => {
   if (!isPublicRoute(request)) {
     auth().protect();
+  }
+
+  if (ignoredRoutes(request)) {
+    auth().getToken();
   }
 });
 
