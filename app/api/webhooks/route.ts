@@ -63,7 +63,7 @@ export async function POST(req: Request) {
     const mongoUser = await createUser({
       clerkId: id,
       name: `${first_name}-${last_name ? ` ${last_name}` : ""}`,
-      username: username!,
+      username: username || `${first_name}` || "techflow_user",
       email: email_addresses[0].email_address,
       avatar: image_url,
     });
@@ -83,7 +83,7 @@ export async function POST(req: Request) {
       clerkId: id,
       updateData: {
         name: `${first_name}-${last_name ? ` ${last_name}` : ""}`,
-        username: username!,
+        username: username || `${first_name}` || "techflow_user",
         email: email_addresses[0].email_address,
         avatar: image_url,
       },

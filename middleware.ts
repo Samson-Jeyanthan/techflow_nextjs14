@@ -1,11 +1,10 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
-const isProtectedRoute = createRouteMatcher(["/home"]);
+const isProtectedRoute = createRouteMatcher(["/home", "/ask-question"]);
 
 export default clerkMiddleware((auth, request) => {
   if (isProtectedRoute(request)) {
     auth().protect();
-    console.log(process.env.CLERK_WEBHOOK_SECRET, "key-webhook");
   }
 });
 
