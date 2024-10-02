@@ -1,15 +1,9 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
-const isPublicRoute = createRouteMatcher([
-  "/sign-in(.*)",
-  "/sign-up(.*)",
-  "/",
-  "/api/webhooks/(.*)",
-  "/question/:id",
-]);
+const isProtectedRoute = createRouteMatcher(["/home"]);
 
 export default clerkMiddleware((auth, request) => {
-  if (!isPublicRoute(request)) {
+  if (isProtectedRoute(request)) {
     auth().protect();
     console.log(process.env.NEXT_CLERK_WEBHOOK_SECRET, "key-webhook");
   }
