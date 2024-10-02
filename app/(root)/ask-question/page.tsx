@@ -5,7 +5,7 @@ import { getUserById } from "@/lib/actions/user.action";
 
 const AskQuestion = async () => {
   // const { userId } = auth();
-  const userId = "clerk_12345abc";
+  const userId = "clerk_12345abc"; // sample user id - replace with your actual user id
   if (!userId) redirect("/sign-in");
 
   const mongoUser = await getUserById({ userId });
