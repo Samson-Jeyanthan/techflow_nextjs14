@@ -39,6 +39,18 @@ export const SIDEBAR_LINKS: ISidebarLinks[] = [
     isLink: true,
   },
   {
+    name: "Explore",
+    route: "/explore",
+    icon: HomeIcon,
+    isLink: true,
+  },
+  {
+    name: "All Users",
+    route: "/users",
+    icon: HomeIcon,
+    isLink: true,
+  },
+  {
     name: "Community",
     route: "/community",
     icon: CommunityIcon,
