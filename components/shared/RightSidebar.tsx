@@ -1,4 +1,5 @@
 import Link from "next/link";
+import RenderTag from "./RenderTag";
 
 const RightSidebar = () => {
   const hotQuestions = [
@@ -26,8 +27,17 @@ const RightSidebar = () => {
         "What advancements are being made in electric vehicles (EVs) and autonomous driving technologies?",
     },
   ];
+
+  const popularTags = [
+    { id: "1", name: "Automotive Technology", totalQuestions: 26 },
+    { id: "2", name: "Digital Transformation", totalQuestions: 5 },
+    { id: "3", name: "Sustainability", totalQuestions: 9 },
+    { id: "4", name: "Cyber Security", totalQuestions: 11 },
+    { id: "5", name: "DevOps", totalQuestions: 15 },
+    { id: "6", name: "Cloud Computing", totalQuestions: 20 },
+  ];
   return (
-    <aside className="bg-light-900_dark-200 sticky right-0 top-0 z-10 flex h-screen w-[300px] flex-col justify-between overflow-y-auto p-4 pt-20 text-light-900 shadow-sm dark:shadow-none max-xl:hidden 2xl:w-80 2xl:p-6 2xl:pt-24">
+    <aside className="bg-light-900_dark-200 sticky right-0 top-0 z-10 flex h-screen w-[300px] flex-col overflow-y-auto p-4 pt-20 text-light-900 shadow-sm dark:shadow-none max-xl:hidden 2xl:w-80 2xl:p-6 2xl:pt-24">
       <div>
         <h3 className="font-semibold text-dark-250 dark:text-light-750">
           Top Questions
@@ -44,10 +54,21 @@ const RightSidebar = () => {
           ))}
         </div>
       </div>
-      <div>
+      <div className="mt-16">
         <h3 className="font-semibold text-dark-250 dark:text-light-750">
           Popular tags
         </h3>
+        <div className="mt-7 flex flex-col gap-4">
+          {popularTags.map((tag, index) => (
+            <RenderTag
+              key={index}
+              _id={tag.id}
+              name={tag.name}
+              totalQuestions={tag.totalQuestions}
+              showCount={true}
+            />
+          ))}
+        </div>
       </div>
     </aside>
   );
