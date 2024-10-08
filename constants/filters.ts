@@ -26,3 +26,9 @@ export const QANDAS_FILTERS = [
   { name: "Frequent", value: "frequent" },
   { name: "Unanswered", value: "unanswered" },
 ];
+
+export const USERS_FILTERS = [
+  { name: "New Users", value: "new_users" },
+  { name: "Old Users", value: "old_users" },
+  { name: "Top Contributors", value: "top_contributors" },
+];

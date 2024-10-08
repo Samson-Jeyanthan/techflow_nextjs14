@@ -1,0 +1,44 @@
+import { UserCard } from "@/components/cards";
+import { Filter, LocalSearchbar } from "@/components/shared";
+import { USERS_FILTERS } from "@/constants/filters";
+import { getAllUsers } from "@/lib/actions/user.action";
+
+const AllUsers = async () => {
+  const results = await getAllUsers({});
+
+  return (
+    <section>
+      <h1 className="text-dark-100_light-900 flex-between text-3xl font-semibold">
+        All Users
+      </h1>
+      <div className="mb-3 mt-7 flex justify-between gap-5 max-sm:flex-col sm:items-center">
+        <LocalSearchbar
+          route="/"
+          iconPosition="left"
+          placeholder="Search for users"
+          otherClasses="flex-1"
+        />
+
+        <Filter
+          filters={USERS_FILTERS}
+          otherClasses="min-h-[48px] sm:min-w-[160px]"
+          containerClasses="hidden max-md:flex"
+        />
+      </div>
+
+      <div className="mt-12 flex flex-wrap gap-4">
+        {results.users.length > 0 ? (
+          results.users.map((user, index) => (
+            <UserCard key={index} user={user} />
+          ))
+        ) : (
+          <div>
+            <p>No users found</p>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+};
+
+export default AllUsers;
