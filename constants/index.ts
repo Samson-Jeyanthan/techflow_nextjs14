@@ -51,6 +51,12 @@ export const SIDEBAR_LINKS: ISidebarLinks[] = [
     isLink: true,
   },
   {
+    name: "Tags",
+    route: "/tags",
+    icon: HomeIcon,
+    isLink: true,
+  },
+  {
     name: "Community",
     route: "/community",
     icon: CommunityIcon,
@@ -59,7 +65,7 @@ export const SIDEBAR_LINKS: ISidebarLinks[] = [
   {
     name: "Profile",
     route: "/profile",
-    icon: CommunityIcon,
+    icon: HomeIcon,
     isLink: true,
   },
 ];

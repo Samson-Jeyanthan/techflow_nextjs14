@@ -45,3 +45,10 @@ export interface IGetTopInteractedTagsParams {
   userId: string;
   limit?: number;
 }
+
+export interface TGetAllTagsParams {
+  page?: number;
+  pageSize?: number;
+  filter?: string;
+  searchQuery?: string;
+}

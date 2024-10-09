@@ -13,7 +13,7 @@ export const QuestionFilters = [
   { name: "Most Answered", value: "most_answered" },
 ];
 
-export const TagFilters = [
+export const TAGS_FILTERS = [
   { name: "Popular", value: "popular" },
   { name: "Recent", value: "recent" },
   { name: "Name", value: "name" },
