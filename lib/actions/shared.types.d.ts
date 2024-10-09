@@ -52,3 +52,7 @@ export interface TGetAllTagsParams {
   filter?: string;
   searchQuery?: string;
 }
+
+export interface IGetQuestionByIdParams {
+  questionId: string;
+}

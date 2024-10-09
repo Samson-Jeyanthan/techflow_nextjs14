@@ -10,3 +10,4 @@ export { default as NoResult } from "./NoResult";
 export { default as RenderTag } from "./RenderTag";
 export { default as Metric } from "./Metric";
 export { default as UserProfileImg } from "./UserProfileImg";
+export { default as ParseHTML } from "./ParseHTML";

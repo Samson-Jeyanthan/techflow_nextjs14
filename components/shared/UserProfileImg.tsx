@@ -7,11 +7,18 @@ interface Props {
   src?: string | null;
   userId?: string;
   className?: string;
+  isShowUsername?: boolean;
 }
 
-const UserProfileImg = ({ src, userName, userId, className }: Props) => {
+const UserProfileImg = ({
+  src,
+  userName,
+  userId,
+  className,
+  isShowUsername,
+}: Props) => {
   return (
-    <Link href={`/profile/${userId}`} className="flex items-center gap-1">
+    <Link href={`/profile/${userId}`} className="flex items-center gap-1.5">
       <Image
         src={src || "/images/default_profile_pic.png"}
         alt={userId + "profilePic"}
@@ -22,7 +29,9 @@ const UserProfileImg = ({ src, userName, userId, className }: Props) => {
           className
         )}
       />
-      {userName && <span className="text-xs">{userName}</span>}
+      {isShowUsername
+        ? userName && <span className="text-xs">{userName}</span>
+        : null}
     </Link>
   );
 };
