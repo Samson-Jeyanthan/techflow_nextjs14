@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
-import "./globals.css";
+
 import React from "react";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Poppins } from "next/font/google";
+
+import "./globals.css";
+import "../styles/prism.css";
 import { ThemeProvider } from "@/context/ThemeProvider";
 
 const poppins = Poppins({

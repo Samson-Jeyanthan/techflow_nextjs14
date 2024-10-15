@@ -36,6 +36,7 @@ const Metric = ({
             userName={userName}
             userId={userId}
             className="size-7"
+            isShowUsername={true}
           />
           <p>{title}</p>
         </div>

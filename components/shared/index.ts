@@ -11,3 +11,5 @@ export { default as RenderTag } from "./RenderTag";
 export { default as Metric } from "./Metric";
 export { default as UserProfileImg } from "./UserProfileImg";
 export { default as ParseHTML } from "./ParseHTML";
+export { default as AllAnswers } from "./AllAnswers";
+export { default as Votes } from "./Votes";

@@ -3,7 +3,15 @@ import { IconType } from "react-icons/lib";
 import { TConvertedSvgJsxProps } from "@/types/utils.types";
 import { IoMdMoon } from "react-icons/io";
 import { TbSunHigh } from "react-icons/tb";
-import { HomeIcon, SystemIcon, CommunityIcon } from "@/public/svgs";
+import {
+  HomeIcon,
+  SystemIcon,
+  CommunityIcon,
+  SaveIcon,
+  ExploreIcon,
+  QuestionIcon,
+  TagIcon,
+} from "@/public/svgs";
 
 interface ThemeItems {
   name: string;
@@ -35,13 +43,13 @@ export const SIDEBAR_LINKS: ISidebarLinks[] = [
   {
     name: "Q&As Hub",
     route: "/questions-and-answers",
-    icon: HomeIcon,
+    icon: QuestionIcon,
     isLink: true,
   },
   {
     name: "Explore",
     route: "/explore",
-    icon: HomeIcon,
+    icon: ExploreIcon,
     isLink: true,
   },
   {
@@ -53,7 +61,13 @@ export const SIDEBAR_LINKS: ISidebarLinks[] = [
   {
     name: "Tags",
     route: "/tags",
-    icon: HomeIcon,
+    icon: TagIcon,
+    isLink: true,
+  },
+  {
+    name: "Save Collections",
+    route: "/saved-collections",
+    icon: SaveIcon,
     isLink: true,
   },
   {

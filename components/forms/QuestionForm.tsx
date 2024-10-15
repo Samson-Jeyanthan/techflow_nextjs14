@@ -21,14 +21,16 @@ import { Badge } from "../ui/badge";
 import { IoClose } from "react-icons/io5";
 import { createQuestion } from "@/lib/actions/question.action";
 import { usePathname, useRouter } from "next/navigation";
+import { useTheme } from "@/context/ThemeProvider";
 
-const type: any = "edit";
+const isPageEdit: Boolean = false;
 
 interface Props {
   mongoUserId: string;
 }
 
 const QuestionForm = ({ mongoUserId }: Props) => {
+  const { mode } = useTheme();
   const editorRef = useRef(null);
   const router = useRouter();
   const pathname = usePathname();
@@ -168,6 +170,8 @@ const QuestionForm = ({ mongoUserId }: Props) => {
                       "alignright alignjustify | bullist numlist",
                     content_style:
                       "body { font-family:Poppins; font-size:16px }",
+                    skin: mode === "dark" ? "oxide-dark" : "oxide",
+                    content_css: mode === "dark" ? "dark" : "light",
                   }}
                 />
               </FormControl>
@@ -227,9 +231,9 @@ const QuestionForm = ({ mongoUserId }: Props) => {
           disabled={form.formState.isSubmitting}
         >
           {form.formState.isSubmitting ? (
-            <>{type === "edit" ? "Updating..." : "Posting..."}</>
+            <>{isPageEdit ? "Updating..." : "Posting..."}</>
           ) : (
-            <>{type === "edit" ? "Edit Question" : "Ask Question"}</>
+            <>{isPageEdit ? "Edit Question" : "Ask Question"}</>
           )}
         </Button>
       </form>

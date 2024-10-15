@@ -18,7 +18,7 @@ const UserProfileImg = ({
   isShowUsername,
 }: Props) => {
   return (
-    <Link href={`/profile/${userId}`} className="flex items-center gap-1.5">
+    <Link href={`/profile/${userId}`} className="flex items-center gap-2">
       <Image
         src={src || "/images/default_profile_pic.png"}
         alt={userId + "profilePic"}
@@ -30,7 +30,9 @@ const UserProfileImg = ({
         )}
       />
       {isShowUsername
-        ? userName && <span className="text-xs">{userName}</span>
+        ? userName && (
+            <span className="text-dark-300_light-750 text-xs">{userName}</span>
+          )
         : null}
     </Link>
   );

@@ -56,3 +56,17 @@ export interface TGetAllTagsParams {
 export interface IGetQuestionByIdParams {
   questionId: string;
 }
+
+export interface ICreateAnswerParams {
+  content: string;
+  author: string; // User ID
+  question: string; // Question ID
+  path: string;
+}
+
+export interface IGetAnswersParams {
+  questionId: string;
+  sortBy?: string;
+  page?: number;
+  pageSize?: number;
+}

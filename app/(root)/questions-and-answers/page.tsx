@@ -111,7 +111,6 @@ export const metadata: Metadata = {
 
 const QandAs = async () => {
   const result = await getQuestions({});
-  console.log(result.questions);
 
   return (
     <section>
