@@ -3,3 +3,8 @@ export type TConvertedSvgJsxProps = {
   width?: string;
   fill?: string;
 };
+
+export type TURLProps = {
+  params: { id: string };
+  searchParams: { [key: string]: string | undefined };
+};

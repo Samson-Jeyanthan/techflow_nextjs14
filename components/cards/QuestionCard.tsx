@@ -16,10 +16,11 @@ interface QuestionProps {
     picture: string;
     clerkId: string;
   };
-  upvotes: number;
+  upvotes: string[];
   views: number;
   answers: Array<object>;
   createdAt: Date;
+  clerkId?: string | null;
 }
 
 const QuestionCard = ({
@@ -31,6 +32,7 @@ const QuestionCard = ({
   views,
   answers,
   createdAt,
+  clerkId,
 }: QuestionProps) => {
   return (
     <div className="rounded-2xl bg-light-900 p-9 shadow-sm dark:bg-dark-250 sm:px-11">
@@ -62,7 +64,7 @@ const QuestionCard = ({
         <div className="flex-center gap-3">
           <Metric
             Icon={LikeIcon}
-            value={formatAndDivideNumber(upvotes)}
+            value={formatAndDivideNumber(upvotes.length)}
             title="Votes"
             textStyles="text-xs text-light-500"
           />
