@@ -34,7 +34,7 @@ const AllAnswers = async ({
       </div>
 
       <div>
-        {result.answers.map((item, index) => (
+        {result.answers.map((answer, index) => (
           <article
             key={index}
             className="border-b border-light-700 py-10 dark:border-dark-400"
@@ -42,21 +42,29 @@ const AllAnswers = async ({
             <div className="flex items-center justify-between">
               <div className="mb-4 flex flex-col-reverse justify-center gap-5 sm:flex-row sm:items-center sm:gap-2">
                 <UserProfileImg
-                  userId={item.author.clerkId}
-                  userName={item.author.username}
-                  src={item.author.avatar}
+                  userId={answer.author.clerkId}
+                  userName={answer.author.username}
+                  src={answer.author.avatar}
                   isShowUsername={true}
                 />
                 <p className="text-dark-400_light-500 mr-1 mt-0.5 line-clamp-1 flex gap-2 text-xs">
-                  answered {getTimestamp(item.createdAt)}
+                  answered {getTimestamp(answer.createdAt)}
                 </p>
               </div>
               <div className="flex justify-end">
-                <Votes />
+                <Votes
+                  type="answer"
+                  itemId={JSON.stringify(answer._id)}
+                  userId={JSON.stringify(userId)}
+                  upvotes={answer.upvotes.length}
+                  hasUpvoted={answer.upvotes.includes(userId)}
+                  downvotes={answer.downvotes.length}
+                  hasDownvoted={answer.downvotes.includes(userId)}
+                />
               </div>
             </div>
 
-            <ParseHTML data={item.content} />
+            <ParseHTML data={answer.content} />
           </article>
         ))}
       </div>

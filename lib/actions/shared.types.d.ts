@@ -70,3 +70,31 @@ export interface IGetAnswersParams {
   page?: number;
   pageSize?: number;
 }
+
+export interface IQuestionVoteParams {
+  questionId: string;
+  userId: string;
+  hasUpvoted: boolean;
+  hasDownvoted: boolean;
+  path: string;
+}
+
+export interface IAnswerVoteParams {
+  answerId: string;
+  userId: string;
+  hasUpvoted: boolean;
+  hasDownvoted: boolean;
+  path: string;
+}
+
+export interface IToggleSaveParams {
+  userId: string;
+  saveFor: "QUESTION" | "POST" | "JOB" | "RESOURCE";
+  savedItemId: string;
+  path: string;
+}
+
+export interface IViewQuestionParams {
+  questionId: string;
+  userId: string | undefined;
+}
