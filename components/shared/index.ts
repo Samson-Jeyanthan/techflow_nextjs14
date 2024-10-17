@@ -13,3 +13,6 @@ export { default as UserProfileImg } from "./UserProfileImg";
 export { default as ParseHTML } from "./ParseHTML";
 export { default as AllAnswers } from "./AllAnswers";
 export { default as Votes } from "./Votes";
+export { default as QuestionTab } from "./tabs/QuestionTab";
+export { default as AnswerTab } from "./tabs/AnswerTab";
+export { default as EditDeleteAction } from "./EditDeleteAction";

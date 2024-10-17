@@ -105,3 +105,30 @@ export interface IGetQuestionsByTagIdParams {
   pageSize?: number;
   searchQuery?: string;
 }
+
+export interface IGetUserByIdParams {
+  userId: string;
+}
+
+export interface IGetUserStatsParams {
+  userId: string;
+  page?: number;
+  pageSize?: number;
+}
+
+export interface IDeleteQuestionParams {
+  questionId: string;
+  path: string;
+}
+
+export interface IEditQuestionParams {
+  questionId: string;
+  title: string;
+  content: string;
+  path: string;
+}
+
+export interface IDeleteAnswerParams {
+  answerId: string;
+  path: string;
+}

@@ -11,6 +11,7 @@ import {
   ExploreIcon,
   QuestionIcon,
   TagIcon,
+  ProfileIcon,
 } from "@/public/svgs";
 
 interface ThemeItems {
@@ -55,7 +56,7 @@ export const SIDEBAR_LINKS: ISidebarLinks[] = [
   {
     name: "All Users",
     route: "/users",
-    icon: HomeIcon,
+    icon: CommunityIcon,
     isLink: true,
   },
   {
@@ -79,7 +80,7 @@ export const SIDEBAR_LINKS: ISidebarLinks[] = [
   {
     name: "Profile",
     route: "/profile",
-    icon: HomeIcon,
+    icon: ProfileIcon,
     isLink: true,
   },
 ];

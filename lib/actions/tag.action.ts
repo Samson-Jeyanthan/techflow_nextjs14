@@ -10,7 +10,6 @@ import {
 import Tag, { ITag } from "@/database/tag.model";
 import { FilterQuery } from "mongoose";
 import Question from "@/database/question.model";
-import { TagIcon } from "@/public/svgs";
 
 export async function getTopInteractedTags(
   params: IGetTopInteractedTagsParams
@@ -49,7 +48,7 @@ export async function getAllTags(params: TGetAllTagsParams) {
 export async function getQuestionByTagId(params: IGetQuestionsByTagIdParams) {
   try {
     connectToDatabase();
-    const { tagId, page = 1, pageSize = 10, searchQuery } = params;
+    const { tagId, searchQuery } = params;
 
     const tagFilter: FilterQuery<ITag> = { _id: tagId };
 
@@ -82,6 +81,23 @@ export async function getQuestionByTagId(params: IGetQuestionsByTagIdParams) {
       tagTitle: tag.name,
       questions,
     };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function getTopPopularTags() {
+  try {
+    connectToDatabase();
+
+    const popularTags = await Tag.aggregate([
+      { $project: { name: 1, numberOfQuestions: { $size: "$questions" } } },
+      { $sort: { numberOfQuestions: -1 } },
+      { $limit: 5 },
+    ]);
+
+    return popularTags;
   } catch (error) {
     console.log(error);
     throw error;

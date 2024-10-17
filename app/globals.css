@@ -33,6 +33,10 @@ body {
     @apply placeholder:text-light-500 dark:placeholder:text-light-500;
   }
 
+  .active-tab {
+    @apply data-[state=active]:text-dark-100_light-800 data-[state=active]:bg-primary-500/20 min-w-60;
+  }
+
   .custom-scrollbar::-webkit-scrollbar {
     width: 3px;
     height: 3px;

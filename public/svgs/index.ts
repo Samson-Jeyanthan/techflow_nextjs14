@@ -8,3 +8,4 @@ export { default as ExploreIcon } from "./ExploreIcon";
 export { default as SaveIcon } from "./SaveIcon";
 export { default as QuestionIcon } from "./QuestionIcon";
 export { default as TagIcon } from "./TagIcon";
+export { default as ProfileIcon } from "./ProfileIcon";
