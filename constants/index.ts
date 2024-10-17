@@ -12,6 +12,7 @@ import {
   QuestionIcon,
   TagIcon,
   ProfileIcon,
+  JobsIcon,
 } from "@/public/svgs";
 
 interface ThemeItems {
@@ -66,7 +67,19 @@ export const SIDEBAR_LINKS: ISidebarLinks[] = [
     isLink: true,
   },
   {
-    name: "Save Collections",
+    name: "Jobs",
+    route: "/jobs",
+    icon: JobsIcon,
+    isLink: true,
+  },
+  {
+    name: "Resources",
+    route: "/resources",
+    icon: JobsIcon,
+    isLink: true,
+  },
+  {
+    name: "Saved Collections",
     route: "/saved-collections",
     icon: SaveIcon,
     isLink: true,

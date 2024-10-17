@@ -52,7 +52,7 @@ const UserProfile = async ({ params, searchParams }: TURLProps) => {
           <SignedIn>
             {clerkId === userInfo.user.clerkId && (
               <Link
-                href="/profile/edit"
+                href={`/profile/edit/${clerkId}`}
                 className="text-dark-100_light-850 flex-center min-h-[46px] min-w-[175px] rounded-md bg-light-500 px-4 py-3 text-sm dark:bg-dark-350"
               >
                 Edit Profile

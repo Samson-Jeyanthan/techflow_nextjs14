@@ -17,16 +17,6 @@ const RightSidebar = async () => {
       id: 2,
       title: "How do I use express as a custom server in NextJS?",
     },
-    {
-      id: 3,
-      title:
-        "How do I start contributing to open-source projects as a beginner?",
-    },
-  ];
-
-  const popularTag = [
-    { id: "1", name: "Automotive Technology", totalQuestions: 26 },
-    { id: "2", name: "Digital Transformation", totalQuestions: 5 },
   ];
 
   return (
@@ -66,16 +56,7 @@ const RightSidebar = async () => {
               key={index}
               _id={tag.id}
               name={tag.name}
-              totalQuestions={tag.totalQuestions}
-              showCount={true}
-            />
-          ))}
-          {popularTag.map((tag, index) => (
-            <RenderTag
-              key={index}
-              _id={tag.id}
-              name={tag.name}
-              totalQuestions={tag.totalQuestions}
+              totalQuestions={tag.numberOfQuestions}
               showCount={true}
             />
           ))}
