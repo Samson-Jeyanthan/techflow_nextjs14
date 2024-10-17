@@ -13,7 +13,7 @@ interface QuestionProps {
   author: {
     _id: string;
     name: string;
-    picture: string;
+    avatar: string;
     clerkId: string;
   };
   upvotes: string[];
@@ -53,7 +53,7 @@ const QuestionCard = ({
       </div>
       <div className="flex-between mt-6 w-full flex-wrap gap-3">
         <Metric
-          imgUrl={author.picture}
+          imgUrl={author.avatar}
           userId={author._id}
           userName={author.name}
           isAuthor
