@@ -124,7 +124,7 @@ const QandAs = async () => {
       </h1>
       <div className="mb-3 mt-7 flex justify-between gap-5 max-sm:flex-col sm:items-center">
         <LocalSearchbar
-          route="/"
+          route="/questions-and-answers"
           iconPosition="left"
           placeholder="Search for questions"
           otherClasses="flex-1"
