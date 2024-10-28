@@ -2,10 +2,13 @@ import { TagCard } from "@/components/cards";
 import { Filter, LocalSearchbar } from "@/components/shared";
 import { TAGS_FILTERS } from "@/constants/filters";
 import { getAllTags } from "@/lib/actions/tag.action";
+import { ISearchParamsProps } from "@/types/utils.types";
 import React from "react";
 
-const Tags = async () => {
-  const results = await getAllTags({});
+const Tags = async ({ searchParams }: ISearchParamsProps) => {
+  const results = await getAllTags({
+    searchQuery: searchParams.q,
+  });
 
   return (
     <section>

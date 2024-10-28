@@ -58,7 +58,6 @@ const RightSidebar = async () => {
               name={tag.name}
               totalQuestions={tag.numberOfQuestions}
               showCount={true}
-              isLink={true}
             />
           ))}
         </div>

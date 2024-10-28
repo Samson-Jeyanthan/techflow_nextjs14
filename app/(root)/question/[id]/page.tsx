@@ -93,7 +93,6 @@ const QuestionDetail = async ({
             _id={tag._id}
             name={tag.name}
             showCount={false}
-            isLink={true}
           />
         ))}
       </div>
