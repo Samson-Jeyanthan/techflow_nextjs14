@@ -2,9 +2,12 @@ import { UserCard } from "@/components/cards";
 import { Filter, LocalSearchbar } from "@/components/shared";
 import { USERS_FILTERS } from "@/constants/filters";
 import { getAllUsers } from "@/lib/actions/user.action";
+import { ISearchParamsProps } from "@/types/utils.types";
 
-const AllUsers = async () => {
-  const results = await getAllUsers({});
+const AllUsers = async ({ searchParams }: ISearchParamsProps) => {
+  const results = await getAllUsers({
+    searchQuery: searchParams.q,
+  });
 
   return (
     <section>
@@ -13,7 +16,7 @@ const AllUsers = async () => {
       </h1>
       <div className="mb-3 mt-7 flex justify-between gap-5 max-sm:flex-col sm:items-center">
         <LocalSearchbar
-          route="/"
+          route="/users"
           iconPosition="left"
           placeholder="Search for users"
           otherClasses="flex-1"

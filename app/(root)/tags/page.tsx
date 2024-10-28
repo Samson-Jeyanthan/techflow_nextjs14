@@ -14,7 +14,7 @@ const Tags = async () => {
       </h1>
       <div className="mb-3 mt-7 flex justify-between gap-5 max-sm:flex-col sm:items-center">
         <LocalSearchbar
-          route="/"
+          route="/tags"
           iconPosition="left"
           placeholder="Search for tags"
           otherClasses="flex-1"
