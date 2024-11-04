@@ -85,7 +85,9 @@ export async function getAllTags(params: TGetAllTagsParams) {
 export async function getQuestionByTagId(params: IGetQuestionsByTagIdParams) {
   try {
     connectToDatabase();
-    const { tagId, searchQuery } = params;
+    const { tagId, searchQuery, page = 1, pageSize = 20 } = params;
+
+    const skipAmount = (page - 1) * pageSize;
 
     const tagFilter: FilterQuery<ITag> = { _id: tagId };
 
@@ -97,6 +99,8 @@ export async function getQuestionByTagId(params: IGetQuestionsByTagIdParams) {
         : {},
       options: {
         sort: { createdAt: -1 },
+        skip: skipAmount,
+        limit: pageSize + 1,
       },
       populate: [
         { path: "tags", model: Tag, select: "_id name" },
@@ -112,11 +116,13 @@ export async function getQuestionByTagId(params: IGetQuestionsByTagIdParams) {
       throw new Error("Tag not found");
     }
 
+    const isNext = tag.questions.length > pageSize;
     const questions = tag.questions;
 
     return {
       tagTitle: tag.name,
       questions,
+      isNext,
     };
   } catch (error) {
     console.log(error);

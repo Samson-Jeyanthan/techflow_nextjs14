@@ -167,18 +167,24 @@ export async function getUserQuestions(params: IGetUserStatsParams) {
   try {
     connectToDatabase();
 
-    const { userId } = params;
+    const { userId, page = 1, pageSize = 20 } = params;
+
+    const skipAmount = (page - 1) * pageSize;
 
     const totalQuestions = await Question.countDocuments({
       author: userId,
     });
 
     const userQuestions = await Question.find({ author: userId })
+      .skip(skipAmount)
+      .limit(pageSize)
       .sort({ createdAt: -1, views: -1, upvotes: -1 })
       .populate("tags", "_id name")
       .populate("author", "_id clerkId name avatar");
 
-    return { totalQuestions, questions: userQuestions };
+    const isNextQuestion = totalQuestions > skipAmount + userQuestions.length;
+
+    return { totalQuestions, questions: userQuestions, isNextQuestion };
   } catch (error) {
     console.log(error);
     throw error;
@@ -189,16 +195,22 @@ export async function getUserAnswers(params: IGetUserStatsParams) {
   try {
     connectToDatabase();
 
-    const { userId } = params;
+    const { userId, page = 1, pageSize = 20 } = params;
+
+    const skipAmount = (page - 1) * pageSize;
 
     const totalAnswers = await Answer.countDocuments({ author: userId });
 
     const userAnswers = await Answer.find({ author: userId })
+      .skip(skipAmount)
+      .limit(pageSize)
       .sort({ upvotes: -1 })
       .populate("question", "_id title")
       .populate("author", "_id clerkId name avatar");
 
-    return { totalAnswers, answers: userAnswers };
+    const isNextAnswer = totalAnswers > skipAmount + userAnswers.length;
+
+    return { totalAnswers, answers: userAnswers, isNextAnswer };
   } catch (error) {
     console.log(error);
     throw error;

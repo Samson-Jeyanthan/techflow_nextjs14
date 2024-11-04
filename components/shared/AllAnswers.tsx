@@ -6,6 +6,7 @@ import UserProfileImg from "./UserProfileImg";
 import { getTimestamp } from "@/lib/utils";
 import ParseHTML from "./ParseHTML";
 import Votes from "./Votes";
+import Pagination from "./Pagination";
 
 interface Props {
   questionId: string;
@@ -22,7 +23,7 @@ const AllAnswers = async ({
   page,
   filter,
 }: Props) => {
-  const result = await getAllAnswer({
+  const results = await getAllAnswer({
     questionId,
     page: page ? +page : 1,
     sortBy: filter,
@@ -36,7 +37,7 @@ const AllAnswers = async ({
       </div>
 
       <div>
-        {result.answers.map((answer, index) => (
+        {results.answers.map((answer, index) => (
           <article
             key={index}
             className="border-b border-light-700 py-10 dark:border-dark-400"
@@ -69,6 +70,13 @@ const AllAnswers = async ({
             <ParseHTML data={answer.content} />
           </article>
         ))}
+      </div>
+
+      <div className="mt-10 w-full">
+        <Pagination
+          pageNumber={page ? +page : 1}
+          isNext={results.isNextAnswer}
+        />
       </div>
     </div>
   );
