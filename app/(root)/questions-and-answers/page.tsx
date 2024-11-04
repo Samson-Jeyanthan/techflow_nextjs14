@@ -4,6 +4,7 @@ import {
   LocalSearchbar,
   Filter,
   NoResult,
+  Pagination,
 } from "@/components/shared";
 import { Button } from "@/components/ui/button";
 import { QANDAS_FILTERS } from "@/constants/filters";
@@ -17,9 +18,13 @@ export const metadata: Metadata = {
 };
 
 async function QandAs({ searchParams }: ISearchParamsProps) {
-  const result = await getQuestions({
+  const results = await getQuestions({
     searchQuery: searchParams.q,
+    filter: searchParams.filter,
+    page: searchParams.page ? +searchParams.page : 1,
   });
+
+  // fetch recommended questions
 
   return (
     <section>
@@ -47,8 +52,8 @@ async function QandAs({ searchParams }: ISearchParamsProps) {
       </div>
       <QandAFilters />
       <div className="mt-10 flex w-full flex-col gap-6">
-        {result.questions.length > 0 ? (
-          result.questions.map((question, index) => (
+        {results.questions.length > 0 ? (
+          results.questions.map((question, index) => (
             <QuestionCard
               key={index}
               _id={question._id}
@@ -71,7 +76,14 @@ async function QandAs({ searchParams }: ISearchParamsProps) {
         )}
       </div>
 
-      {result.questions?.length > 0 && <div className="mt-10">pagination</div>}
+      {results.questions?.length > 0 && (
+        <div className="mt-10">
+          <Pagination
+            pageNumber={searchParams?.page ? +searchParams.page : 1}
+            isNext={results.isNext}
+          />
+        </div>
+      )}
     </section>
   );
 }

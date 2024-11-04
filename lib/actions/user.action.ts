@@ -92,7 +92,9 @@ export async function deleteUser(params: TDeleteUserParams) {
 export async function getAllUsers(params: IGetAllUsersParams) {
   try {
     connectToDatabase();
-    const { searchQuery } = params;
+    const { searchQuery, filter, page = 1, pageSize = 10 } = params;
+
+    const skipAmount = (page - 1) * pageSize;
 
     const query: FilterQuery<typeof User> = {};
 
@@ -103,9 +105,32 @@ export async function getAllUsers(params: IGetAllUsersParams) {
       ];
     }
 
-    const users = await User.find(query).sort({ createdAt: -1 });
+    let sortOptons = {};
 
-    return { users };
+    switch (filter) {
+      case "new_users":
+        sortOptons = { joinedAt: -1 };
+        break;
+      case "old_users":
+        sortOptons = { joinedAt: 1 };
+        break;
+      case "top_contributors":
+        sortOptons = { reputation: -1 };
+        break;
+      default:
+        break;
+    }
+
+    const users = await User.find(query)
+      .skip(skipAmount)
+      .limit(pageSize)
+      .sort(sortOptons);
+
+    const totalUsers = await User.countDocuments(query);
+
+    const isNext = totalUsers > skipAmount + users.length;
+
+    return { users, isNext };
   } catch (error) {
     console.log(error);
     throw error;

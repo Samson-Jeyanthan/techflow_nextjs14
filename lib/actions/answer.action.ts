@@ -5,6 +5,7 @@ import { connectToDatabase } from "../mongoose";
 import {
   IAnswerVoteParams,
   ICreateAnswerParams,
+  IDeleteAnswerParams,
   IGetAnswersParams,
 } from "./shared.types";
 import Question from "@/database/question.model";
@@ -40,10 +41,30 @@ export async function getAllAnswer(params: IGetAnswersParams) {
   try {
     connectToDatabase();
 
-    const { questionId } = params;
+    const { questionId, sortBy } = params;
+
+    let sortOptions = {};
+
+    switch (sortBy) {
+      case "highestUpvotes":
+        sortOptions = { upvotes: -1 };
+        break;
+      case "lowestUpvotes":
+        sortOptions = { upvotes: 1 };
+        break;
+      case "recent": // filter by alphabetical order
+        sortOptions = { createdAt: -1 };
+        break;
+      case "old":
+        sortOptions = { createdAt: 1 };
+        break;
+      default:
+        break;
+    }
+
     const answers = await Answer.find({ question: questionId })
       .populate("author", "_id clerkId name username avatar")
-      .sort({ createdAt: -1 });
+      .sort(sortOptions);
     return { answers };
   } catch (error) {
     console.log(error);
@@ -137,7 +158,7 @@ export async function downvoteAnswer(params: IAnswerVoteParams) {
   }
 }
 
-export async function deleteAnswer(params: DeleteAnswerParams) {
+export async function deleteAnswer(params: IDeleteAnswerParams) {
   try {
     connectToDatabase();
 

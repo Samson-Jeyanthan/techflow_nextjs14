@@ -40,12 +40,12 @@ const LocalSearchbar = ({
       } else {
         console.log(route, pathname);
         if (pathname === route) {
-          const newUrl = removeKeysFromQuery({
+          const newURL = removeKeysFromQuery({
             params: searchParams.toString(),
             keysToRemove: ["q"],
           });
 
-          router.push(newUrl, { scroll: false });
+          router.push(newURL, { scroll: false });
         }
       }
     }, 350);
