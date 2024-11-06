@@ -8,10 +8,8 @@ import {
   SystemIcon,
   CommunityIcon,
   SaveIcon,
-  ExploreIcon,
   QuestionIcon,
   TagIcon,
-  ProfileIcon,
   JobsIcon,
 } from "@/public/svgs";
 
@@ -32,7 +30,6 @@ interface ISidebarLinks {
   name: string;
   route: string;
   icon: IconType | React.ComponentType<TConvertedSvgJsxProps>;
-  isLink: boolean;
 }
 
 export const SIDEBAR_LINKS: ISidebarLinks[] = [
@@ -40,60 +37,40 @@ export const SIDEBAR_LINKS: ISidebarLinks[] = [
     name: "Home",
     route: "/home",
     icon: HomeIcon,
-    isLink: true,
   },
   {
     name: "Q&As Hub",
     route: "/questions-and-answers",
     icon: QuestionIcon,
-    isLink: true,
-  },
-  {
-    name: "Explore",
-    route: "/explore",
-    icon: ExploreIcon,
-    isLink: true,
   },
   {
     name: "All Users",
     route: "/users",
     icon: CommunityIcon,
-    isLink: true,
   },
   {
     name: "Tags",
     route: "/tags",
     icon: TagIcon,
-    isLink: true,
   },
   {
     name: "Jobs",
     route: "/jobs",
     icon: JobsIcon,
-    isLink: true,
   },
   {
     name: "Resources",
     route: "/resources",
     icon: JobsIcon,
-    isLink: true,
   },
   {
     name: "Saved Collections",
     route: "/saved-collections",
     icon: SaveIcon,
-    isLink: true,
   },
   {
-    name: "Community",
-    route: "/community",
+    name: "Communities",
+    route: "/communities",
     icon: CommunityIcon,
-    isLink: true,
-  },
-  {
-    name: "Profile",
-    route: "/profile",
-    icon: ProfileIcon,
-    isLink: true,
   },
 ];

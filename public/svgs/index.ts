@@ -10,3 +10,4 @@ export { default as QuestionIcon } from "./QuestionIcon";
 export { default as TagIcon } from "./TagIcon";
 export { default as ProfileIcon } from "./ProfileIcon";
 export { default as JobsIcon } from "./JobsIcon";
+export { default as CreatePostIcon } from "./CreatePostIcon";
