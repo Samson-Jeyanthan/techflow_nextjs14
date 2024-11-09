@@ -74,3 +74,83 @@ export const SIDEBAR_LINKS: ISidebarLinks[] = [
     icon: CommunityIcon,
   },
 ];
+
+export const WORKMODE_OPTIONS = [
+  {
+    _id: "remote",
+    name: "Remote",
+  },
+  {
+    _id: "onsite",
+    name: "On-site",
+  },
+  {
+    _id: "hybrid",
+    name: "Hybrid",
+  },
+];
+
+export const EMPLOYMENTTYPE_OPTIONS = [
+  {
+    _id: "full-time",
+    name: "Full-time",
+  },
+  {
+    _id: "part-time",
+    name: "Part-time",
+  },
+  {
+    _id: "contract",
+    name: "Contract",
+  },
+  {
+    _id: "freelance",
+    name: "Freelance",
+  },
+  {
+    _id: "internship",
+    name: "Internship",
+  },
+];
+
+export const SALARY_PER_OPTIONS = [
+  {
+    _id: "hour",
+    name: "Hour",
+  },
+  {
+    _id: "day",
+    name: "Day",
+  },
+  {
+    _id: "month",
+    name: "Month",
+  },
+  {
+    _id: "year",
+    name: "Year",
+  },
+];
+
+export const SALARY_CURRENCY_OPTIONS = [
+  {
+    _id: "lkr",
+    name: "LKR",
+  },
+  {
+    _id: "inr",
+    name: "INR",
+  },
+  {
+    _id: "usd",
+    name: "USD",
+  },
+  {
+    _id: "eur",
+    name: "EUR",
+  },
+  {
+    _id: "gbp",
+    name: "GBP",
+  },
+];

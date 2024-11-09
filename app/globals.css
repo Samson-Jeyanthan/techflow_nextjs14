@@ -28,7 +28,7 @@ body {
   }
 
   .no-focus {
-    @apply ring-0 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0 !important;
+    @apply ring-0 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0  outline-none !important;
   }
 
   .placeholder {
@@ -196,6 +196,10 @@ body {
 
   .text-light-500_dark-500 {
     @apply text-light-500 dark:text-dark-500;
+  }
+
+  .text-dark-500_light-600 {
+    @apply text-dark-500 dark:text-light-600;
   }
 
   /* inverse text color uc */
