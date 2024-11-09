@@ -11,3 +11,4 @@ export { default as TagIcon } from "./TagIcon";
 export { default as ProfileIcon } from "./ProfileIcon";
 export { default as JobsIcon } from "./JobsIcon";
 export { default as CreatePostIcon } from "./CreatePostIcon";
+export { default as CameraIcon } from "./CameraIcon";

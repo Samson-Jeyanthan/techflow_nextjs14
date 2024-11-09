@@ -16,3 +16,11 @@ export interface ISearchParamsProps {
 export interface IParamsProps {
   params: { id: string };
 }
+
+export type TMedia = {
+  data: File | null;
+  preview: string;
+  fileType: string | null;
+  fileName: string | null;
+  mediaType?: string | null;
+};

@@ -8,9 +8,15 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
-import { Input } from "../ui/input";
+import { Textarea } from "../ui/textarea";
 
-const FormInput = ({ form, inputName, formLabel, formDescription }: any) => {
+const TextArea = ({
+  form,
+  inputName,
+  formLabel,
+  formDescription,
+  maxLength,
+}: any) => {
   return (
     <FormField
       control={form.control}
@@ -21,9 +27,10 @@ const FormInput = ({ form, inputName, formLabel, formDescription }: any) => {
             {formLabel}
           </FormLabel>
           <FormControl>
-            <Input
+            <Textarea
               {...field}
-              className="no-focus text-dark-100_light-850 bg-light-800_dark-250 border border-solid border-light-750 text-sm dark:border-dark-350"
+              className="no-focus text-dark-100_light-850 h-24 resize-none border border-solid border-light-750 bg-light-800 text-sm dark:border-dark-350 dark:bg-dark-250"
+              maxLength={maxLength}
             />
           </FormControl>
           <FormDescription className="mt-2.5 text-xs text-light-500">
@@ -36,4 +43,4 @@ const FormInput = ({ form, inputName, formLabel, formDescription }: any) => {
   );
 };
 
-export default FormInput;
+export default TextArea;

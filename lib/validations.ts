@@ -23,3 +23,10 @@ export const JobsSchema = z.object({
   deadline: z.string().min(1),
   tags: z.array(z.string().min(1).max(15)).min(1).max(3),
 });
+
+export const CommunitySchema = z.object({
+  communityName: z.string().min(5).max(40),
+  bio: z.string().min(5).max(120),
+  profilePhoto: z.string(),
+  coverPhoto: z.string(),
+});

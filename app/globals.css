@@ -152,6 +152,9 @@ body {
   }
 
   /* 750 */
+  .bg-light-750_dark-250 {
+    @apply bg-light-750 dark:bg-dark-250;
+  }
   .bg-light-750_dark-350 {
     @apply bg-light-750 dark:bg-dark-300;
   }
