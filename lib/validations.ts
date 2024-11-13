@@ -25,8 +25,8 @@ export const JobsSchema = z.object({
 });
 
 export const CommunitySchema = z.object({
-  communityName: z.string().min(5).max(40),
+  name: z.string().min(5).max(40),
   bio: z.string().min(5).max(120),
-  profilePhoto: z.string(),
-  coverPhoto: z.string(),
+  profilePhoto: z.custom<File[]>().optional(),
+  coverPhoto: z.custom<File[]>().optional(),
 });

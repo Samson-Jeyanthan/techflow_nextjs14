@@ -6,7 +6,13 @@ import { CameraIcon } from "@/public/svgs";
 import Image from "next/image";
 import { useMedia } from "@/hooks/useMedia";
 
-const ProfilePhoto = ({ fieldChange, mediaUrl }: any) => {
+type Props = {
+  fieldChange: (e: any) => void;
+  mediaUrl?: string | null;
+  defaultPic: string;
+};
+
+const ProfilePhoto = ({ fieldChange, mediaUrl, defaultPic }: Props) => {
   const photoRef = useRef<HTMLInputElement>(null);
   const [isActionOpen, setIsActionOpen] = useState(false);
   const { handleImageInput, media } = useMedia();
@@ -22,7 +28,7 @@ const ProfilePhoto = ({ fieldChange, mediaUrl }: any) => {
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     handleImageInput(e);
-    fieldChange(media.data);
+    fieldChange(e.target.files);
   };
 
   return (
@@ -36,11 +42,11 @@ const ProfilePhoto = ({ fieldChange, mediaUrl }: any) => {
           accept="image/jpeg,image/jpg,image/png,image/webp"
         />
         <Image
-          src={media.preview || "/images/default_profile_pic.png"}
+          src={media.preview || defaultPic}
           alt="profile_pic"
           width={512}
           height={512}
-          className="size-36 rounded-full object-cover"
+          className={`${media.preview ? "size-36 rounded-full" : "size-24 pt-3"}  object-cover`}
         />
 
         <div

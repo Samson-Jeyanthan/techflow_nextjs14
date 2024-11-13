@@ -7,7 +7,9 @@ import { Form, FormField } from "@/components/ui/form";
 import { CommunitySchema } from "@/lib/validations";
 import { CoverPhoto, FormInput, ProfilePhoto, TextArea } from "../inputs";
 import { Button } from "../ui/button";
-import { getSignedURL } from "@/lib/actions/utils.action";
+import { getFileUpload } from "@/lib/actions/utils.action";
+import { createCommunity } from "@/lib/actions/community.action";
+import { usePathname, useRouter } from "next/navigation";
 
 type Props = {
   type?: string;
@@ -16,24 +18,65 @@ type Props = {
 };
 
 const CommunityForm = ({ type, mongoUserId, communityDetails }: Props) => {
+  const router = useRouter();
+  const pathname = usePathname();
+
   const parsedCommunityDetails =
     communityDetails && JSON.parse(communityDetails || "");
 
   const form = useForm<z.infer<typeof CommunitySchema>>({
     resolver: zodResolver(CommunitySchema),
     defaultValues: {
-      communityName: parsedCommunityDetails?.communityName || "",
+      name: parsedCommunityDetails?.name || "",
       bio: parsedCommunityDetails?.bio || "",
-      profilePhoto: parsedCommunityDetails?.profilePhoto || "",
-      coverPhoto: parsedCommunityDetails?.coverPhoto || "",
+      profilePhoto: parsedCommunityDetails?.profilePhoto || [],
+      coverPhoto: parsedCommunityDetails?.coverPhoto || [],
     },
   });
 
   async function onSubmit(values: z.infer<typeof CommunitySchema>) {
-    console.log(values);
+    let profilePicURL = "";
 
-    const signedURLResult = await getSignedURL();
-    console.log(signedURLResult);
+    try {
+      if (values.profilePhoto) {
+        const signedURLResult = await getFileUpload({
+          fileType: "image/jpeg",
+        });
+        console.log(signedURLResult);
+
+        if (signedURLResult.failure !== undefined) {
+          console.log(signedURLResult.failure);
+          return;
+        }
+
+        const url = signedURLResult.success;
+
+        const res = await fetch(url, {
+          method: "PUT",
+          body: values.profilePhoto[0],
+          headers: {
+            "Content-Type": "image/jpeg",
+          },
+        });
+
+        if (res.ok) {
+          profilePicURL = url.split("?")[0];
+        }
+      }
+
+      await createCommunity({
+        name: values.name,
+        bio: values.bio,
+        profilePhoto: profilePicURL,
+        coverPhoto: "",
+        createdBy: JSON.parse(mongoUserId),
+        path: pathname,
+      });
+
+      router.push("/communities");
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
@@ -51,12 +94,17 @@ const CommunityForm = ({ type, mongoUserId, communityDetails }: Props) => {
         <FormField
           control={form.control}
           name="profilePhoto"
-          render={({ field }) => <ProfilePhoto fieldChange={field.onChange} />}
+          render={({ field }) => (
+            <ProfilePhoto
+              fieldChange={field.onChange}
+              defaultPic="/images/default-community-profile-pic.png"
+            />
+          )}
         />
 
         <FormInput
           form={form}
-          inputName={"communityName"}
+          inputName={"name"}
           formLabel={"Community Name"}
           formDescription={
             "Introduce the problem and expand on what you put in the title"

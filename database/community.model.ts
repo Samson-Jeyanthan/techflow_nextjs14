@@ -4,7 +4,7 @@ export interface ICommunity extends Document {
   name: string;
   profilePhoto?: string;
   coverPhoto?: string;
-  description: string;
+  bio: string;
   members?: Schema.Types.ObjectId[];
   admins: Schema.Types.ObjectId[];
   createdBy: Schema.Types.ObjectId;
@@ -15,7 +15,7 @@ const CommunitySchema = new Schema({
   name: { type: String, required: true },
   profilePhoto: { type: String },
   coverPhoto: { type: String },
-  description: { type: String, required: true },
+  bio: { type: String, required: true },
   members: [{ type: Schema.Types.ObjectId, ref: "User" }],
   admins: [{ type: Schema.Types.ObjectId, ref: "User" }],
   createdBy: { type: Schema.Types.ObjectId, ref: "User" },
