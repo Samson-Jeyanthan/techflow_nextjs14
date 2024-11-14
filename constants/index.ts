@@ -35,7 +35,7 @@ interface ISidebarLinks {
 export const SIDEBAR_LINKS: ISidebarLinks[] = [
   {
     name: "Home",
-    route: "/home",
+    route: "/",
     icon: HomeIcon,
   },
   {

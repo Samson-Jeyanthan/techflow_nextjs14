@@ -23,7 +23,7 @@ const UserCard = async ({ user }: Props) => {
         className="flex-center w-full flex-col"
       >
         <Image
-          src={user.avatar || "/images/default_profile_pic.png"}
+          src={user.avatar || "/images/default-user-profile-pic.png"}
           alt={user.name}
           width={100}
           height={100}

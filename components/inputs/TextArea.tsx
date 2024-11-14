@@ -10,13 +10,21 @@ import {
 } from "../ui/form";
 import { Textarea } from "../ui/textarea";
 
+interface Props {
+  form: any;
+  inputName: string;
+  formLabel: string;
+  formDescription: string;
+  maxLength: number;
+}
+
 const TextArea = ({
   form,
   inputName,
   formLabel,
   formDescription,
   maxLength,
-}: any) => {
+}: Props) => {
   return (
     <FormField
       control={form.control}

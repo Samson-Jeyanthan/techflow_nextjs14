@@ -18,15 +18,8 @@ const LeftSidebar = () => {
       <ul className="flex flex-1 flex-col gap-[10px] 2xl:gap-4">
         {SIDEBAR_LINKS.map((item, index) => {
           const isActive =
-            pathname === item.route || pathname.includes(item.route);
-
-          // if (item.route === "/profile") {
-          //   if (userId) {
-          //     item.route = `${item.route}/${userId}`;
-          //   } else {
-          //     return null;
-          //   }
-          // }
+            (pathname.includes(item.route) && item.route.length > 1) ||
+            pathname === item.route;
 
           return (
             <li key={index}>
