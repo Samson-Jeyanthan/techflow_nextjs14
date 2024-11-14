@@ -30,3 +30,8 @@ export const CommunitySchema = z.object({
   profilePhoto: z.custom<File[]>().optional(),
   coverPhoto: z.custom<File[]>().optional(),
 });
+
+export const HomePostSchema = z.object({
+  description: z.string().min(5).max(160),
+  postImage: z.custom<File[]>().optional(),
+});

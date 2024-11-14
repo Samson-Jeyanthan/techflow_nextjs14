@@ -132,3 +132,13 @@ export interface IDeleteAnswerParams {
   answerId: string;
   path: string;
 }
+
+export type TCreatePostParams = {
+  title?: string;
+  description?: string;
+  postImage?: string;
+  tags?: string[];
+  author: Schema.Types.ObjectId | IUser;
+  groupId?: string;
+  path: string;
+};

@@ -5,3 +5,4 @@ export { default as TagInput } from "./TagInput";
 export { default as TextArea } from "./TextArea";
 export { default as CoverPhoto } from "./CoverPhoto";
 export { default as ProfilePhoto } from "./ProfilePhoto";
+export { default as HomePostPhoto } from "./HomePostPhoto";

@@ -22,7 +22,7 @@ const CoverPhoto = ({ fieldChange, mediaUrl }: any) => {
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     handleImageInput(e);
-    fieldChange(media.data);
+    fieldChange(e.target.files);
   };
 
   return (

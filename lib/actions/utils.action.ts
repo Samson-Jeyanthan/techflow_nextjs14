@@ -24,7 +24,7 @@ const s3 = new S3Client({
   },
 });
 
-export async function getFileUpload({
+export async function getSignedURL({
   fileType,
   // fileSize,
   // filePreviousURL,

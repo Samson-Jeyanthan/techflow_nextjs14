@@ -8,24 +8,77 @@ import {
   FormMessage,
 } from "../ui/form";
 import { useForm } from "react-hook-form";
-import { AnswerSchema } from "@/lib/validations";
+import { HomePostSchema } from "@/lib/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import Image from "next/image";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { HomePostPhoto } from "../inputs";
+import { createPost } from "@/lib/actions/post.action";
+import { usePathname } from "next/navigation";
+import { getSignedURL } from "@/lib/actions/utils.action";
 
-const HomePostForm = ({ avatar, userId }: any) => {
-  const form = useForm<z.infer<typeof AnswerSchema>>({
-    resolver: zodResolver(AnswerSchema),
+const HomePostForm = ({ avatar, mongoUserId }: any) => {
+  const pathname = usePathname();
+
+  const form = useForm<z.infer<typeof HomePostSchema>>({
+    resolver: zodResolver(HomePostSchema),
     defaultValues: {
-      answer: "",
+      description: "",
+      postImage: [],
     },
   });
 
+  async function onSubmit(values: z.infer<typeof HomePostSchema>) {
+    let postImageURL = "";
+
+    try {
+      if (values.postImage) {
+        const signedURLResult = await getSignedURL({
+          fileType: "image/jpeg",
+        });
+        console.log(signedURLResult);
+
+        if (signedURLResult.failure !== undefined) {
+          console.log(signedURLResult.failure);
+          return;
+        }
+
+        const url = signedURLResult.success;
+
+        const res = await fetch(url, {
+          method: "PUT",
+          body: values.postImage[0],
+          headers: {
+            "Content-Type": "image/jpeg",
+          },
+        });
+
+        if (res.ok) {
+          postImageURL = url.split("?")[0];
+        }
+      }
+
+      await createPost({
+        description: values.description,
+        postImage: postImageURL,
+        author: JSON.parse(mongoUserId),
+        path: pathname,
+      });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      form.reset();
+    }
+  }
+
   return (
     <Form {...form}>
-      <form className="flex w-4/6 items-start justify-between gap-6 rounded-2xl bg-light-900 p-4 shadow-md dark:bg-dark-200">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex w-4/6 items-start justify-between gap-6 rounded-2xl bg-light-900 p-4 shadow-md dark:bg-dark-250"
+      >
         <Image
           src={avatar}
           alt="profile picture"
@@ -33,10 +86,11 @@ const HomePostForm = ({ avatar, userId }: any) => {
           height={120}
           className="mt-1 size-10 rounded-full border object-cover"
         />
-        <div className="flex w-full flex-col justify-start gap-6">
+
+        <div className="flex w-full flex-col justify-start gap-3">
           <FormField
             control={form.control}
-            name="answer"
+            name="description"
             render={({ field }) => (
               <FormItem className="flex w-full flex-col pt-[3px]">
                 <FormControl>
@@ -52,8 +106,21 @@ const HomePostForm = ({ avatar, userId }: any) => {
           />
 
           <div className="flex w-full items-center justify-between border-t border-light-750 pt-6 dark:border-dark-350">
-            <Button className="w-max bg-none text-light-900">Image</Button>
-            <Button className="w-20 bg-primary-500 text-light-900">Post</Button>
+            <FormField
+              control={form.control}
+              name="postImage"
+              render={({ field }) => (
+                <HomePostPhoto fieldChange={field.onChange} />
+              )}
+            />
+
+            <Button
+              className="w-20 bg-primary-500 text-light-900"
+              type="submit"
+              disabled={form.formState.isSubmitting}
+            >
+              {form.formState.isSubmitting ? "Posting..." : "Post"}
+            </Button>
           </div>
         </div>
       </form>
