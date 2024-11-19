@@ -11,11 +11,11 @@ const UserProfileHeader = ({ userInfo }: { userInfo: any }) => {
     <header className="flex flex-col-reverse items-start justify-between sm:flex-row">
       <div className="flex flex-col items-start gap-4 lg:flex-row">
         <Image
-          src={userInfo?.user.avatar}
+          src={userInfo?.user.avatar || "/images/default-user-profile-pic.png"}
           alt="profile picture"
           width={140}
           height={140}
-          className="rounded-full object-cover"
+          className="rounded-full bg-light-700 object-cover dark:bg-dark-400"
         />
 
         <div className="mt-3">

@@ -23,7 +23,10 @@ const TabLinks = ({ tabs }: Props) => {
         {tabs.map((tab, index) => {
           return (
             <TabsTrigger key={index} value={tab.value} className="active-tab">
-              <Link href={tab.href} className="flex gap-1">
+              <Link
+                href={tab.href}
+                className="flex size-full items-center justify-center gap-1 px-5 py-1.5"
+              >
                 {tab.totalNumbers !== 0 &&
                   formatAndDivideNumber(tab.totalNumbers)}
                 <p>{tab.tabName}</p>

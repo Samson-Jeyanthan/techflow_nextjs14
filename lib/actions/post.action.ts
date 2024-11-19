@@ -5,6 +5,7 @@ import { connectToDatabase } from "../mongoose";
 import { revalidatePath } from "next/cache";
 import Tag from "@/database/tag.model";
 import { TCreatePostParams } from "./shared.types";
+import User from "@/database/user.model";
 
 export async function createPost(params: TCreatePostParams) {
   try {
@@ -53,11 +54,20 @@ export async function createPost(params: TCreatePostParams) {
   }
 }
 
-export async function getAllPosts() {
+export async function getAllPosts(params: any) {
   try {
     connectToDatabase();
 
-    const posts = await Post.find({});
+    const posts = await Post.find({})
+      .populate({
+        path: "author",
+        model: User,
+      })
+      .populate({
+        path: "tags",
+        model: Tag,
+      })
+      .sort({ createdAt: -1 });
 
     return { posts };
   } catch (error) {

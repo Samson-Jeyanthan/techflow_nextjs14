@@ -16,12 +16,11 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { HomePostPhoto } from "../inputs";
 import { createPost } from "@/lib/actions/post.action";
-import { usePathname } from "next/navigation";
 import { getSignedURL } from "@/lib/actions/utils.action";
+import { useRouter } from "next/navigation";
 
 const HomePostForm = ({ avatar, mongoUserId }: any) => {
-  const pathname = usePathname();
-
+  const router = useRouter();
   const form = useForm<z.infer<typeof HomePostSchema>>({
     resolver: zodResolver(HomePostSchema),
     defaultValues: {
@@ -34,7 +33,7 @@ const HomePostForm = ({ avatar, mongoUserId }: any) => {
     let postImageURL = "";
 
     try {
-      if (values.postImage) {
+      if (values.postImage && values.postImage.length > 0) {
         const signedURLResult = await getSignedURL({
           fileType: "image/jpeg",
         });
@@ -64,8 +63,10 @@ const HomePostForm = ({ avatar, mongoUserId }: any) => {
         description: values.description,
         postImage: postImageURL,
         author: JSON.parse(mongoUserId),
-        path: pathname,
+        path: "/",
       });
+
+      router.push("/");
     } catch (error) {
       console.log(error);
     } finally {
