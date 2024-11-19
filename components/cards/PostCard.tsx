@@ -1,7 +1,10 @@
 import Image from "next/image";
-import { RenderTag } from "../shared";
+import { LikeButton, RenderTag, UserProfileImg } from "../shared";
 import { getTimestamp } from "@/lib/utils";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import Link from "next/link";
+import { CommentInput } from "../inputs";
+import { CommentIcon } from "@/public/svgs";
 
 interface Props {
   _id: string;
@@ -29,27 +32,26 @@ const PostCard = ({
   views,
 }: Props) => {
   return (
-    <div className="w-full rounded-xl bg-light-900 p-7 dark:bg-dark-250 sm:px-9">
+    <div className="w-full rounded-xl bg-light-900 p-7 shadow-md dark:bg-dark-250 sm:px-9">
       <header className="flex items-center justify-between">
         <div className="flex items-start gap-2">
-          <Image
+          <UserProfileImg
             src={author.avatar}
-            alt={author.name}
-            width={600}
-            height={600}
+            userId={author.clerkId}
             className="size-10 rounded-full object-cover"
           />
           <p className="text-dark-100_light-850 flex flex-col gap-0 text-sm">
-            {author.username}
+            <Link href={`/profile/${author.clerkId}`}>{author.username}</Link>
+
             <span className="text-light-500_dark-500 text-xs">
-              posted on {getTimestamp(createdAt)}
+              posted {getTimestamp(createdAt)}
             </span>
           </p>
         </div>
         <BsThreeDotsVertical />
       </header>
 
-      <p className="text-dark-100_light-850 my-8">
+      <p className="text-dark-100_light-850 mt-8">
         {title === "" ? description : title}
       </p>
 
@@ -59,20 +61,29 @@ const PostCard = ({
           alt={title}
           width={1200}
           height={1200}
-          className="mt-4 size-full rounded-lg object-cover"
+          className="mt-6 size-full rounded-lg object-cover"
         />
       )}
 
-      <p className="text-dark-100_light-850 mt-4">
-        {title !== "" && description}
-      </p>
+      {title !== "" && (
+        <p className="text-dark-100_light-850 mt-4">{description}</p>
+      )}
 
-      <div className="mt-3.5 flex flex-wrap gap-2">
-        {tags.length > 0 &&
-          tags.map((tag) => (
+      {tags.length > 0 && (
+        <div className="mt-3.5 flex flex-wrap gap-2 border">
+          {tags.map((tag) => (
             <RenderTag key={tag._id} _id={tag._id} name={tag.name} />
           ))}
+        </div>
+      )}
+
+      <div className="mt-6 flex items-center justify-start gap-8 fill-black dark:fill-white">
+        <LikeButton likeCounts={0} isUserLiked={false} />
+
+        <CommentIcon width="20px" height="20px" />
       </div>
+
+      <CommentInput />
     </div>
   );
 };

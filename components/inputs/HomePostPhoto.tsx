@@ -1,18 +1,24 @@
 "use client";
 
 import { ChangeEvent, useRef } from "react";
-import { useMedia } from "@/hooks/useMedia";
 import Image from "next/image";
 import { RiAttachment2 } from "react-icons/ri";
 import { MdClose } from "react-icons/md";
 
 type Props = {
   fieldChange: (e: any) => void;
+  handleImageInput: (e: ChangeEvent<HTMLInputElement>) => void;
+  media: any;
+  resetMedia: () => void;
 };
 
-const HomePostPhoto = ({ fieldChange }: Props) => {
+const HomePostPhoto = ({
+  fieldChange,
+  handleImageInput,
+  media,
+  resetMedia,
+}: Props) => {
   const photoRef = useRef<HTMLInputElement>(null);
-  const { handleImageInput, media, resetMedia } = useMedia();
 
   // handle the photo action modal open and input change
   const handleInputBtn = () => {

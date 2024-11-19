@@ -18,9 +18,11 @@ import { HomePostPhoto } from "../inputs";
 import { createPost } from "@/lib/actions/post.action";
 import { getSignedURL } from "@/lib/actions/utils.action";
 import { useRouter } from "next/navigation";
+import { useMedia } from "@/hooks/useMedia";
 
 const HomePostForm = ({ avatar, mongoUserId }: any) => {
   const router = useRouter();
+  const { handleImageInput, media, resetMedia } = useMedia();
   const form = useForm<z.infer<typeof HomePostSchema>>({
     resolver: zodResolver(HomePostSchema),
     defaultValues: {
@@ -70,6 +72,7 @@ const HomePostForm = ({ avatar, mongoUserId }: any) => {
     } catch (error) {
       console.log(error);
     } finally {
+      resetMedia();
       form.reset();
     }
   }
@@ -98,7 +101,7 @@ const HomePostForm = ({ avatar, mongoUserId }: any) => {
                   <Input
                     {...field}
                     placeholder="What's on your mind?"
-                    className="no-focus text-dark-100_light-850 bg-light-800_dark-250 rounded-lg border-none text-sm placeholder:text-light-500 dark:border-dark-350 placeholder:dark:text-dark-500"
+                    className="no-focus text-dark-100_light-850 bg-light-800_dark-300 rounded-lg border-none text-sm placeholder:text-light-500 dark:border-dark-350 placeholder:dark:text-dark-500"
                   />
                 </FormControl>
                 <FormMessage className="text-xs text-custom-red" />
@@ -111,7 +114,12 @@ const HomePostForm = ({ avatar, mongoUserId }: any) => {
               control={form.control}
               name="postImage"
               render={({ field }) => (
-                <HomePostPhoto fieldChange={field.onChange} />
+                <HomePostPhoto
+                  fieldChange={field.onChange}
+                  handleImageInput={handleImageInput}
+                  media={media}
+                  resetMedia={resetMedia}
+                />
               )}
             />
 
