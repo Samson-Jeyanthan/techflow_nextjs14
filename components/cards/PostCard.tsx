@@ -4,7 +4,7 @@ import { getTimestamp } from "@/lib/utils";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import Link from "next/link";
 import { CommentInput } from "../inputs";
-import { CommentIcon } from "@/public/svgs";
+import { CommentModal } from "../modals";
 
 interface Props {
   _id: string;
@@ -77,10 +77,9 @@ const PostCard = ({
         </div>
       )}
 
-      <div className="mt-6 flex items-center justify-start gap-8 fill-black dark:fill-white">
+      <div className="mt-6 flex items-center justify-start gap-8 ">
         <LikeButton likeCounts={0} isUserLiked={false} />
-
-        <CommentIcon width="20px" height="20px" />
+        <CommentModal />
       </div>
 
       <CommentInput />
