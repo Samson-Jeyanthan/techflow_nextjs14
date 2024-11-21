@@ -85,8 +85,8 @@ const PostCard = ({
 
       <div className="mt-6 flex items-center justify-start gap-8 ">
         <LikeButton
-          userId={currentUserId}
-          postId={JSON.stringify(_id)}
+          userId={JSON.parse(currentUserId)}
+          postId={JSON.parse(_id)}
           likeCounts={likesCount}
           isUserLiked={isLiked}
         />

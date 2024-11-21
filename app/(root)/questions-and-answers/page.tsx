@@ -24,7 +24,7 @@ async function QandAs({ searchParams }: ISearchParamsProps) {
     page: searchParams.page ? +searchParams.page : 1,
   });
 
-  // fetch recommended questions
+  // TODO: fetch recommended questions
 
   return (
     <>

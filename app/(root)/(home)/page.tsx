@@ -33,7 +33,7 @@ const Home = async ({ searchParams }: ISearchParamsProps) => {
           results.posts.map((post, index) => (
             <PostCard
               key={index}
-              _id={post._id}
+              _id={JSON.stringify(post._id)}
               title={post.title}
               description={post.description}
               postImage={post.postImage}

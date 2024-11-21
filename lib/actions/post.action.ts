@@ -1,8 +1,8 @@
 "use server";
 
-import Post from "@/database/post.model";
 import { connectToDatabase } from "../mongoose";
 import { revalidatePath } from "next/cache";
+import Post from "@/database/post.model";
 import Tag from "@/database/tag.model";
 import { TCreatePostParams } from "./shared.types";
 import User from "@/database/user.model";
