@@ -35,10 +35,7 @@ const NavContent = () => {
 const MobileNav = () => {
   return (
     <Sheet>
-      <SheetTrigger
-        className="text-dark-100_light-900 ml-1 cursor-pointer text-2xl sm:hidden"
-        asChild
-      >
+      <SheetTrigger className="text-dark-100_light-900 ml-1 cursor-pointer text-2xl sm:hidden">
         <CgMenu />
       </SheetTrigger>
       <SheetContent
