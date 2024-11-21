@@ -1,20 +1,35 @@
 "use client";
 
+import { likePost } from "@/lib/actions/post.action";
 import { useState } from "react";
 import { GoHeart, GoHeartFill } from "react-icons/go";
 
 type Props = {
+  userId: string;
+  postId: string;
   likeCounts: number;
   isUserLiked: boolean;
 };
 
-const LikeButton = ({ likeCounts, isUserLiked }: Props) => {
+const LikeButton = ({ userId, postId, likeCounts, isUserLiked }: Props) => {
   const [isLiked, setIsLiked] = useState(isUserLiked || false);
   const [likeCount, setLikeCount] = useState(likeCounts);
 
-  const handleLike = () => {
+  const handleLike = async () => {
+    if (!userId) {
+      return;
+    }
+
     setIsLiked(!isLiked);
     setLikeCount(isLiked ? likeCount - 1 : likeCount + 1);
+    const { status } = await likePost({
+      userId: JSON.parse(userId),
+      postId,
+      isLiked: !isLiked,
+      path: "",
+    });
+
+    console.log(status);
   };
 
   return (

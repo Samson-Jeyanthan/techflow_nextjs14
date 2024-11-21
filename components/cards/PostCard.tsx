@@ -19,6 +19,9 @@ interface Props {
   createdAt: Date;
   views: number;
   likes: string[];
+  currentUserId: string;
+  isLiked: boolean;
+  likesCount: number;
 }
 
 const PostCard = ({
@@ -30,6 +33,9 @@ const PostCard = ({
   author,
   createdAt,
   views,
+  currentUserId,
+  isLiked,
+  likesCount,
 }: Props) => {
   return (
     <div className="w-full rounded-xl bg-light-900 p-7 shadow-md dark:bg-dark-250 sm:px-9">
@@ -78,7 +84,12 @@ const PostCard = ({
       )}
 
       <div className="mt-6 flex items-center justify-start gap-8 ">
-        <LikeButton likeCounts={0} isUserLiked={false} />
+        <LikeButton
+          userId={currentUserId}
+          postId={JSON.stringify(_id)}
+          likeCounts={likesCount}
+          isUserLiked={isLiked}
+        />
         <CommentModal />
       </div>
 

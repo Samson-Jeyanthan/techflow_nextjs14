@@ -14,20 +14,17 @@ const NavContent = () => {
   return (
     <ul className="flex h-full flex-col gap-6 pt-16">
       {SIDEBAR_LINKS.map((item, index) => {
-        const isActive = item.isLink
-          ? pathname === item.route || pathname.includes(item.route)
-          : pathname === "/create-post" || pathname === "share";
+        const isActive =
+          pathname === item.route || pathname.includes(item.route);
         return (
           <li key={index}>
-            {item.isLink ? (
-              <Link
-                href={item.route}
-                className={`${isActive ? "text-dark-100_light-900 fill-dark-100_light-900 bg-primary-500/20" : "fill-light-600 text-light-600"} flex-start  hover:fill-dark-100_light-900 hover:text-dark-100_light-900 w-full cursor-pointer gap-4 rounded-lg p-3 text-sm hover:bg-primary-500/20`}
-              >
-                <item.icon width="20px" height="20px" />
-                {item.name}
-              </Link>
-            ) : null}
+            <Link
+              href={item.route}
+              className={`${isActive ? "text-dark-100_light-900 fill-dark-100_light-900 bg-primary-500/20" : "fill-light-600 text-light-600"} flex-start  hover:fill-dark-100_light-900 hover:text-dark-100_light-900 w-full cursor-pointer gap-4 rounded-lg p-3 text-sm hover:bg-primary-500/20`}
+            >
+              <item.icon width="20px" height="20px" />
+              {item.name}
+            </Link>
           </li>
         );
       })}
@@ -47,7 +44,8 @@ const MobileNav = () => {
       <SheetContent
         side="left"
         className="bg-light-900_dark-200 text-dark-100_light-900 overflow-y-auto border-none"
-      >s
+      >
+        s
         <Link
           href="/"
           className="text-primary-100_primary-500 flex-start w-max gap-2 text-xl font-bold"

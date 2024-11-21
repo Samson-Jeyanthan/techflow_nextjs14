@@ -75,3 +75,39 @@ export async function getAllPosts(params: any) {
     throw error;
   }
 }
+
+export async function likePost(params: any) {
+  try {
+    connectToDatabase();
+
+    const { postId, userId, hasLiked, path } = params;
+
+    let updateQuery = {};
+
+    if (hasLiked) {
+      updateQuery = {
+        $pull: { likes: userId },
+      };
+    } else {
+      updateQuery = {
+        $addToSet: { likes: userId },
+      };
+    }
+
+    const post = await Post.findByIdAndUpdate(postId, updateQuery, {
+      new: true,
+    });
+
+    if (!post) {
+      throw new Error("Post not found");
+    }
+
+    revalidatePath(path);
+    return {
+      status: 200,
+    };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}

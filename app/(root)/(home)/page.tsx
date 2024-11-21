@@ -19,7 +19,6 @@ const Home = async ({ searchParams }: ISearchParamsProps) => {
     filter: searchParams.filter,
     page: searchParams.page ? +searchParams.page : 1,
   });
-  console.log(results);
 
   return (
     <section className="flex w-full flex-col items-center gap-8">
@@ -43,6 +42,9 @@ const Home = async ({ searchParams }: ISearchParamsProps) => {
               likes={post.likes}
               views={post.views}
               createdAt={post.createdAt}
+              currentUserId={JSON.stringify(mongoUser?._id)}
+              isLiked={post.likes.includes(mongoUser?._id)}
+              likesCount={post.likes.length}
             />
           ))
         ) : (
