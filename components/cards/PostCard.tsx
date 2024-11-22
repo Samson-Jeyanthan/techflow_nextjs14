@@ -22,9 +22,10 @@ interface Props {
   currentUserId: string;
   isLiked: boolean;
   likesCount: number;
+  commentsCounts: number;
 }
 
-const PostCard = ({
+const PostCard = async ({
   _id,
   title,
   description,
@@ -36,6 +37,7 @@ const PostCard = ({
   currentUserId,
   isLiked,
   likesCount,
+  commentsCounts,
 }: Props) => {
   return (
     <div className="w-full rounded-xl bg-light-900 p-7 shadow-md dark:bg-dark-250 sm:px-9">
@@ -86,14 +88,22 @@ const PostCard = ({
       <div className="mt-6 flex items-center justify-start gap-8 ">
         <LikeButton
           userId={JSON.parse(currentUserId)}
-          postId={JSON.parse(_id)}
+          postId={JSON.stringify(_id)}
           likeCounts={likesCount}
           isUserLiked={isLiked}
         />
-        <CommentModal />
+        <CommentModal
+          postId={JSON.stringify(_id)}
+          currentUserId={JSON.parse(currentUserId)}
+          commentsCount={commentsCounts}
+        />
       </div>
 
-      <CommentInput />
+      <CommentInput
+        postId={JSON.stringify(_id)}
+        currentUserId={JSON.parse(currentUserId)}
+        path=""
+      />
     </div>
   );
 };

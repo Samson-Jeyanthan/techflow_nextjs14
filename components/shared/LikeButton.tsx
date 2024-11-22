@@ -12,7 +12,6 @@ type Props = {
 };
 
 const LikeButton = ({ userId, postId, likeCounts, isUserLiked }: Props) => {
-  console.log(userId, postId);
   const [isLiked, setIsLiked] = useState(isUserLiked || false);
   const [likeCount, setLikeCount] = useState(likeCounts);
 
@@ -25,7 +24,7 @@ const LikeButton = ({ userId, postId, likeCounts, isUserLiked }: Props) => {
     setLikeCount(isLiked ? likeCount - 1 : likeCount + 1);
     const { status } = await likePost({
       userId,
-      postId,
+      postId: JSON.parse(postId),
       isLiked: !isLiked,
       path: "",
     });

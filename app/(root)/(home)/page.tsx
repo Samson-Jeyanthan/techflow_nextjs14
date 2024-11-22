@@ -33,7 +33,7 @@ const Home = async ({ searchParams }: ISearchParamsProps) => {
           results.posts.map((post, index) => (
             <PostCard
               key={index}
-              _id={JSON.stringify(post._id)}
+              _id={post._id}
               title={post.title}
               description={post.description}
               postImage={post.postImage}
@@ -45,6 +45,7 @@ const Home = async ({ searchParams }: ISearchParamsProps) => {
               currentUserId={JSON.stringify(mongoUser?._id)}
               isLiked={post.likes.includes(mongoUser?._id)}
               likesCount={post.likes.length}
+              commentsCounts={post.comments.length}
             />
           ))
         ) : (

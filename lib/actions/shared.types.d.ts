@@ -142,3 +142,11 @@ export type TCreatePostParams = {
   groupId?: string;
   path: string;
 };
+
+export interface IGetCommentsParams {
+  isClientSide: boolean;
+  postId: string;
+  sortBy?: string;
+  page?: number;
+  pageSize?: number;
+}
