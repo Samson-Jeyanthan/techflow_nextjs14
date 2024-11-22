@@ -13,12 +13,7 @@ const Navbar = () => {
         className="text-primary-100_primary-500 flex-start w-max gap-2 text-xl font-bold"
       >
         <DiAtom className="text-3xl" />
-        <h1 className="flex-start gap-2">
-          TechFlow
-          {/* <span className="text-primary-500_primary-100 bg-primary-100_primary-500 rounded-lg p-[2px] px-2">
-            Flow
-          </span> */}
-        </h1>
+        <h1>TechFlow</h1>
       </Link>
 
       <GlobalSearch />

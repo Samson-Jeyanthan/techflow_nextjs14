@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -26,11 +28,15 @@ body {
   }
 
   .no-focus {
-    @apply ring-0 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0 !important;
+    @apply ring-0 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0  outline-none !important;
   }
 
   .placeholder {
     @apply placeholder:text-light-500 dark:placeholder:text-light-500;
+  }
+
+  .active-tab {
+    @apply data-[state=active]:text-dark-100_light-800 data-[state=active]:bg-primary-500/20 rounded-lg mr-1 min-w-28;
   }
 
   .custom-scrollbar::-webkit-scrollbar {
@@ -146,6 +152,9 @@ body {
   }
 
   /* 750 */
+  .bg-light-750_dark-250 {
+    @apply bg-light-750 dark:bg-dark-250;
+  }
   .bg-light-750_dark-350 {
     @apply bg-light-750 dark:bg-dark-300;
   }
@@ -190,6 +199,10 @@ body {
 
   .text-light-500_dark-500 {
     @apply text-light-500 dark:text-dark-500;
+  }
+
+  .text-dark-500_light-600 {
+    @apply text-dark-500 dark:text-light-600;
   }
 
   /* inverse text color uc */

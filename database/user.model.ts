@@ -7,7 +7,7 @@ export interface IUser extends Document {
   email: string;
   password?: string;
   location?: string;
-  bio: string;
+  bio?: string;
   avatar?: string;
   reputation?: number;
   socialLinks?: {
@@ -27,9 +27,11 @@ export interface IUser extends Document {
     userId: Schema.Types.ObjectId;
     followedAt: Date;
   }[];
-  followings?: Schema.Types.ObjectId[];
-  // communities: Schema.Types.ObjectId[];
-  // createdCommunities: Schema.Types.ObjectId[];
+  followings?: {
+    userId: Schema.Types.ObjectId;
+    followedAt: Date;
+  }[];
+  cvResume?: string;
   joinedAt: Date;
 }
 
@@ -68,9 +70,13 @@ const UserSchema = new Schema({
       followedAt: { type: Date, default: Date.now },
     },
   ],
-  followings: [{ type: Schema.Types.ObjectId, ref: "User" }],
-  // communities: [{ type: Schema.Types.ObjectId, ref: "Community" }],
-  // createdCommunities: [{ type: Schema.Types.ObjectId, ref: "Community" }],
+  followings: [
+    {
+      userId: { type: Schema.Types.ObjectId, ref: "User" },
+      followedAt: { type: Date, default: Date.now },
+    },
+  ],
+  cvResume: { type: String, default: null },
   joinedAt: { type: Date, default: Date.now },
 });
 

@@ -12,6 +12,7 @@ interface MetricProps {
   userName?: string;
   userId?: string;
   Icon?: IconType | React.ComponentType<TConvertedSvgJsxProps>;
+  isReactIcon?: boolean;
 }
 
 const Metric = ({
@@ -23,6 +24,7 @@ const Metric = ({
   textStyles,
   isAuthor,
   Icon,
+  isReactIcon,
 }: MetricProps) => {
   // const metricContent = () => {};
   return (
@@ -34,6 +36,7 @@ const Metric = ({
             userName={userName}
             userId={userId}
             className="size-7"
+            isShowUsername={true}
           />
           <p>{title}</p>
         </div>
@@ -41,7 +44,13 @@ const Metric = ({
 
       {!userId && (
         <div className={`${textStyles} flex-center gap-1 fill-primary-500`}>
-          {Icon && <Icon width="15px" height="15px" />}
+          {Icon ? (
+            isReactIcon ? (
+              <Icon className="text-xs" />
+            ) : (
+              <Icon width="15px" height="15px" />
+            )
+          ) : null}
           <p>{value}</p>
           <p
             className={`line-clamp-1 text-xs ${isAuthor ? "max-sm:hidden" : ""}`}
