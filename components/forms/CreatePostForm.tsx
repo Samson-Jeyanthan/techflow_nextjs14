@@ -12,39 +12,40 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "../ui/button";
-import { QuestionsSchema } from "@/lib/validations";
+import { PostSchema } from "@/lib/validations";
+import { Input } from "../ui/input";
+import { useTheme } from "@/context/ThemeProvider";
 import { Editor } from "@tinymce/tinymce-react";
 import React, { useRef } from "react";
-import { Badge } from "../ui/badge";
-import { IoClose } from "react-icons/io5";
-import { createQuestion, editQuestion } from "@/lib/actions/question.action";
 import { usePathname, useRouter } from "next/navigation";
-import { useTheme } from "@/context/ThemeProvider";
+import { IoClose } from "react-icons/io5";
+import { Badge } from "../ui/badge";
+import { Button } from "../ui/button";
+import { useMedia } from "@/hooks/useMedia";
+import { PostPhotoInput } from "../inputs";
 
 interface Props {
   type?: string;
-  mongoUserId: string;
-  questionDetails?: string;
+  currentUserId: string;
+  postDetails?: string;
 }
 
-const QuestionForm = ({ type, mongoUserId, questionDetails }: Props) => {
+const CreatePostForm = ({ type, currentUserId, postDetails }: Props) => {
   const { mode } = useTheme();
   const editorRef = useRef(null);
   const router = useRouter();
   const pathname = usePathname();
+  const { handleImageInput, media, resetMedia } = useMedia();
+  const parsedPostDetails = postDetails && JSON.parse(postDetails || "");
 
-  const parsedQuestionDetails =
-    questionDetails && JSON.parse(questionDetails || "");
+  const groupedTags = parsedPostDetails?.tags.map((tag: any) => tag.name);
 
-  const groupedTags = parsedQuestionDetails?.tags.map((tag: any) => tag.name);
-
-  const form = useForm<z.infer<typeof QuestionsSchema>>({
-    resolver: zodResolver(QuestionsSchema),
+  const form = useForm<z.infer<typeof PostSchema>>({
+    resolver: zodResolver(PostSchema),
     defaultValues: {
-      title: parsedQuestionDetails?.title || "",
-      explanation: parsedQuestionDetails?.content || "",
+      title: "",
+      description: "",
+      postImage: [],
       tags: groupedTags || [],
     },
   });
@@ -83,34 +84,8 @@ const QuestionForm = ({ type, mongoUserId, questionDetails }: Props) => {
     form.setValue("tags", newTags);
   };
 
-  async function onSubmit(values: z.infer<typeof QuestionsSchema>) {
+  async function onSubmit(values: z.infer<typeof PostSchema>) {
     console.log(values);
-
-    try {
-      // make an async API call
-      if (type === "Edit") {
-        await editQuestion({
-          questionId: parsedQuestionDetails._id,
-          title: values.title,
-          content: values.explanation,
-          path: pathname,
-        });
-
-        router.push(`/question/${parsedQuestionDetails._id}`);
-      } else {
-        await createQuestion({
-          title: values.title,
-          content: values.explanation,
-          tags: values.tags,
-          author: JSON.parse(mongoUserId),
-          path: pathname,
-        });
-
-        router.push("/questions-and-answers");
-      }
-    } catch (error) {
-      // handle errors
-    }
   }
 
   return (
@@ -121,11 +96,24 @@ const QuestionForm = ({ type, mongoUserId, questionDetails }: Props) => {
       >
         <FormField
           control={form.control}
+          name="postImage"
+          render={({ field }) => (
+            <PostPhotoInput
+              fieldChange={field.onChange}
+              handleImageInput={handleImageInput}
+              media={media}
+              resetMedia={resetMedia}
+            />
+          )}
+        />
+
+        <FormField
+          control={form.control}
           name="title"
           render={({ field }) => (
             <FormItem className="flex w-full flex-col">
               <FormLabel className="text-dark-100_light-850">
-                Question Title
+                Post Title
               </FormLabel>
               <FormControl className="mt-3.5">
                 <Input
@@ -134,8 +122,8 @@ const QuestionForm = ({ type, mongoUserId, questionDetails }: Props) => {
                 />
               </FormControl>
               <FormDescription className="mt-2.5 text-xs text-light-500">
-                Be specific and imagine you’re asking a question to another
-                person.
+                Be specific and express your creativity you’re creating a post
+                to public
               </FormDescription>
               <FormMessage className="text-xs text-custom-red" />
             </FormItem>
@@ -144,11 +132,11 @@ const QuestionForm = ({ type, mongoUserId, questionDetails }: Props) => {
 
         <FormField
           control={form.control}
-          name="explanation"
+          name="description"
           render={({ field }) => (
             <FormItem className="flex w-full flex-col">
               <FormLabel className="text-dark-100_light-850">
-                Detail Explanation of Your Problem
+                Description of your post
               </FormLabel>
               <FormControl className="mt-3.5">
                 <Editor
@@ -159,7 +147,7 @@ const QuestionForm = ({ type, mongoUserId, questionDetails }: Props) => {
                   }
                   onBlur={field.onBlur} // save the value on the exit
                   onEditorChange={(content) => field.onChange(content)}
-                  initialValue={parsedQuestionDetails?.content || ""}
+                  initialValue={parsedPostDetails?.content || ""}
                   init={{
                     height: 400,
                     menubar: false,
@@ -257,7 +245,7 @@ const QuestionForm = ({ type, mongoUserId, questionDetails }: Props) => {
           {form.formState.isSubmitting ? (
             <>{type ? "Updating..." : "Posting..."}</>
           ) : (
-            <>{type ? "Edit Question" : "Ask Question"}</>
+            <>{type ? "Edit Post" : "Create Post"}</>
           )}
         </Button>
       </form>
@@ -265,4 +253,4 @@ const QuestionForm = ({ type, mongoUserId, questionDetails }: Props) => {
   );
 };
 
-export default QuestionForm;
+export default CreatePostForm;

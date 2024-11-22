@@ -15,7 +15,8 @@ const NavContent = () => {
     <ul className="flex h-full flex-col gap-6 pt-16">
       {SIDEBAR_LINKS.map((item, index) => {
         const isActive =
-          pathname === item.route || pathname.includes(item.route);
+          (pathname.startsWith(item.route) && item.route.length > 1) ||
+          pathname === item.route;
         return (
           <li key={index}>
             <Link
@@ -42,7 +43,6 @@ const MobileNav = () => {
         side="left"
         className="bg-light-900_dark-200 text-dark-100_light-900 overflow-y-auto border-none"
       >
-        s
         <Link
           href="/"
           className="text-primary-100_primary-500 flex-start w-max gap-2 text-xl font-bold"

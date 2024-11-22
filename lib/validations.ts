@@ -35,3 +35,10 @@ export const HomePostSchema = z.object({
   description: z.string().min(5).max(160),
   postImage: z.custom<File[]>().optional(),
 });
+
+export const PostSchema = z.object({
+  title: z.string().min(5).max(100),
+  description: z.string().min(5).max(1000),
+  postImage: z.custom<File[]>(),
+  tags: z.array(z.string().min(1).max(15)).min(1).max(3),
+});
