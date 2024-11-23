@@ -70,25 +70,28 @@ const PostCard = async ({
         {title === "" ? description : title}
       </p>
 
-      {media?.length > 0 &&
-        media?.map((item, index) => (
-          <React.Fragment key={index}>
+      <div className="flex w-full gap-2">
+        {media?.length > 0 &&
+          media?.map((item, index) => (
             <Image
+              key={index}
               src={item.mediaURL}
               alt={title}
               width={1200}
               height={1200}
               className="mt-6 size-full rounded-lg object-cover"
             />
-          </React.Fragment>
-        ))}
+          ))}
+      </div>
 
       {title !== "" && (
-        <p className="text-dark-100_light-850 mt-4">{description}</p>
+        <p className="text-dark-100_light-850 font-regular mt-4 line-clamp-6 text-sm">
+          {description}
+        </p>
       )}
 
       {tags.length > 0 && (
-        <div className="mt-3.5 flex flex-wrap gap-2 border">
+        <div className="mt-3.5 flex flex-wrap gap-2">
           {tags.map((tag) => (
             <RenderTag key={tag._id} _id={tag._id} name={tag.name} />
           ))}

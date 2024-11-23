@@ -24,7 +24,7 @@ import { Button } from "../ui/button";
 import { PostPhotoInput } from "../inputs";
 import { IMediaProps } from "@/types/utils.types";
 import { getFileUpload } from "@/lib/functions/getFileUpload";
-import { createPostAction } from "@/lib/actions/post.action";
+import { createPostAction, editPostAction } from "@/lib/actions/post.action";
 
 interface Props {
   type?: string;
@@ -48,8 +48,8 @@ const CreatePostForm = ({ type, currentUserId, postDetails }: Props) => {
   const form = useForm<z.infer<typeof PostSchema>>({
     resolver: zodResolver(PostSchema),
     defaultValues: {
-      title: "",
-      description: "",
+      title: parsedPostDetails?.title || "",
+      description: parsedPostDetails?.description || "",
       mediaFiles: [],
       tags: groupedTags || [],
     },
@@ -92,7 +92,7 @@ const CreatePostForm = ({ type, currentUserId, postDetails }: Props) => {
   async function onSubmit(values: z.infer<typeof PostSchema>) {
     console.log(values);
 
-    const uploadedMedia: IMediaProps[] = [...previousMedia];
+    const uploadedMedia: IMediaProps[] = [];
 
     try {
       for (let i = 0; i < values.mediaFiles.length; i++) {
@@ -116,15 +116,27 @@ const CreatePostForm = ({ type, currentUserId, postDetails }: Props) => {
         }
       }
 
-      await createPostAction({
-        title: values.title,
-        description: values.description,
-        mediaFiles: uploadedMedia,
-        tags: values.tags,
-        author: JSON.parse(currentUserId),
-        groupId: "",
-        path: pathname,
-      });
+      uploadedMedia.push(...previousMedia);
+
+      if (type === "edit") {
+        await editPostAction({
+          postId: parsedPostDetails._id,
+          title: values.title,
+          description: values.description,
+          media: uploadedMedia,
+          path: pathname,
+        });
+      } else {
+        await createPostAction({
+          title: values.title,
+          description: values.description,
+          media: uploadedMedia,
+          tags: values.tags,
+          author: JSON.parse(currentUserId),
+          groupId: "",
+          path: pathname,
+        });
+      }
 
       router.push("/");
     } catch (error) {
@@ -191,7 +203,7 @@ const CreatePostForm = ({ type, currentUserId, postDetails }: Props) => {
                   }
                   onBlur={field.onBlur} // save the value on the exit
                   onEditorChange={(content) => field.onChange(content)}
-                  initialValue={parsedPostDetails?.content || ""}
+                  initialValue={parsedPostDetails?.description || ""}
                   init={{
                     height: 400,
                     menubar: false,

@@ -137,7 +137,7 @@ export interface IDeleteAnswerParams {
 export type TCreatePostParams = {
   title?: string;
   description?: string;
-  mediaFiles?: IMediaProps[];
+  media?: IMediaProps[];
   tags?: string[];
   author: Schema.Types.ObjectId | IUser;
   groupId?: string;
@@ -150,4 +150,8 @@ export interface IGetCommentsParams {
   sortBy?: string;
   page?: number;
   pageSize?: number;
+}
+
+export interface IGetPostByIdParams {
+  postId: string;
 }

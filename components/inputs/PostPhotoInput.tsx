@@ -10,7 +10,7 @@ import { IMediaProps } from "@/types/utils.types";
 type Props = {
   fieldChange: (e: any) => void;
   previousMedia: IMediaProps[];
-  setPreviousMedia?: (media: IMediaProps[]) => void;
+  setPreviousMedia: (media: IMediaProps[]) => void;
 };
 
 const LargeMediaDisplay = ({ src, onClick }: any) => {
@@ -19,8 +19,8 @@ const LargeMediaDisplay = ({ src, onClick }: any) => {
       <Image
         src={src || ""}
         alt="first-image"
-        width={240}
-        height={240}
+        width={1024}
+        height={1024}
         className="size-72 min-w-72 rounded-lg object-cover"
       />
       <span
@@ -59,15 +59,20 @@ const PostPhotoInput = ({
       acceptFileType: ["image/jpeg", "image/jpg", "image/png", "image/webp"],
       filesLimit: 3 - allMedia,
     });
+    setSelectedItem({ isURL: false, index: 0 });
   };
 
   const handleRemoveMedia = (item: { isURL: boolean; index: number }) => {
-    setSelectedItem(item);
+    if (multipleMedia.length > 1) {
+      setSelectedItem({ isURL: false, index: 0 });
+    } else {
+      setSelectedItem({ isURL: true, index: 0 });
+    }
 
     if (item.isURL) {
       const updatedMedia = [...previousMedia];
       updatedMedia.splice(item.index, 1);
-      // setPreviousMedia && setPreviousMedia(updatedMedia);
+      setPreviousMedia(updatedMedia);
     } else {
       const updatedMedia = [...multipleMedia];
       updatedMedia.splice(item.index, 1);
@@ -79,6 +84,16 @@ const PostPhotoInput = ({
     fieldChange([...multipleMedia]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [multipleMedia]);
+
+  useEffect(() => {
+    console.log(
+      previousMedia,
+      multipleMedia,
+      selectedItem,
+      "useeffcet",
+      allMedia
+    );
+  }, [previousMedia, multipleMedia, selectedItem, allMedia]);
 
   return (
     <div className="flex w-full flex-col gap-4">
@@ -101,11 +116,11 @@ const PostPhotoInput = ({
       )}
 
       <div className="flex items-center justify-start">
-        {selectedItem.isURL ? (
+        {allMedia > 0 && selectedItem.isURL ? (
           <>
             {previousMedia.length > 0 && (
               <LargeMediaDisplay
-                src={previousMedia[selectedItem.index]}
+                src={previousMedia[selectedItem.index].mediaURL}
                 onClick={() =>
                   handleRemoveMedia({ isURL: true, index: selectedItem.index })
                 }
@@ -146,7 +161,10 @@ const PostPhotoInput = ({
                   alt="cropped-cover-image"
                   width={120}
                   height={120}
-                  onClick={() => setSelectedItem({ index, isURL: true })}
+                  onClick={() => {
+                    setSelectedItem({ index, isURL: true });
+                    console.log(index);
+                  }}
                   className="size-20 min-w-20 cursor-pointer rounded-md object-cover"
                 />
               ))}
