@@ -3,7 +3,13 @@ import { Schema, models, model, Document } from "mongoose";
 export interface IPost extends Document {
   title: string;
   description: string;
-  postImage: string;
+  media: [
+    {
+      mediaType: string;
+      mediaURL: string;
+      thumbnailURL: string;
+    },
+  ];
   tags: Schema.Types.ObjectId[];
   likes: Schema.Types.ObjectId[];
   comments: Schema.Types.ObjectId[];
@@ -16,7 +22,13 @@ export interface IPost extends Document {
 const PostSchema = new Schema({
   title: { type: String, default: "" },
   description: { type: String, default: "" },
-  postImage: { type: String, default: "" },
+  media: [
+    {
+      mediaType: { type: String, default: "" },
+      mediaURL: { type: String, default: "" },
+      thumbnailURL: { type: String, default: "" },
+    },
+  ],
   tags: [{ type: Schema.Types.ObjectId, ref: "Tag" }],
   likes: [{ type: Schema.Types.ObjectId, ref: "User" }],
   comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
