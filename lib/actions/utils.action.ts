@@ -24,17 +24,7 @@ const s3 = new S3Client({
   },
 });
 
-export async function getSignedURL({
-  fileType,
-  // fileSize,
-  // filePreviousURL,
-  // file,
-  // acceptedFileTypes,
-}: fileUploadProps) {
-  // if (!file) {
-  //   return { failure: "No file provided" };
-  // }
-
+export async function getSignedURL({ fileType }: fileUploadProps) {
   const { userId } = auth();
   if (!userId)
     return {
@@ -50,6 +40,7 @@ export async function getSignedURL({
     },
   });
 
+  // this url is from aws
   const url = await getSignedUrl(s3, putObjectCommand, {
     expiresIn: 3600,
   });
@@ -70,4 +61,42 @@ export async function getSignedURL({
 
   // console.log(res);
   return { success: url };
+}
+
+export async function getFileUpload({ file, fileType }: any) {
+  if (!file)
+    return {
+      status: 400,
+      res: "No files selected",
+    };
+
+  const signedURLResult = await getSignedURL({
+    fileType,
+  });
+
+  if (signedURLResult.failure !== undefined) {
+    console.log(signedURLResult.failure);
+    return {
+      status: 400,
+      res: signedURLResult.failure,
+    };
+  }
+
+  const url = signedURLResult.success;
+
+  const res = await fetch(url, {
+    method: "PUT",
+    body: file,
+    headers: {
+      "Content-Type": fileType,
+    },
+  });
+  if (res.ok) {
+    const resMediaURL = url.split("?")[0];
+
+    return {
+      status: 200,
+      res: resMediaURL,
+    };
+  }
 }

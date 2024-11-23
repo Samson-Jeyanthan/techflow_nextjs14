@@ -5,8 +5,8 @@ import { Button } from "../ui/button";
 import { usePathname } from "next/navigation";
 import { SIDEBAR_LINKS } from "@/constants";
 import Link from "next/link";
-import { LuPlus } from "react-icons/lu";
 import { ProfileIcon } from "@/public/svgs";
+import { UploadDrawer } from "../modals";
 
 const LeftSidebar = () => {
   const { userId } = useAuth();
@@ -43,10 +43,8 @@ const LeftSidebar = () => {
           <ProfileIcon width="20px" height="20px" />
           <p className="max-lg:hidden">Profile</p>
         </Link>
-        <div className="flex-center text-dark-100_light-900 cursor-pointer gap-4 rounded-lg border border-primary-500/20 p-3 text-sm hover:bg-primary-500/20 hover:text-light-900">
-          <LuPlus className="text-lg" />
-          <p className="max-lg:hidden">Upload</p>
-        </div>
+
+        <UploadDrawer />
       </div>
 
       <SignedOut>

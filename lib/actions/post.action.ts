@@ -7,17 +7,17 @@ import Tag from "@/database/tag.model";
 import { TCreatePostParams } from "./shared.types";
 import User from "@/database/user.model";
 
-export async function createPost(params: TCreatePostParams) {
+export async function createPostAction(params: TCreatePostParams) {
   try {
     connectToDatabase();
 
-    const { title, description, postImage, tags, author, groupId, path } =
+    const { title, description, mediaFiles, tags, author, groupId, path } =
       params;
 
     const post = await Post.create({
       title,
       description,
-      postImage,
+      mediaFiles,
       groupId,
       author,
     });

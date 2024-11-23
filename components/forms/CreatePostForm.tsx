@@ -16,13 +16,15 @@ import { PostSchema } from "@/lib/validations";
 import { Input } from "../ui/input";
 import { useTheme } from "@/context/ThemeProvider";
 import { Editor } from "@tinymce/tinymce-react";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { IoClose } from "react-icons/io5";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
-import { useMedia } from "@/hooks/useMedia";
 import { PostPhotoInput } from "../inputs";
+import { IMediaProps } from "@/types/utils.types";
+import { getFileUpload } from "@/lib/functions/getFileUpload";
+import { createPostAction } from "@/lib/actions/post.action";
 
 interface Props {
   type?: string;
@@ -35,17 +37,20 @@ const CreatePostForm = ({ type, currentUserId, postDetails }: Props) => {
   const editorRef = useRef(null);
   const router = useRouter();
   const pathname = usePathname();
-  const { handleImageInput, media, resetMedia } = useMedia();
-  const parsedPostDetails = postDetails && JSON.parse(postDetails || "");
 
+  const parsedPostDetails = postDetails && JSON.parse(postDetails || "");
   const groupedTags = parsedPostDetails?.tags.map((tag: any) => tag.name);
+
+  const [previousMedia, setPreviousMedia] = useState<IMediaProps[]>(
+    parsedPostDetails?.media || []
+  );
 
   const form = useForm<z.infer<typeof PostSchema>>({
     resolver: zodResolver(PostSchema),
     defaultValues: {
       title: "",
       description: "",
-      postImage: [],
+      mediaFiles: [],
       tags: groupedTags || [],
     },
   });
@@ -86,6 +91,46 @@ const CreatePostForm = ({ type, currentUserId, postDetails }: Props) => {
 
   async function onSubmit(values: z.infer<typeof PostSchema>) {
     console.log(values);
+
+    const uploadedMedia: IMediaProps[] = [...previousMedia];
+
+    try {
+      for (let i = 0; i < values.mediaFiles.length; i++) {
+        console.log(i, "i");
+        const fileUpload = await getFileUpload({
+          file: values.mediaFiles[i].data,
+          fileType: values.mediaFiles[i].fileType,
+        });
+        console.log(fileUpload, "fileUpload-in-form");
+
+        if (fileUpload && fileUpload.status === 200) {
+          const file = {
+            mediaType: "image",
+            mediaURL: fileUpload.res,
+            thumbnailURL: "",
+          };
+
+          uploadedMedia.push(file);
+        } else {
+          return null;
+        }
+      }
+
+      await createPostAction({
+        title: values.title,
+        description: values.description,
+        mediaFiles: uploadedMedia,
+        tags: values.tags,
+        author: JSON.parse(currentUserId),
+        groupId: "",
+        path: pathname,
+      });
+
+      router.push("/");
+    } catch (error) {
+      console.log("error");
+      console.log(error);
+    }
   }
 
   return (
@@ -96,13 +141,12 @@ const CreatePostForm = ({ type, currentUserId, postDetails }: Props) => {
       >
         <FormField
           control={form.control}
-          name="postImage"
+          name="mediaFiles"
           render={({ field }) => (
             <PostPhotoInput
               fieldChange={field.onChange}
-              handleImageInput={handleImageInput}
-              media={media}
-              resetMedia={resetMedia}
+              previousMedia={previousMedia}
+              setPreviousMedia={setPreviousMedia}
             />
           )}
         />

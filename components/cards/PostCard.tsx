@@ -5,6 +5,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import Link from "next/link";
 import { CommentInput } from "../inputs";
 import { CommentModal } from "../modals";
+import React from "react";
 
 interface Props {
   _id: string;
@@ -14,7 +15,13 @@ interface Props {
     _id: string;
     name: string;
   }[];
-  postImage: string;
+  media: [
+    {
+      mediaType: string;
+      mediaURL: string;
+      thumbnailURL: string;
+    },
+  ];
   author: any;
   createdAt: Date;
   views: number;
@@ -30,7 +37,7 @@ const PostCard = async ({
   title,
   description,
   tags,
-  postImage,
+  media,
   author,
   createdAt,
   views,
@@ -63,15 +70,18 @@ const PostCard = async ({
         {title === "" ? description : title}
       </p>
 
-      {postImage !== "" && (
-        <Image
-          src={postImage}
-          alt={title}
-          width={1200}
-          height={1200}
-          className="mt-6 size-full rounded-lg object-cover"
-        />
-      )}
+      {media?.length > 0 &&
+        media?.map((item, index) => (
+          <React.Fragment key={index}>
+            <Image
+              src={item.mediaURL}
+              alt={title}
+              width={1200}
+              height={1200}
+              className="mt-6 size-full rounded-lg object-cover"
+            />
+          </React.Fragment>
+        ))}
 
       {title !== "" && (
         <p className="text-dark-100_light-850 mt-4">{description}</p>
