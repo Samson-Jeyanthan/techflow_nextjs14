@@ -6,9 +6,9 @@ export interface IInteraction extends Document {
   question: Schema.Types.ObjectId[];
   answer: Schema.Types.ObjectId[];
   tags: Schema.Types.ObjectId[];
-  // post: Schema.Types.ObjectId[];
-  // resource: Schema.Types.ObjectId[];
-  // job: Schema.Types.ObjectId[];
+  post: Schema.Types.ObjectId[];
+  resource: Schema.Types.ObjectId[];
+  job: Schema.Types.ObjectId[];
   createdAt: Date;
 }
 
@@ -18,6 +18,9 @@ const InteractionSchema = new Schema({
   question: { type: Schema.Types.ObjectId, ref: "Question" },
   answer: { type: Schema.Types.ObjectId, ref: "Answer" },
   tags: [{ type: Schema.Types.ObjectId, ref: "Tag" }],
+  post: { type: Schema.Types.ObjectId, ref: "Post" },
+  resource: { type: Schema.Types.ObjectId, ref: "Resource" },
+  job: { type: Schema.Types.ObjectId, ref: "Job" },
   createdAt: { type: Date, default: Date.now },
 });
 

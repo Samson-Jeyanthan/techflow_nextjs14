@@ -1,7 +1,7 @@
 import { Schema, models, model, Document } from "mongoose";
 
 export interface IApplication extends Document {
-  job: Schema.Types.ObjectId;
+  jobId: Schema.Types.ObjectId;
   applicant: Schema.Types.ObjectId;
   resumeUrl: string;
   coverLetter?: string;
@@ -10,14 +10,14 @@ export interface IApplication extends Document {
 }
 
 const ApplicationSchema = new Schema({
-  job: { type: Schema.Types.ObjectId, ref: "Job", required: true },
+  jobId: { type: Schema.Types.ObjectId, ref: "Job", required: true },
   applicant: { type: Schema.Types.ObjectId, ref: "User", required: true },
   resumeUrl: { type: String, required: true },
   coverLetter: { type: String },
   status: {
     type: String,
-    enum: ["Pending", "Reviewed", "Accepted", "Rejected"],
-    default: "Pending",
+    enum: ["pending", "reviewed", "accepted", "rejected"],
+    default: "pending",
   },
   appliedAt: { type: Date, default: Date.now },
 });
