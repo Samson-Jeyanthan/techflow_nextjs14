@@ -98,6 +98,35 @@ export async function getAllJobsAction(params: any) {
   }
 }
 
+export async function getJobByIdAction(params: { jobId: string }) {
+  try {
+    connectToDatabase();
+
+    const { jobId } = params;
+
+    const job = await Job.findById(jobId)
+      .populate({
+        path: "tags",
+        model: Tag,
+        select: "_id name",
+      })
+      .populate({
+        path: "author",
+        model: User,
+        select: "_id clerkId name username avatar",
+      })
+      .populate({
+        path: "applications",
+        model: Application,
+      });
+
+    return job;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
 export async function deleteJobAction(params: any) {
   try {
     connectToDatabase();

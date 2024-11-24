@@ -184,18 +184,27 @@ const JobForm = ({ type, currentUserId, jobDetails }: Props) => {
           formDescription="Add up to 5 tags to describe what your job is about. Start typing to see suggestions."
         />
 
-        <Button
-          type="submit"
-          className="bg-primary-100_primary-500 text-sm font-medium text-light-900"
-          disabled={form.formState.isSubmitting}
-          onClick={() => console.log(form.getValues())}
-        >
-          {form.formState.isSubmitting ? (
-            <>{type ? "Updating..." : "Posting..."}</>
-          ) : (
-            <>{type ? "Edit Job" : "Create Job"}</>
-          )}
-        </Button>
+        <footer className="flex w-full flex-col items-center justify-center gap-4 pb-6">
+          <Button
+            type="submit"
+            className="bg-primary-100_primary-500 w-full text-sm font-medium text-light-900"
+            disabled={form.formState.isSubmitting}
+            onClick={() => console.log(form.getValues())}
+          >
+            {form.formState.isSubmitting ? (
+              <>{type ? "Updating..." : "Posting..."}</>
+            ) : (
+              <>{type ? "Edit Job" : "Create Job"}</>
+            )}
+          </Button>
+
+          <Button
+            onClick={() => router.back()}
+            className="text-dark-100_light-850 w-max border-0 bg-transparent hover:text-primary-100"
+          >
+            Cancel
+          </Button>
+        </footer>
       </form>
     </Form>
   );

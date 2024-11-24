@@ -20,3 +20,4 @@ export { default as Pagination } from "./Pagination";
 export { default as UserProfileHeader } from "./UserProfileHeader";
 export { default as TabLinks } from "./TabLinks";
 export { default as LikeButton } from "./LikeButton";
+export { default as JobMetric } from "./JobMetric";
