@@ -22,7 +22,7 @@ const UploadDrawer = () => {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger>
-        <div className="flex-center text-dark-100_light-900 cursor-pointer gap-4 rounded-lg border border-primary-500/20 p-3 text-sm hover:bg-primary-500/20 hover:text-light-900">
+        <div className="flex-center text-dark-500_light-600 hover:text-dark-100_light-900 cursor-pointer gap-4 rounded-lg border border-primary-500/20 p-3 text-sm hover:bg-primary-500/20">
           <LuPlus className="text-lg" />
           <p className="max-lg:hidden">Upload</p>
         </div>

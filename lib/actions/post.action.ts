@@ -4,8 +4,13 @@ import { connectToDatabase } from "../mongoose";
 import { revalidatePath } from "next/cache";
 import Post from "@/database/post.model";
 import Tag from "@/database/tag.model";
-import { IGetPostByIdParams, TCreatePostParams } from "./shared.types";
+import {
+  IDeletePostParams,
+  IGetPostByIdParams,
+  TCreatePostParams,
+} from "./shared.types";
 import User from "@/database/user.model";
+import Comment from "@/database/comment.model";
 
 export async function createPostAction(params: TCreatePostParams) {
   try {
@@ -151,6 +156,22 @@ export async function editPostAction(params: any) {
     post.media = media;
 
     await post.save();
+
+    revalidatePath(path);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function deletePostAction(params: IDeletePostParams) {
+  try {
+    connectToDatabase();
+
+    const { postId, path } = params;
+
+    await Post.deleteOne({ _id: postId });
+    await Comment.deleteMany({ postId });
+    await Tag.updateMany({ posts: postId }, { $pull: { posts: postId } });
 
     revalidatePath(path);
   } catch (error) {

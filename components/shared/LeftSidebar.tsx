@@ -38,7 +38,7 @@ const LeftSidebar = () => {
       <div className="flex flex-col gap-3">
         <Link
           href={`/profile/${userId}`}
-          className={`${isProfile ? "text-dark-100_light-900 bg-primary-500/20 fill-dark-100 dark:fill-light-900" : "text-dark-500_light-600 fill-light-600"} flex-center cursor-pointer gap-4 rounded-lg border border-primary-500/20 p-3 text-sm hover:bg-primary-500/20 hover:fill-light-900 hover:text-light-900`}
+          className={`${isProfile ? "text-dark-100_light-900 bg-primary-500/20 fill-dark-100 dark:fill-light-900" : "text-dark-500_light-600 fill-light-600"} flex-center hover:text-dark-100_light-900 hover:fill-dark-100_light-900 cursor-pointer gap-4 rounded-lg border border-primary-500/20 p-3 text-sm hover:bg-primary-500/20`}
         >
           <ProfileIcon width="20px" height="20px" />
           <p className="max-lg:hidden">Profile</p>

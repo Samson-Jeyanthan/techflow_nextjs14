@@ -155,3 +155,8 @@ export interface IGetCommentsParams {
 export interface IGetPostByIdParams {
   postId: string;
 }
+
+export interface IDeletePostParams {
+  postId: string;
+  path: string;
+}

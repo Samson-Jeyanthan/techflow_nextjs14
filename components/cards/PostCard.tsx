@@ -1,11 +1,11 @@
 import Image from "next/image";
 import { LikeButton, RenderTag, UserProfileImg } from "../shared";
 import { getTimestamp } from "@/lib/utils";
-import { BsThreeDotsVertical } from "react-icons/bs";
 import Link from "next/link";
 import { CommentInput } from "../inputs";
 import { CommentModal } from "../modals";
 import React from "react";
+import { PostOptions } from "../options";
 
 interface Props {
   _id: string;
@@ -46,6 +46,7 @@ const PostCard = async ({
   likesCount,
   commentsCounts,
 }: Props) => {
+  const parsedAuthor = JSON.stringify(author._id);
   return (
     <div className="w-full rounded-xl bg-light-900 p-7 shadow-md dark:bg-dark-250 sm:px-9">
       <header className="flex items-center justify-between">
@@ -63,7 +64,9 @@ const PostCard = async ({
             </span>
           </p>
         </div>
-        <BsThreeDotsVertical />
+        {JSON.parse(currentUserId) === JSON.parse(parsedAuthor) && (
+          <PostOptions postId={JSON.stringify(_id)} />
+        )}
       </header>
 
       <p className="text-dark-100_light-850 mt-8">

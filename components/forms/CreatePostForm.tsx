@@ -293,17 +293,26 @@ const CreatePostForm = ({ type, currentUserId, postDetails }: Props) => {
           )}
         />
 
-        <Button
-          type="submit"
-          className="bg-primary-100_primary-500 text-sm font-medium text-light-900"
-          disabled={form.formState.isSubmitting}
-        >
-          {form.formState.isSubmitting ? (
-            <>{type ? "Updating..." : "Posting..."}</>
-          ) : (
-            <>{type ? "Edit Post" : "Create Post"}</>
-          )}
-        </Button>
+        <footer className="flex w-full flex-col items-center justify-center gap-4 pb-6">
+          <Button
+            type="submit"
+            className="bg-primary-100_primary-500 w-full text-sm font-medium text-light-900"
+            disabled={form.formState.isSubmitting}
+          >
+            {form.formState.isSubmitting ? (
+              <>{type ? "Updating..." : "Posting..."}</>
+            ) : (
+              <>{type ? "Edit Post" : "Create Post"}</>
+            )}
+          </Button>
+
+          <Button
+            onClick={() => router.back()}
+            className="text-dark-100_light-850 w-max border-0 bg-transparent hover:text-primary-100"
+          >
+            Cancel
+          </Button>
+        </footer>
       </form>
     </Form>
   );
