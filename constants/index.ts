@@ -11,6 +11,8 @@ import {
   QuestionIcon,
   TagIcon,
   JobsIcon,
+  MultiUserIcon,
+  ResourceIcon,
 } from "@/public/svgs";
 
 interface ThemeItems {
@@ -35,7 +37,7 @@ interface ISidebarLinks {
 export const SIDEBAR_LINKS: ISidebarLinks[] = [
   {
     name: "Home",
-    route: "/home",
+    route: "/",
     icon: HomeIcon,
   },
   {
@@ -46,7 +48,7 @@ export const SIDEBAR_LINKS: ISidebarLinks[] = [
   {
     name: "All Users",
     route: "/users",
-    icon: CommunityIcon,
+    icon: MultiUserIcon,
   },
   {
     name: "Tags",
@@ -61,7 +63,7 @@ export const SIDEBAR_LINKS: ISidebarLinks[] = [
   {
     name: "Resources",
     route: "/resources",
-    icon: JobsIcon,
+    icon: ResourceIcon,
   },
   {
     name: "Saved Collections",

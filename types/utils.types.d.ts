@@ -16,3 +16,9 @@ export interface ISearchParamsProps {
 export interface IParamsProps {
   params: { id: string };
 }
+
+export interface IMediaProps {
+  mediaType: string;
+  mediaURL: string;
+  thumbnailURL: string;
+}

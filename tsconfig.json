@@ -21,12 +21,17 @@
       "@/*": ["./*"]
     }
   },
+  "ts-node": {
+    "esm": true
+  },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "lib/utils/getCroppedImg.js"
+    "lib/utils/getCroppedImg.js",
+    "lib/scripts/migratePosts.js",
+    "lib/scripts/script.ts"
   ],
   "exclude": ["node_modules"]
 }
