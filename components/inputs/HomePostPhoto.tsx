@@ -7,7 +7,11 @@ import { MdClose } from "react-icons/md";
 
 type Props = {
   fieldChange: (e: any) => void;
-  handleImageInput: (e: ChangeEvent<HTMLInputElement>) => void;
+  handleImageInput: (options: {
+    e: ChangeEvent<HTMLInputElement>;
+    isMultiple: boolean;
+    acceptFileType: string[];
+  }) => void;
   media: any;
   resetMedia: () => void;
 };
@@ -26,7 +30,11 @@ const HomePostPhoto = ({
   };
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    handleImageInput(e);
+    handleImageInput({
+      e,
+      isMultiple: false,
+      acceptFileType: ["image/jpeg", "image/jpg", "image/png", "image/webp"],
+    });
     fieldChange(e.target.files);
   };
 

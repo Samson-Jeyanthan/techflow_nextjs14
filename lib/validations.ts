@@ -36,9 +36,17 @@ export const HomePostSchema = z.object({
   postImage: z.custom<File[]>().optional(),
 });
 
+export const MediaFileSchema = z.object({
+  data: z.custom<File[]>(),
+  preview: z.string().url(),
+  fileType: z.string(),
+  fileName: z.string(),
+  mediaType: z.string(),
+});
+
 export const PostSchema = z.object({
   title: z.string().min(5).max(100),
   description: z.string().min(5).max(1000),
-  postImage: z.custom<File[]>(),
-  tags: z.array(z.string().min(1).max(15)).min(1).max(3),
+  mediaFiles: z.array(MediaFileSchema),
+  tags: z.array(z.string().min(1).max(15)).min(1).max(5),
 });

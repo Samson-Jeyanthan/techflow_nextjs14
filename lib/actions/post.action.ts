@@ -4,20 +4,24 @@ import { connectToDatabase } from "../mongoose";
 import { revalidatePath } from "next/cache";
 import Post from "@/database/post.model";
 import Tag from "@/database/tag.model";
-import { TCreatePostParams } from "./shared.types";
+import {
+  IDeletePostParams,
+  IGetPostByIdParams,
+  TCreatePostParams,
+} from "./shared.types";
 import User from "@/database/user.model";
+import Comment from "@/database/comment.model";
 
-export async function createPost(params: TCreatePostParams) {
+export async function createPostAction(params: TCreatePostParams) {
   try {
     connectToDatabase();
 
-    const { title, description, postImage, tags, author, groupId, path } =
-      params;
+    const { title, description, media, tags, author, groupId, path } = params;
 
     const post = await Post.create({
       title,
       description,
-      postImage,
+      media,
       groupId,
       author,
     });
@@ -109,5 +113,68 @@ export async function likePost(params: any) {
   } catch (error) {
     console.log(error);
     throw error;
+  }
+}
+
+export async function getPostByIdAction(params: IGetPostByIdParams) {
+  try {
+    connectToDatabase();
+
+    const { postId } = params;
+
+    const post = await Post.findById(postId)
+      .populate({
+        path: "author",
+        model: User,
+      })
+      .populate({
+        path: "tags",
+        model: Tag,
+      });
+
+    return post;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function editPostAction(params: any) {
+  try {
+    connectToDatabase();
+
+    const { postId, title, description, media, path } = params;
+
+    const post = await Post.findById(postId).populate("tags");
+
+    if (!post) {
+      throw new Error("Post not found");
+    }
+
+    post.title = title;
+    post.description = description;
+    post.media = media;
+
+    await post.save();
+
+    revalidatePath(path);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function deletePostAction(params: IDeletePostParams) {
+  try {
+    connectToDatabase();
+
+    const { postId, path } = params;
+
+    await Post.deleteOne({ _id: postId });
+    await Comment.deleteMany({ postId });
+    await Tag.updateMany({ posts: postId }, { $pull: { posts: postId } });
+
+    revalidatePath(path);
+  } catch (error) {
+    console.log(error);
   }
 }

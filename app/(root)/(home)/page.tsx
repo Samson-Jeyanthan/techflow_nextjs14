@@ -36,7 +36,7 @@ const Home = async ({ searchParams }: ISearchParamsProps) => {
               _id={post._id}
               title={post.title}
               description={post.description}
-              postImage={post.postImage}
+              media={post.media}
               tags={post.tags}
               author={post.author}
               likes={post.likes}

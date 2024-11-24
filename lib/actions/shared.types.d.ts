@@ -1,5 +1,6 @@
 import { Schema } from "mongoose";
 import { IUser } from "@/database/user.model";
+import { IMediaProps } from "@/types/utils.types";
 
 export type TGetQuestionsParams = {
   page?: number;
@@ -136,7 +137,7 @@ export interface IDeleteAnswerParams {
 export type TCreatePostParams = {
   title?: string;
   description?: string;
-  postImage?: string;
+  media?: IMediaProps[];
   tags?: string[];
   author: Schema.Types.ObjectId | IUser;
   groupId?: string;
@@ -149,4 +150,13 @@ export interface IGetCommentsParams {
   sortBy?: string;
   page?: number;
   pageSize?: number;
+}
+
+export interface IGetPostByIdParams {
+  postId: string;
+}
+
+export interface IDeletePostParams {
+  postId: string;
+  path: string;
 }

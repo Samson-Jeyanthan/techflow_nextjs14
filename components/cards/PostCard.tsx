@@ -1,10 +1,11 @@
 import Image from "next/image";
 import { LikeButton, RenderTag, UserProfileImg } from "../shared";
 import { getTimestamp } from "@/lib/utils";
-import { BsThreeDotsVertical } from "react-icons/bs";
 import Link from "next/link";
 import { CommentInput } from "../inputs";
 import { CommentModal } from "../modals";
+import React from "react";
+import { PostOptions } from "../options";
 
 interface Props {
   _id: string;
@@ -14,7 +15,13 @@ interface Props {
     _id: string;
     name: string;
   }[];
-  postImage: string;
+  media: [
+    {
+      mediaType: string;
+      mediaURL: string;
+      thumbnailURL: string;
+    },
+  ];
   author: any;
   createdAt: Date;
   views: number;
@@ -30,7 +37,7 @@ const PostCard = async ({
   title,
   description,
   tags,
-  postImage,
+  media,
   author,
   createdAt,
   views,
@@ -39,6 +46,7 @@ const PostCard = async ({
   likesCount,
   commentsCounts,
 }: Props) => {
+  const parsedAuthor = JSON.stringify(author._id);
   return (
     <div className="w-full rounded-xl bg-light-900 p-7 shadow-md dark:bg-dark-250 sm:px-9">
       <header className="flex items-center justify-between">
@@ -56,29 +64,37 @@ const PostCard = async ({
             </span>
           </p>
         </div>
-        <BsThreeDotsVertical />
+        {JSON.parse(currentUserId) === JSON.parse(parsedAuthor) && (
+          <PostOptions postId={JSON.stringify(_id)} />
+        )}
       </header>
 
       <p className="text-dark-100_light-850 mt-8">
         {title === "" ? description : title}
       </p>
 
-      {postImage !== "" && (
-        <Image
-          src={postImage}
-          alt={title}
-          width={1200}
-          height={1200}
-          className="mt-6 size-full rounded-lg object-cover"
-        />
-      )}
+      <div className="flex w-full gap-2">
+        {media?.length > 0 &&
+          media?.map((item, index) => (
+            <Image
+              key={index}
+              src={item.mediaURL}
+              alt={title}
+              width={1200}
+              height={1200}
+              className="mt-6 size-full rounded-lg object-cover"
+            />
+          ))}
+      </div>
 
       {title !== "" && (
-        <p className="text-dark-100_light-850 mt-4">{description}</p>
+        <p className="text-dark-100_light-850 font-regular mt-4 line-clamp-6 text-sm">
+          {description}
+        </p>
       )}
 
       {tags.length > 0 && (
-        <div className="mt-3.5 flex flex-wrap gap-2 border">
+        <div className="mt-3.5 flex flex-wrap gap-2">
           {tags.map((tag) => (
             <RenderTag key={tag._id} _id={tag._id} name={tag.name} />
           ))}
