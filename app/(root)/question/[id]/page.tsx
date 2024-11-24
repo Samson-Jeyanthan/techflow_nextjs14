@@ -84,7 +84,10 @@ const QuestionDetail = async ({
         />
       </div>
 
-      <ParseHTML data={result.content} />
+      <ParseHTML
+        data={result.content}
+        className="text-dark-100_light-800 text-sm"
+      />
 
       <div className="mt-8 flex flex-wrap gap-2">
         {result.tags.map((tag: any, index: number) => (

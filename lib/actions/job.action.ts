@@ -5,6 +5,8 @@ import { connectToDatabase } from "../mongoose";
 import Job from "@/database/job.model";
 import { revalidatePath } from "next/cache";
 import { TCreateJobParams } from "./shared.types";
+import User from "@/database/user.model";
+import Application from "@/database/application.model";
 
 export async function createJobAction(params: TCreateJobParams) {
   try {
@@ -68,5 +70,45 @@ export async function createJobAction(params: TCreateJobParams) {
   } catch (error) {
     console.log(error);
     throw error;
+  }
+}
+
+export async function getAllJobsAction(params: any) {
+  try {
+    connectToDatabase();
+
+    const jobs = await Job.find({})
+      .populate({
+        path: "tags",
+        model: Tag,
+      })
+      .populate({
+        path: "author",
+        model: User,
+      })
+      .populate({
+        path: "applications",
+        model: Application,
+      });
+
+    return { jobs };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function deleteJobAction(params: any) {
+  try {
+    connectToDatabase();
+
+    const { jobId, path } = params;
+
+    await Job.deleteOne({ _id: jobId });
+    await Tag.updateMany({ jobs: jobId }, { $pull: { jobs: jobId } });
+
+    revalidatePath(path);
+  } catch (error) {
+    console.log(error);
   }
 }

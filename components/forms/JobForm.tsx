@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { JobsSchema } from "@/lib/validations";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { number, z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "@/components/ui/form";
 import { Button } from "../ui/button";
@@ -47,7 +47,7 @@ const JobForm = ({ type, currentUserId, jobDetails }: Props) => {
       employmentType: parsedJobDetails?.employmentType || "",
       location: parsedJobDetails?.location || "",
       furtherDetailLink: parsedJobDetails?.furtherDetailLink || "",
-      salary: parsedJobDetails?.salary || "",
+      salary: parsedJobDetails?.salary || number(),
       salaryPer: parsedJobDetails?.salaryPer || "",
       salaryCurrency: parsedJobDetails?.salaryCurrency || "",
       deadline: parsedJobDetails?.deadline || "",
@@ -157,6 +157,7 @@ const JobForm = ({ type, currentUserId, jobDetails }: Props) => {
         <div className="flex items-start gap-6">
           <FormInput
             form={form}
+            inputType="number"
             inputName="salary"
             formLabel="Salary Amount"
             formDescription="Introduce the problem and expand on what you put in the title"

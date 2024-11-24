@@ -17,7 +17,7 @@ export const JobsSchema = z.object({
   employmentType: z.string().min(1),
   location: z.string().min(1),
   furtherDetailLink: z.string().optional(),
-  salary: z.string().optional(),
+  salary: z.number().optional(),
   salaryPer: z.string().optional(),
   salaryCurrency: z.string().optional(),
   deadline: z.date().min(new Date()),
