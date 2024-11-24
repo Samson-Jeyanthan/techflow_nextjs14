@@ -3,12 +3,12 @@ import { Schema, models, model, Document } from "mongoose";
 export interface IJob extends Document {
   title: string;
   description: string;
-  workmode: string;
+  workMode: string;
   employmentType: string;
   furtherDetailLink?: string;
   salaryPer?: string;
   salaryCurrency?: string;
-  salary?: number;
+  salary?: string;
   location: string;
   deadline: Date;
   tags: Schema.Types.ObjectId[];
@@ -20,20 +20,20 @@ export interface IJob extends Document {
 const JobSchema = new Schema({
   title: { type: String, required: true },
   description: { type: String, required: true },
-  workmode: {
+  workMode: {
     type: String,
     required: true,
-    enum: ["remote", "onSite", "hybrid"],
+    enum: ["remote", "onsite", "hybrid"],
   },
   employmentType: {
     type: String,
     required: true,
-    enum: ["fullTime", "partTime", "contract"],
+    enum: ["fullTime", "partTime", "contract", "internship", "freelance"],
   },
   furtherDetailLink: { type: String },
   salaryCurrency: { type: String },
-  salary: { type: Number },
-  salaryPer: { type: String, enum: ["hour", "day", "month", "year"] },
+  salary: { type: String },
+  salaryPer: { type: String },
   location: { type: String, required: true },
   deadline: { type: Date, required: true },
   tags: [{ type: Schema.Types.ObjectId, ref: "Tag" }],

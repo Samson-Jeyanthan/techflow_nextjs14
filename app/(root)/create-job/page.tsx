@@ -16,7 +16,7 @@ const CreateJob = async () => {
         Create a Job Opportunity
       </h1>
       <div className="mt-8">
-        <JobForm mongoUserId={JSON.stringify(mongoUser._id)} />
+        <JobForm currentUserId={JSON.stringify(mongoUser._id)} />
       </div>
     </section>
   );

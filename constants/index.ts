@@ -94,11 +94,11 @@ export const WORKMODE_OPTIONS = [
 
 export const EMPLOYMENTTYPE_OPTIONS = [
   {
-    _id: "full-time",
+    _id: "fullTime",
     name: "Full-time",
   },
   {
-    _id: "part-time",
+    _id: "partTime",
     name: "Part-time",
   },
   {

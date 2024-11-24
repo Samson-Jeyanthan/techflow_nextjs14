@@ -8,3 +8,4 @@ export { default as ProfilePhoto } from "./ProfilePhoto";
 export { default as HomePostPhoto } from "./HomePostPhoto";
 export { default as CommentInput } from "./CommentInput";
 export { default as PostPhotoInput } from "./PostPhotoInput";
+export { default as CalendarInput } from "./CalendarInput";
