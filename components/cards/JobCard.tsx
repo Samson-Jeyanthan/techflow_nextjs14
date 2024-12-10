@@ -51,7 +51,7 @@ const JobCard = ({
         <p className="text-dark-500_light-600 flex flex-wrap items-center gap-4 text-xs">
           <span className="flex items-center gap-1 lowercase">
             <HiOutlineOfficeBuilding className="text-lg" />
-            called by {author.username}
+            {author.username}
           </span>
           <span className="flex items-center gap-1 lowercase">
             <CiLocationOn className="text-lg" />

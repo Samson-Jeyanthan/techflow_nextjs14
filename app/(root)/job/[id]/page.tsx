@@ -1,3 +1,4 @@
+import { ApplyJobModal } from "@/components/modals";
 import { JobMetric, ParseHTML, RenderTag } from "@/components/shared";
 import { Button } from "@/components/ui/button";
 import { getJobByIdAction } from "@/lib/actions/job.action";
@@ -9,8 +10,11 @@ import {
   SalaryIcon,
   WorkModeIcon,
 } from "@/public/svgs";
+import { SignedIn } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 import Image from "next/image";
+import Link from "next/link";
+import { MdEdit } from "react-icons/md";
 
 const JobDetailPage = async ({ params }: { params: { id: string } }) => {
   const { userId: clerkId } = auth();
@@ -21,8 +25,9 @@ const JobDetailPage = async ({ params }: { params: { id: string } }) => {
   if (clerkId) {
     mongoUser = await getUserById({ userId: clerkId });
   }
-
   console.log(mongoUser);
+
+  const showActionButtons = clerkId && clerkId === result?.author.clerkId;
   return (
     <section className="flex w-full flex-col gap-6 pb-16">
       <header className="mb-10 flex w-full flex-col items-center justify-center gap-4 border-b border-light-750 pb-12 pt-8 dark:border-dark-350 ">
@@ -41,9 +46,18 @@ const JobDetailPage = async ({ params }: { params: { id: string } }) => {
           <p>{getTimestamp(result?.createdAt)}</p>
         </div>
 
-        <Button className="mt-4 rounded-full bg-primary-100 text-sm font-medium text-light-900">
-          Apply for this job
-        </Button>
+        {showActionButtons ? (
+          <SignedIn>
+            <Link href={`/job/edit/${result?._id}`}>
+              <Button className="mt-4 rounded-full bg-primary-100 text-sm font-medium text-light-900">
+                <MdEdit className="mr-2 text-xl" />
+                Edit this job
+              </Button>
+            </Link>
+          </SignedIn>
+        ) : (
+          <ApplyJobModal />
+        )}
       </header>
 
       <div className="bg-light-800_dark-200 mb-2 flex w-full items-center justify-between gap-6 rounded-xl p-6">

@@ -15,7 +15,7 @@ const EditPost = async ({ params }: IParamsProps) => {
   return (
     <section>
       <h1 className="text-dark-100_light-900 flex-between text-3xl font-semibold">
-        Edit Question
+        Edit Post
       </h1>
 
       <div className="mt-9">
