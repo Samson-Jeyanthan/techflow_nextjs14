@@ -52,7 +52,12 @@ export const PostSchema = z.object({
 });
 
 export const ApplicationSchema = z.object({
+  name: z.string().min(5).max(40),
   email: z.string().email(),
-  resumeUrl: z.string().url(),
-  coverLetter: z.string().optional(),
+  resumeFile: z
+    .custom<File[]>()
+    .refine(
+      (files) => Array.isArray(files) && files.length > 0,
+      "Resume file is required"
+    ),
 });

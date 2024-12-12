@@ -9,3 +9,4 @@ export { default as HomePostPhoto } from "./HomePostPhoto";
 export { default as CommentInput } from "./CommentInput";
 export { default as PostPhotoInput } from "./PostPhotoInput";
 export { default as CalendarInput } from "./CalendarInput";
+export { default as ResumeInput } from "./ResumeInput";

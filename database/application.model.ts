@@ -6,7 +6,7 @@ export interface IApplication extends Document {
   resumeUrl: string;
   coverLetter?: string;
   status: string;
-  appliedAt: Date;
+  appliedOn: Date;
 }
 
 const ApplicationSchema = new Schema({
@@ -19,7 +19,7 @@ const ApplicationSchema = new Schema({
     enum: ["pending", "reviewed", "accepted", "rejected"],
     default: "pending",
   },
-  appliedAt: { type: Date, default: Date.now },
+  appliedOn: { type: Date, default: Date.now },
 });
 
 const Application =

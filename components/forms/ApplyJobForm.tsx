@@ -1,41 +1,75 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import { FormInput } from "../inputs";
-import { Form } from "../ui/form";
+import { FormInput, ResumeInput } from "../inputs";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "../ui/form";
 import { z } from "zod";
 import { ApplicationSchema } from "@/lib/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
+import { Button } from "../ui/button";
 
-interface Props {
-  applicationDetails?: string;
-}
-
-const ApplyJobForm = ({ applicationDetails }: Props) => {
+const ApplyJobForm = () => {
   const [urlSelected, setUrlSelected] = useState<boolean>(false);
-
-  const parsedJobDetails =
-    applicationDetails && JSON.parse(applicationDetails || "");
 
   const form = useForm<z.infer<typeof ApplicationSchema>>({
     resolver: zodResolver(ApplicationSchema),
     defaultValues: {
-      email: parsedJobDetails?.email || "",
-      resumeUrl: parsedJobDetails?.content || "",
-      coverLetter: parsedJobDetails?.coverLetter || "",
+      name: "",
+      email: "",
+      resumeFile: [],
     },
   });
 
+  const handleSubmit = async (values: z.infer<typeof ApplicationSchema>) => {
+    console.log(values);
+  };
+
   return (
     <Form {...form}>
-      <form className="flex w-full flex-col gap-10">
+      <form
+        className="flex size-full flex-col gap-10 overflow-auto"
+        onSubmit={form.handleSubmit(handleSubmit)}
+      >
+        <FormField
+          control={form.control}
+          name="resumeFile"
+          render={({ field }) => (
+            <FormItem className="flex w-full flex-col">
+              <FormControl>
+                <ResumeInput fieldChange={field.onChange} />
+              </FormControl>
+              <FormMessage className="text-xs text-custom-red" />
+            </FormItem>
+          )}
+        />
+
+        <FormInput
+          form={form}
+          inputName="name"
+          formLabel="Full Name"
+          formDescription="Enter your full name as it appears on your resume"
+        />
+
         <FormInput
           form={form}
           inputName="email"
           formLabel="Email Address"
-          formDescription="entered email will be used to contact you about the job"
+          formDescription="Entered email will be used to contact you about the job"
         />
+
+        <Button
+          className="bg-primary-100_primary-500 w-fit self-end text-sm font-medium text-light-900"
+          disabled={form.formState.isSubmitting}
+        >
+          {form.formState.isSubmitting ? "Applying..." : "Apply"}
+        </Button>
       </form>
     </Form>
   );

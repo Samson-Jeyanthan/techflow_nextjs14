@@ -6,6 +6,7 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
+  DialogTitle,
   DialogTrigger,
 } from "../ui/dialog";
 import { Button } from "../ui/button";
@@ -23,8 +24,11 @@ const ApplyJobModal = () => {
       </DialogTrigger>
       <DialogContent
         aria-describedby={undefined}
-        className="bg-light-900_dark-300 flex h-[85vh] w-full max-w-3xl rounded-2xl p-12 shadow-md"
+        className="bg-light-900_dark-300 flex h-auto w-full max-w-3xl flex-col gap-4 rounded-2xl p-12 shadow-md"
       >
+        <DialogTitle className="text-dark-100_light-900 bg-light-900_dark-300 mb-4 text-center text-2xl">
+          Apply for this job
+        </DialogTitle>
         <ApplyJobForm />
         <DialogClose className="text-light-500_dark-500 flex-center bg-light-900_dark-300 absolute -right-8 -top-8 size-9 cursor-pointer rounded-full text-xl hover:text-light-900">
           <MdClose />

@@ -89,6 +89,42 @@ export function useMedia() {
     }
   };
 
+  // PDF
+
+  type PDFInputProps = {
+    e: ChangeEvent<HTMLInputElement>;
+    acceptFileType: string[];
+  };
+
+  const handlePDFInput = ({ e, acceptFileType }: PDFInputProps) => {
+    // Convert FileList to Array
+    const files = Array.from(e.target.files || []);
+    if (files.length === 0) return;
+
+    // Validate file types
+    const invalidFiles = files.filter(
+      (file) => !acceptFileType.includes(file.type)
+    );
+    if (invalidFiles.length > 0) {
+      setError(
+        "Invalid file type. Please choose files in PDF format and try again."
+      );
+      return;
+    }
+
+    // Reset errors if validation passes
+    setError("");
+
+    const file = files[0];
+    setMedia({
+      data: file,
+      preview: URL.createObjectURL(file),
+      fileType: file.type,
+      fileName: file.name,
+      mediaType: "pdf",
+    });
+  };
+
   return {
     error,
     media,
@@ -97,6 +133,7 @@ export function useMedia() {
     setMedia,
     setMultipleMedia,
     handleImageInput,
+    handlePDFInput,
     resetMedia,
   };
 }
