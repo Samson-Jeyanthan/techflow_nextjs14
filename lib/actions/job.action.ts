@@ -141,3 +141,40 @@ export async function deleteJobAction(params: any) {
     console.log(error);
   }
 }
+
+export async function applyApplicationAction(params: any) {
+  try {
+    connectToDatabase();
+
+    const { jobId, userId, name, email, resume, coverLetter, path } = params;
+
+    const application = await Application.create({
+      jobId,
+      applicant: userId,
+      applicantName: name,
+      applicantEmail: email,
+      resume,
+      coverLetter,
+    });
+
+    // update user's latest cvResume
+    await User.findByIdAndUpdate(userId, {
+      $set: {
+        cvResume: {
+          url: resume.url,
+          name: resume.name,
+        },
+      },
+    });
+
+    // add applicaiton to the job's applications array
+    await Job.findByIdAndUpdate(jobId, {
+      $push: { applications: application._id },
+    });
+
+    revalidatePath(path);
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}

@@ -56,7 +56,10 @@ const JobDetailPage = async ({ params }: { params: { id: string } }) => {
             </Link>
           </SignedIn>
         ) : (
-          <ApplyJobModal userDetails={JSON.stringify(mongoUser)} />
+          <ApplyJobModal
+            userDetails={JSON.stringify(mongoUser)}
+            jobId={params.id}
+          />
         )}
       </header>
 

@@ -4,17 +4,26 @@ import { useMedia } from "@/lib/hooks/useMedia";
 import Image from "next/image";
 import { ChangeEvent, useEffect, useRef } from "react";
 import { MdClose } from "react-icons/md";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../ui/tooltip";
 
 type Props = {
   fieldChange: (e: any) => void;
+  urlSelected: boolean;
+  setUrlSelected: (e: boolean) => void;
 };
 
-const ResumeInput = ({ fieldChange }: Props) => {
+const ResumeInput = ({ fieldChange, urlSelected, setUrlSelected }: Props) => {
   const resumeRef = useRef<HTMLInputElement>(null);
   const { handlePDFInput, error, media, resetMedia } = useMedia();
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     handlePDFInput({ e, acceptFileType: ["application/pdf"] });
+    setUrlSelected(false);
   };
 
   useEffect(() => {
@@ -25,14 +34,8 @@ const ResumeInput = ({ fieldChange }: Props) => {
     }
   }, [media, error, fieldChange]);
 
-  const handleReset = () => {
-    resetMedia();
-  };
   return (
     <div>
-      <h2 className="text-dark-100_light-850 mb-2 text-sm font-medium">
-        CV Resume
-      </h2>
       <input
         type="file"
         ref={resumeRef}
@@ -41,27 +44,40 @@ const ResumeInput = ({ fieldChange }: Props) => {
         accept="application/pdf"
       />
       {media.preview ? (
-        <div className="flex-center h-44 w-full gap-4 rounded-lg border border-light-750 dark:border-dark-350">
-          <div className="flex items-center gap-4">
-            <Image
-              src="/images/pdf.png"
-              alt="resume"
-              width={1024}
-              height={1024}
-              className="size-16 min-w-16 rounded-lg object-cover"
-            />
-            <p className="text-dark-200_light-700 text-sm">{media.fileName}</p>
-            <span
-              className="flex-center hover:text-dark-100_light-900 cursor-pointer rounded-full border border-light-500 p-1 text-light-500"
-              onClick={handleReset}
-            >
-              <MdClose className="text-base" />
-            </span>
-          </div>
+        <div
+          className={`${urlSelected ? "border-light-750 dark:border-dark-350" : "border-primary-500"} flex-center z-0 h-44 w-full cursor-pointer gap-3 rounded-xl border `}
+          onClick={() => setUrlSelected(false)}
+        >
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger className="flex w-3/5 items-center gap-2">
+                <Image
+                  src="/images/pdf.png"
+                  alt="resume"
+                  width={1024}
+                  height={1024}
+                  className="size-16 min-w-16 rounded-lg object-cover"
+                />
+                <p className="text-dark-200_light-700 line-clamp-2 text-left text-sm">
+                  {media.fileName}
+                </p>
+              </TooltipTrigger>
+              <TooltipContent className="bg-light-850_dark-200 text-dark-100_light-900 border-none text-xs">
+                {media.fileName}
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+
+          <span
+            className="flex-center hover:text-dark-100_light-900 z-10 cursor-pointer rounded-full border border-light-500 p-1 text-light-500"
+            onClick={resetMedia}
+          >
+            <MdClose className="text-base" />
+          </span>
         </div>
       ) : (
         <div
-          className="text-dark-300_light-750 flex-center h-44 w-full cursor-pointer gap-2 rounded-lg border border-dashed border-light-500 bg-transparent text-sm dark:border-dark-500"
+          className="text-dark-300_light-750 flex-center h-44 w-full cursor-pointer gap-2 rounded-lg border border-light-750 bg-transparent text-sm dark:border-dark-350"
           onClick={() => resumeRef.current?.click()}
         >
           Upload CV Resume
