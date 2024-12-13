@@ -27,10 +27,8 @@ const ResumeInput = ({ fieldChange, urlSelected, setUrlSelected }: Props) => {
   };
 
   useEffect(() => {
-    console.log(media, error);
-    if (error === "") {
+    if (error === "" && media.data) {
       fieldChange([media.data]);
-      console.log(media, error);
     }
   }, [media, error, fieldChange]);
 

@@ -29,7 +29,7 @@ const ApplyJobModal = ({ userDetails, jobId }: any) => {
           jobId={jobId}
           setModalOpen={setOpen}
         />
-        <DialogClose className="text-light-500_dark-500 flex-center bg-light-900_dark-300 absolute -right-8 -top-8 size-9 cursor-pointer rounded-full text-xl hover:text-light-900">
+        <DialogClose className="text-light-500_dark-500 flex-center bg-light-900_dark-300 hover:text-dark-100_light-900 absolute -right-8 -top-8 size-9 cursor-pointer rounded-full text-xl">
           <MdClose />
         </DialogClose>
       </DialogContent>
