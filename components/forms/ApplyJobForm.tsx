@@ -15,14 +15,16 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { Button } from "../ui/button";
 
-const ApplyJobForm = () => {
+const ApplyJobForm = ({ userDetails }: any) => {
   const [urlSelected, setUrlSelected] = useState<boolean>(false);
+
+  const parsedUserDetails = userDetails && JSON.parse(userDetails || "");
 
   const form = useForm<z.infer<typeof ApplicationSchema>>({
     resolver: zodResolver(ApplicationSchema),
     defaultValues: {
-      name: "",
-      email: "",
+      name: parsedUserDetails?.name || "",
+      email: parsedUserDetails?.email || "",
       resumeFile: [],
     },
   });
@@ -37,18 +39,20 @@ const ApplyJobForm = () => {
         className="flex size-full flex-col gap-10 overflow-auto"
         onSubmit={form.handleSubmit(handleSubmit)}
       >
-        <FormField
-          control={form.control}
-          name="resumeFile"
-          render={({ field }) => (
-            <FormItem className="flex w-full flex-col">
-              <FormControl>
-                <ResumeInput fieldChange={field.onChange} />
-              </FormControl>
-              <FormMessage className="text-xs text-custom-red" />
-            </FormItem>
-          )}
-        />
+        <div className="">
+          <FormField
+            control={form.control}
+            name="resumeFile"
+            render={({ field }) => (
+              <FormItem className="flex w-full flex-col">
+                <FormControl>
+                  <ResumeInput fieldChange={field.onChange} />
+                </FormControl>
+                <FormMessage className="text-xs text-custom-red" />
+              </FormItem>
+            )}
+          />
+        </div>
 
         <FormInput
           form={form}
