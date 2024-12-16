@@ -19,12 +19,6 @@ import Image from "next/image";
 import { getFileUpload } from "@/lib/functions/getFileUpload";
 import { applyApplicationAction } from "@/lib/actions/job.action";
 import { usePathname, useRouter } from "next/navigation";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "../ui/tooltip";
 
 type Props = {
   userDetails: any;
@@ -128,26 +122,17 @@ const ApplyJobForm = ({ userDetails, jobId, setModalOpen }: Props) => {
               className={`${urlSelected ? "border-primary-500" : "border-light-750 dark:border-dark-350"} flex-center h-44 w-full cursor-pointer gap-2 rounded-xl border`}
               onClick={() => setUrlSelected(true)}
             >
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger className="flex items-center gap-2">
-                    <Image
-                      src="/images/pdf-blue.png"
-                      alt="resume"
-                      width={1024}
-                      height={1024}
-                      className="size-16 min-w-16 rounded-lg object-cover"
-                    />
-                    <p className="text-dark-200_light-700 line-clamp-1 flex flex-col items-start gap-0 text-left text-sm first-letter:capitalize">
-                      {parsedUserDetails?.cvResume?.name}
-                      <span className="text-xs">Last used cv resume</span>
-                    </p>
-                  </TooltipTrigger>
-                  <TooltipContent className="bg-light-850_dark-200 text-dark-100_light-900 border-none text-xs">
-                    {parsedUserDetails?.cvResume?.name}
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+              <Image
+                src="/images/pdf-blue.png"
+                alt="resume"
+                width={1024}
+                height={1024}
+                className="size-16 min-w-16 rounded-lg object-cover"
+              />
+              <p className="text-dark-200_light-700 line-clamp-1 flex flex-col items-start gap-0 text-left text-sm first-letter:capitalize">
+                {parsedUserDetails?.cvResume?.name}
+                <span className="text-xs">Last used cv resume</span>
+              </p>
             </div>
           )}
         </div>

@@ -4,12 +4,6 @@ import { useMedia } from "@/lib/hooks/useMedia";
 import Image from "next/image";
 import { ChangeEvent, useEffect, useRef } from "react";
 import { MdClose } from "react-icons/md";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "../ui/tooltip";
 
 type Props = {
   fieldChange: (e: any) => void;
@@ -46,26 +40,16 @@ const ResumeInput = ({ fieldChange, urlSelected, setUrlSelected }: Props) => {
           className={`${urlSelected ? "border-light-750 dark:border-dark-350" : "border-primary-500"} flex-center z-0 h-44 w-full cursor-pointer gap-3 rounded-xl border `}
           onClick={() => setUrlSelected(false)}
         >
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger className="flex w-3/5 items-center gap-2">
-                <Image
-                  src="/images/pdf.png"
-                  alt="resume"
-                  width={1024}
-                  height={1024}
-                  className="size-16 min-w-16 rounded-lg object-cover"
-                />
-                <p className="text-dark-200_light-700 line-clamp-2 text-left text-sm">
-                  {media.fileName}
-                </p>
-              </TooltipTrigger>
-              <TooltipContent className="bg-light-850_dark-200 text-dark-100_light-900 border-none text-xs">
-                {media.fileName}
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-
+          <Image
+            src="/images/pdf.png"
+            alt="resume"
+            width={1024}
+            height={1024}
+            className="size-16 min-w-16 rounded-lg object-cover"
+          />
+          <p className="text-dark-200_light-700 line-clamp-2 text-left text-sm">
+            {media.fileName}
+          </p>
           <span
             className="flex-center hover:text-dark-100_light-900 z-10 cursor-pointer rounded-full border border-light-500 p-1 text-light-500"
             onClick={resetMedia}
