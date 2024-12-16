@@ -112,6 +112,7 @@ const JobForm = ({ type, currentUserId, jobDetails }: Props) => {
             inputName="workMode"
             formLabel="Work Mode"
             options={WORKMODE_OPTIONS}
+            prevValue={parsedJobDetails?.workMode}
             formDescription="Introduce the problem and expand on what you put in the title"
           />
 
@@ -120,6 +121,7 @@ const JobForm = ({ type, currentUserId, jobDetails }: Props) => {
             inputName="employmentType"
             formLabel="Employment Type"
             options={EMPLOYMENTTYPE_OPTIONS}
+            prevValue={parsedJobDetails?.employmentType}
             formDescription="Introduce the problem and expand on what you put in the title"
           />
         </div>
@@ -141,7 +143,7 @@ const JobForm = ({ type, currentUserId, jobDetails }: Props) => {
         <TextEditor
           form={form}
           editorRef={editorRef}
-          parsedDetails={parsedJobDetails}
+          parsedDetailDescription={parsedJobDetails?.description}
           inputName="description"
           formLabel="Job Description"
           formDescription="Introduce the problem and expand on what you put in the title"
@@ -167,6 +169,7 @@ const JobForm = ({ type, currentUserId, jobDetails }: Props) => {
             inputName="salaryCurrency"
             formLabel="Currency"
             options={SALARY_CURRENCY_OPTIONS}
+            prevValue={parsedJobDetails?.salaryCurrency}
             formDescription="Introduce the problem and expand on what you put in the title"
           />
           <Dropdown
@@ -174,6 +177,7 @@ const JobForm = ({ type, currentUserId, jobDetails }: Props) => {
             inputName="salaryPer"
             formLabel="Salary Per"
             options={SALARY_PER_OPTIONS}
+            prevValue={parsedJobDetails?.salaryPer}
             formDescription="Introduce the problem and expand on what you put in the title"
           />
         </div>

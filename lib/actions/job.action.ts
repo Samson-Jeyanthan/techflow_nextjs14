@@ -178,3 +178,21 @@ export async function applyApplicationAction(params: any) {
     throw error;
   }
 }
+
+export async function getAllApplicationsAction(params: any) {
+  try {
+    connectToDatabase();
+
+    const { jobId } = params;
+
+    const applications = await Application.find({ jobId }).populate(
+      "applicant",
+      "_id clerkId name username avatar"
+    );
+
+    return { applications };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}

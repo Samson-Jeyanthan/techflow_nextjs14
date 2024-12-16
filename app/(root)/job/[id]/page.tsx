@@ -1,5 +1,10 @@
 import { ApplyJobModal } from "@/components/modals";
-import { JobMetric, ParseHTML, RenderTag } from "@/components/shared";
+import {
+  AllApplications,
+  JobMetric,
+  ParseHTML,
+  RenderTag,
+} from "@/components/shared";
 import { Button } from "@/components/ui/button";
 import { getJobByIdAction } from "@/lib/actions/job.action";
 import { getUserById } from "@/lib/actions/user.action";
@@ -113,6 +118,11 @@ const JobDetailPage = async ({ params }: { params: { id: string } }) => {
           />
         ))}
       </div>
+
+      <AllApplications
+        jobId={result?._id}
+        totalApplications={result?.applications?.length}
+      />
     </section>
   );
 };

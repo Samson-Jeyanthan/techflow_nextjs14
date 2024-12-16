@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import {
   FormControl,
   FormDescription,
@@ -22,6 +23,7 @@ type TDropdownProps = {
   inputName: string;
   options: { _id: string; name: string }[];
   formDescription?: string;
+  prevValue?: string;
 };
 
 const Dropdown = ({
@@ -30,7 +32,10 @@ const Dropdown = ({
   inputName,
   options,
   formDescription,
+  prevValue,
 }: TDropdownProps) => {
+  const [value, setValue] = useState(prevValue || "");
+
   return (
     <FormField
       control={form.control}
@@ -41,7 +46,11 @@ const Dropdown = ({
           <FormControl className="no-focus">
             <Select onValueChange={(_id: string) => field.onChange(_id)}>
               <SelectTrigger className="no-focus text-dark-100_light-850 border border-solid border-light-750 bg-light-800 text-sm dark:border-dark-350 dark:bg-dark-250">
-                <SelectValue />
+                {value ? (
+                  <p className="first-letter:capitalize">{value}</p>
+                ) : (
+                  <SelectValue />
+                )}
               </SelectTrigger>
               <SelectContent className="no-focus text-dark-100_light-850 border border-solid border-light-750 bg-light-800 text-sm dark:border-dark-350 dark:bg-dark-250 ">
                 {options?.map((option, index) => (
@@ -49,6 +58,7 @@ const Dropdown = ({
                     key={index}
                     value={option?._id}
                     className="cursor-pointer hover:bg-light-500 hover:dark:bg-dark-350"
+                    onClick={() => setValue("")}
                   >
                     {option?.name}
                   </SelectItem>
