@@ -1,6 +1,7 @@
 "use client";
 
 import { deleteAnswer } from "@/lib/actions/answer.action";
+import { deleteJobAction } from "@/lib/actions/job.action";
 import { deleteQuestion } from "@/lib/actions/question.action";
 import { usePathname, useRouter } from "next/navigation";
 import { MdEdit, MdDelete } from "react-icons/md";
@@ -31,6 +32,9 @@ const EditDeleteAction = ({ type, itemId }: Props) => {
         answerId: JSON.parse(itemId),
         path: pathname,
       });
+    } else if (type === "Job") {
+      // Delete job
+      await deleteJobAction({ jobId: JSON.parse(itemId), path: pathname });
     }
   };
 

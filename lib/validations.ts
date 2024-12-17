@@ -16,12 +16,12 @@ export const JobsSchema = z.object({
   workMode: z.string().min(1),
   employmentType: z.string().min(1),
   location: z.string().min(1),
-  furtherDetailLink: z.string(),
-  salary: z.string(),
-  salaryPer: z.string(),
-  salaryCurrency: z.string(),
-  deadline: z.string().min(1),
-  tags: z.array(z.string().min(1).max(15)).min(1).max(3),
+  furtherDetailLink: z.string().optional(),
+  salary: z.number().optional(),
+  salaryPer: z.string().optional(),
+  salaryCurrency: z.string().optional(),
+  deadline: z.date().min(new Date()),
+  tags: z.array(z.string().min(1).max(20)).min(1).max(5),
 });
 
 export const CommunitySchema = z.object({
@@ -49,4 +49,15 @@ export const PostSchema = z.object({
   description: z.string().min(5).max(1000),
   mediaFiles: z.array(MediaFileSchema),
   tags: z.array(z.string().min(1).max(15)).min(1).max(5),
+});
+
+export const ApplicationSchema = z.object({
+  name: z.string().min(5).max(40),
+  email: z.string().email(),
+  resumeFile: z
+    .custom<File[]>()
+    .refine(
+      (files) => Array.isArray(files) && files.length > 0,
+      "Resume file is required"
+    ),
 });

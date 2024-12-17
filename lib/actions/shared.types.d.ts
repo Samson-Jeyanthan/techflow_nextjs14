@@ -160,3 +160,19 @@ export interface IDeletePostParams {
   postId: string;
   path: string;
 }
+
+export type TCreateJobParams = {
+  title: string;
+  description: string;
+  workMode: string;
+  employmentType: string;
+  furtherDetailLink: string | undefined;
+  salaryPer: string | undefined;
+  salaryCurrency: string | undefined;
+  salary: number | undefined;
+  location: string;
+  deadline: string;
+  tags: string[];
+  author: Schema.Types.ObjectId | IUser;
+  path: string;
+};

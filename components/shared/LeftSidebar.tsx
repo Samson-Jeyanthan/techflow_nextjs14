@@ -1,6 +1,6 @@
 "use client";
 
-import { SignedOut, useAuth } from "@clerk/nextjs";
+import { SignedIn, SignedOut, useAuth } from "@clerk/nextjs";
 import { Button } from "../ui/button";
 import { usePathname } from "next/navigation";
 import { SIDEBAR_LINKS } from "@/constants";
@@ -35,22 +35,24 @@ const LeftSidebar = () => {
         })}
       </ul>
 
-      <div className="flex flex-col gap-3">
-        <Link
-          href={`/profile/${userId}`}
-          className={`${isProfile ? "text-dark-100_light-900 bg-primary-500/20 fill-dark-100 dark:fill-light-900" : "text-dark-500_light-600 fill-light-600"} flex-center hover:text-dark-100_light-900 hover:fill-dark-100_light-900 cursor-pointer gap-4 rounded-lg border border-primary-500/20 p-3 text-sm hover:bg-primary-500/20`}
-        >
-          <ProfileIcon width="20px" height="20px" />
-          <p className="max-lg:hidden">Profile</p>
-        </Link>
+      <SignedIn>
+        <div className="flex flex-col gap-3">
+          <Link
+            href={`/profile/${userId}`}
+            className={`${isProfile ? "text-dark-100_light-900 bg-primary-500/20 fill-dark-100 dark:fill-light-900" : "text-dark-500_light-600 fill-light-600"} flex-center hover:text-dark-100_light-900 hover:fill-dark-100_light-900 cursor-pointer gap-4 rounded-lg border border-primary-500/20 p-3 text-sm hover:bg-primary-500/20`}
+          >
+            <ProfileIcon width="20px" height="20px" />
+            <p className="max-lg:hidden">Profile</p>
+          </Link>
 
-        <UploadDrawer />
-      </div>
+          <UploadDrawer />
+        </div>
+      </SignedIn>
 
       <SignedOut>
         <div className="flex flex-col gap-3">
           <Link href="/sign-in">
-            <Button className="small-medium min-h-[41px] w-full rounded-lg px-4 py-3 shadow-none">
+            <Button className="bg-primary-100_primary-500 w-full text-sm font-medium text-light-900">
               Log In
             </Button>
           </Link>

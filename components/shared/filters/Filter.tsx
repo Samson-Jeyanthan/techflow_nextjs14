@@ -53,7 +53,7 @@ const Filter = ({ filters, otherClasses, containerClasses }: Props) => {
               <SelectItem
                 key={index}
                 value={item.value}
-                className="hover:bg-light-800_dark-300 hover:text-dark-100_light-800 cursor-pointer text-light-500"
+                className="hover:bg-light-800_dark-300 hover:text-dark-100_light-800 cursor-pointer text-start text-light-500"
               >
                 {item.name}
               </SelectItem>

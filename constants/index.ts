@@ -94,11 +94,11 @@ export const WORKMODE_OPTIONS = [
 
 export const EMPLOYMENTTYPE_OPTIONS = [
   {
-    _id: "full-time",
+    _id: "fullTime",
     name: "Full-time",
   },
   {
-    _id: "part-time",
+    _id: "partTime",
     name: "Part-time",
   },
   {
@@ -154,5 +154,24 @@ export const SALARY_CURRENCY_OPTIONS = [
   {
     _id: "gbp",
     name: "GBP",
+  },
+];
+
+export const JOB_STATUS_OPTIONS = [
+  {
+    _id: "pending",
+    name: "Pending",
+  },
+  {
+    _id: "reviewed",
+    name: "Reviewed",
+  },
+  {
+    _id: "accepted",
+    name: "Accepted",
+  },
+  {
+    _id: "rejected",
+    name: "Rejected",
   },
 ];

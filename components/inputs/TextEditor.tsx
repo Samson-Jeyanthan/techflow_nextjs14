@@ -14,7 +14,7 @@ import { useTheme } from "@/context/ThemeProvider";
 const TextEditor = ({
   form,
   editorRef,
-  parsedDetails,
+  parsedDetailDescription,
   inputName,
   formLabel,
   formDescription,
@@ -41,7 +41,7 @@ const TextEditor = ({
               }
               onBlur={field.onBlur} // save the value on the exit
               onEditorChange={(content) => field.onChange(content)}
-              initialValue={parsedDetails?.content || ""}
+              initialValue={parsedDetailDescription || ""}
               init={{
                 height: 400,
                 menubar: false,
