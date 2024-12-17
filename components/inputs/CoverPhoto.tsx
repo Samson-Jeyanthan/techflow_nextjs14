@@ -4,7 +4,7 @@ import { ChangeEvent, useRef, useState } from "react";
 import { MdEdit } from "react-icons/md";
 import { CameraIcon } from "@/public/svgs";
 import Image from "next/image";
-import { useMedia } from "@/hooks/useMedia";
+import { useMedia } from "@/lib/hooks/useMedia";
 
 const CoverPhoto = ({ fieldChange, mediaUrl }: any) => {
   const photoRef = useRef<HTMLInputElement>(null);
@@ -22,7 +22,7 @@ const CoverPhoto = ({ fieldChange, mediaUrl }: any) => {
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     handleImageInput(e);
-    fieldChange(media.data);
+    fieldChange(e.target.files);
   };
 
   return (

@@ -31,7 +31,10 @@ export interface IUser extends Document {
     userId: Schema.Types.ObjectId;
     followedAt: Date;
   }[];
-  cvResume?: string;
+  cvResume?: {
+    url: string;
+    name: string;
+  };
   joinedAt: Date;
 }
 
@@ -76,7 +79,10 @@ const UserSchema = new Schema({
       followedAt: { type: Date, default: Date.now },
     },
   ],
-  cvResume: { type: String, default: null },
+  cvResume: {
+    url: { type: String, default: "" },
+    name: { type: String, default: "" },
+  },
   joinedAt: { type: Date, default: Date.now },
 });
 

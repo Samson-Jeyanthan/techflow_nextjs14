@@ -20,17 +20,9 @@ const Navbar = () => {
 
       <div className="flex-between gap-2">
         <Theme />
+
         <SignedIn>
-          <UserButton
-            appearance={{
-              elements: {
-                avatarBox: "h-8 w-8",
-              },
-              variables: {
-                colorPrimary: "#000000",
-              },
-            }}
-          />
+          <UserButton />
         </SignedIn>
         <MobileNav />
       </div>

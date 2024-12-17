@@ -18,6 +18,10 @@ export async function createCommunity(params: any) {
       createdBy,
     });
 
+    // TODO: create an interaction record for the user's create-community action
+
+    // TODO: increment author's reputation by +5 for create-community
+
     revalidatePath(path);
   } catch (error) {
     console.log(error);

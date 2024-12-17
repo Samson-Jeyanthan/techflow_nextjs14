@@ -11,6 +11,8 @@ import {
   QuestionIcon,
   TagIcon,
   JobsIcon,
+  MultiUserIcon,
+  ResourceIcon,
 } from "@/public/svgs";
 
 interface ThemeItems {
@@ -35,7 +37,7 @@ interface ISidebarLinks {
 export const SIDEBAR_LINKS: ISidebarLinks[] = [
   {
     name: "Home",
-    route: "/home",
+    route: "/",
     icon: HomeIcon,
   },
   {
@@ -46,7 +48,7 @@ export const SIDEBAR_LINKS: ISidebarLinks[] = [
   {
     name: "All Users",
     route: "/users",
-    icon: CommunityIcon,
+    icon: MultiUserIcon,
   },
   {
     name: "Tags",
@@ -61,7 +63,7 @@ export const SIDEBAR_LINKS: ISidebarLinks[] = [
   {
     name: "Resources",
     route: "/resources",
-    icon: JobsIcon,
+    icon: ResourceIcon,
   },
   {
     name: "Saved Collections",
@@ -92,11 +94,11 @@ export const WORKMODE_OPTIONS = [
 
 export const EMPLOYMENTTYPE_OPTIONS = [
   {
-    _id: "full-time",
+    _id: "fullTime",
     name: "Full-time",
   },
   {
-    _id: "part-time",
+    _id: "partTime",
     name: "Part-time",
   },
   {
@@ -152,5 +154,24 @@ export const SALARY_CURRENCY_OPTIONS = [
   {
     _id: "gbp",
     name: "GBP",
+  },
+];
+
+export const JOB_STATUS_OPTIONS = [
+  {
+    _id: "pending",
+    name: "Pending",
+  },
+  {
+    _id: "reviewed",
+    name: "Reviewed",
+  },
+  {
+    _id: "accepted",
+    name: "Accepted",
+  },
+  {
+    _id: "rejected",
+    name: "Rejected",
   },
 ];

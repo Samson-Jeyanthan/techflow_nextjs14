@@ -7,7 +7,7 @@ import { Form, FormField } from "@/components/ui/form";
 import { CommunitySchema } from "@/lib/validations";
 import { CoverPhoto, FormInput, ProfilePhoto, TextArea } from "../inputs";
 import { Button } from "../ui/button";
-import { getFileUpload } from "@/lib/actions/utils.action";
+import { getSignedURL } from "@/lib/actions/utils.action";
 import { createCommunity } from "@/lib/actions/community.action";
 import { usePathname, useRouter } from "next/navigation";
 
@@ -39,7 +39,7 @@ const CommunityForm = ({ type, mongoUserId, communityDetails }: Props) => {
 
     try {
       if (values.profilePhoto) {
-        const signedURLResult = await getFileUpload({
+        const signedURLResult = await getSignedURL({
           fileType: "image/jpeg",
         });
         console.log(signedURLResult);
