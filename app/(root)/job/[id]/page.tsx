@@ -8,7 +8,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { getJobByIdAction } from "@/lib/actions/job.action";
 import { getUserById } from "@/lib/actions/user.action";
-import { formatCountValue, getTimestamp } from "@/lib/utils";
+import { formatCountValue, getFormattedDate, getTimestamp } from "@/lib/utils";
 import {
   JobsIcon,
   LocationIcon,
@@ -32,7 +32,7 @@ const JobDetailPage = async ({ params }: { params: { id: string } }) => {
   }
   console.log(mongoUser);
 
-  const showActionButtons = clerkId && clerkId === result?.author.clerkId;
+  const isAuthor = clerkId && clerkId === result?.author.clerkId;
   return (
     <section className="flex w-full flex-col gap-6 pb-16">
       <header className="mb-10 flex w-full flex-col items-center justify-center gap-4 border-b border-light-750 pb-12 pt-8 dark:border-dark-350 ">
@@ -51,7 +51,7 @@ const JobDetailPage = async ({ params }: { params: { id: string } }) => {
           <p>{getTimestamp(result?.createdAt)}</p>
         </div>
 
-        {showActionButtons ? (
+        {isAuthor ? (
           <SignedIn>
             <Link href={`/job/edit/${result?._id}`}>
               <Button className="mt-4 rounded-full bg-primary-100 text-sm font-medium text-light-900">
@@ -66,6 +66,13 @@ const JobDetailPage = async ({ params }: { params: { id: string } }) => {
             jobId={params.id}
           />
         )}
+
+        <div className="text-dark-100_light-800 flex-center mt-2 gap-2 text-base">
+          <p className="text-dark-500_light-600 text-sm">
+            {isAuthor ? "Deadline" : "Apply Before"}
+          </p>
+          {getFormattedDate(result?.deadline)}
+        </div>
       </header>
 
       <div className="bg-light-800_dark-200 mb-2 flex w-full items-center justify-between gap-6 rounded-xl p-6">
@@ -119,10 +126,12 @@ const JobDetailPage = async ({ params }: { params: { id: string } }) => {
         ))}
       </div>
 
-      <AllApplications
-        jobId={result?._id}
-        totalApplications={result?.applications?.length}
-      />
+      {isAuthor && (
+        <AllApplications
+          jobId={result?._id}
+          totalApplications={result?.applications?.length}
+        />
+      )}
     </section>
   );
 };

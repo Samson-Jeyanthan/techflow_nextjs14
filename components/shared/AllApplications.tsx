@@ -24,6 +24,8 @@ const AllApplications = async ({ totalApplications, jobId }: Props) => {
         {results.applications.map((result, index) => (
           <ApplicationCard
             key={index}
+            _id={result._id}
+            jobId={jobId}
             applicantEmail={result.applicantEmail}
             applicantName={result.applicantName}
             profilePic={result.applicant.avatar}

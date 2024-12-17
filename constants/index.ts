@@ -156,3 +156,22 @@ export const SALARY_CURRENCY_OPTIONS = [
     name: "GBP",
   },
 ];
+
+export const JOB_STATUS_OPTIONS = [
+  {
+    _id: "pending",
+    name: "Pending",
+  },
+  {
+    _id: "reviewed",
+    name: "Reviewed",
+  },
+  {
+    _id: "accepted",
+    name: "Accepted",
+  },
+  {
+    _id: "rejected",
+    name: "Rejected",
+  },
+];

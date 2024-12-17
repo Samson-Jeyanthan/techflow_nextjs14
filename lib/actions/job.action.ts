@@ -196,3 +196,20 @@ export async function getAllApplicationsAction(params: any) {
     throw error;
   }
 }
+
+export async function setApplicationStatusAction(params: any) {
+  try {
+    connectToDatabase();
+
+    const { applicationId, status, path } = params;
+
+    await Application.findByIdAndUpdate(applicationId, {
+      $set: { status },
+    });
+
+    revalidatePath(path);
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}

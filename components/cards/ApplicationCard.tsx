@@ -6,6 +6,8 @@ import Link from "next/link";
 import { ApplicationOptions } from "../options";
 
 type Props = {
+  _id: string;
+  jobId: string;
   applicantName: string;
   applicantEmail: string;
   profilePic: string;
@@ -18,6 +20,8 @@ type Props = {
 };
 
 const ApplicationCard = ({
+  _id,
+  jobId,
   applicantName,
   applicantEmail,
   profilePic,
@@ -37,7 +41,7 @@ const ApplicationCard = ({
         />
 
         <div className="flex w-full items-start justify-between gap-2">
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-1">
             <h2 className="text-dark-100_light-850 text-sm font-medium capitalize">
               {applicantName}
             </h2>
@@ -46,7 +50,7 @@ const ApplicationCard = ({
             </p>
           </div>
 
-          <ApplicationOptions />
+          <ApplicationOptions applicationId={_id} jobId={jobId} />
         </div>
       </div>
 
