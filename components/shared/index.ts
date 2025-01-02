@@ -22,3 +22,4 @@ export { default as TabLinks } from "./TabLinks";
 export { default as LikeButton } from "./LikeButton";
 export { default as JobMetric } from "./JobMetric";
 export { default as AllApplications } from "./AllApplications";
+export { default as CommunityHeader } from "./CommunityHeader";
