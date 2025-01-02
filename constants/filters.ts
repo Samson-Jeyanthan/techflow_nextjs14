@@ -13,7 +13,7 @@ export const QuestionFilters = [
   { name: "Most Answered", value: "most_answered" },
 ];
 
-export const TagFilters = [
+export const TAGS_FILTERS = [
   { name: "Popular", value: "popular" },
   { name: "Recent", value: "recent" },
   { name: "Name", value: "name" },
@@ -25,4 +25,10 @@ export const QANDAS_FILTERS = [
   { name: "Recommended", value: "recommended" },
   { name: "Frequent", value: "frequent" },
   { name: "Unanswered", value: "unanswered" },
+];
+
+export const USERS_FILTERS = [
+  { name: "New Users", value: "new_users" },
+  { name: "Old Users", value: "old_users" },
+  { name: "Top Contributors", value: "top_contributors" },
 ];

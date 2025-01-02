@@ -1,5 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import qs from "query-string";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -52,3 +53,114 @@ export const getTimestamp = (createdAt: Date): string => {
     return `${years} ${years === 1 ? "year" : "years"} ago`;
   }
 };
+
+export const getJoinedDate = (date: Date): string => {
+  // Extract the month and year from the Date object
+  const month = date.toLocaleString("default", { month: "long" });
+  const year = date.getFullYear();
+
+  // Create the joined date string (e.g., "September 2023")
+  const joinedDate = `${month} ${year}`;
+
+  return joinedDate;
+};
+
+interface IUrlQueryParams {
+  params: string;
+  key: string;
+  value: string | null;
+}
+
+export const formUrlQuery = ({ params, key, value }: IUrlQueryParams) => {
+  const currentUrl = qs.parse(params);
+
+  currentUrl[key] = value;
+
+  return qs.stringifyUrl(
+    {
+      url: window.location.pathname,
+      query: currentUrl,
+    },
+    { skipNull: true }
+  );
+};
+
+interface IRemoveUrlQueryParams {
+  params: string;
+  keysToRemove: string[];
+}
+
+export const removeKeysFromQuery = ({
+  params,
+  keysToRemove,
+}: IRemoveUrlQueryParams) => {
+  const currentUrl = qs.parse(params);
+
+  keysToRemove.forEach((key) => {
+    delete currentUrl[key];
+  });
+
+  return qs.stringifyUrl(
+    {
+      url: window.location.pathname,
+      query: currentUrl,
+    },
+    { skipNull: true }
+  );
+};
+
+// getting date format like 2024 Jan 01
+export function getFormattedDate(date: string | null): string {
+  if (!date) {
+    return "";
+  }
+  const dt = new Date(date);
+
+  if (isNaN(dt.getTime())) {
+    throw new Error("Invalid date format");
+  }
+
+  const year = dt.getUTCFullYear();
+  const monthNames = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  const month = monthNames[dt.getUTCMonth()]; // Get the month name from the array
+  const day = dt.getUTCDate().toString().padStart(2, "0");
+
+  return `${year} ${month} ${day}`;
+}
+
+export function formatCountValue(countValue: number): string {
+  if (countValue >= 1000 && countValue < 1000000) {
+    if (countValue % 1000 === 0) {
+      return countValue / 1000 + "K";
+    } else {
+      const formatted = (countValue / 1000).toFixed(1);
+      return formatted.endsWith(".0")
+        ? formatted.slice(0, -2) + "K"
+        : formatted + "K";
+    }
+  } else if (countValue >= 1000000) {
+    if (countValue % 1000000 === 0) {
+      return countValue / 1000000 + "M";
+    } else {
+      const formatted = (countValue / 1000000).toFixed(1);
+      return formatted.endsWith(".0")
+        ? formatted.slice(0, -2) + "M"
+        : formatted + "M";
+    }
+  } else {
+    return countValue.toString();
+  }
+}
