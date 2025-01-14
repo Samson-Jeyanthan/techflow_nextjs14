@@ -1,9 +1,9 @@
 import { TURLProps } from "@/types/utils.types";
-import { CreatePostForm } from "@/components/forms";
+import { PostForm } from "@/components/forms";
 import { getUserById } from "@/lib/actions/user.action";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
-import { getCommunityInfoAction } from "@/lib/actions/community.action";
+import { getCommunityByIdAction } from "@/lib/actions/community.action";
 
 const CreatePost = async ({ params, searchParams }: TURLProps) => {
   const { userId } = auth();
@@ -11,7 +11,7 @@ const CreatePost = async ({ params, searchParams }: TURLProps) => {
 
   const mongoUser = await getUserById({ userId });
 
-  const communityInfo = await getCommunityInfoAction({
+  const communityInfo = await getCommunityByIdAction({
     communityId: params.id,
   });
 
@@ -25,7 +25,7 @@ const CreatePost = async ({ params, searchParams }: TURLProps) => {
         Only displays on community&apos;s post feed
       </p>
       <div className="my-8">
-        <CreatePostForm
+        <PostForm
           currentUserId={JSON.stringify(mongoUser._id)}
           communityId={params.id}
         />

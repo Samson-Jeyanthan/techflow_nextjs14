@@ -33,12 +33,7 @@ interface Props {
   communityId?: string;
 }
 
-const CreatePostForm = ({
-  type,
-  currentUserId,
-  postDetails,
-  communityId,
-}: Props) => {
+const PostForm = ({ type, currentUserId, postDetails, communityId }: Props) => {
   const { mode } = useTheme();
   const editorRef = useRef(null);
   const router = useRouter();
@@ -327,4 +322,4 @@ const CreatePostForm = ({
   );
 };
 
-export default CreatePostForm;
+export default PostForm;

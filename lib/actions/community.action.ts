@@ -1,10 +1,10 @@
 "use server";
 
-import Community from "@/database/community.model";
 import { connectToDatabase } from "../mongoose";
 import { revalidatePath } from "next/cache";
 import User from "@/database/user.model";
 import Post from "@/database/post.model";
+import Community from "@/database/community.model";
 
 export async function createCommunity(params: any) {
   try {
@@ -44,7 +44,7 @@ export async function getAllCommunities() {
   }
 }
 
-export async function getCommunityInfoAction(params: any) {
+export async function getCommunityByIdAction(params: any) {
   try {
     connectToDatabase();
 
@@ -71,6 +71,33 @@ export async function getCommunityInfoAction(params: any) {
   } catch (error) {
     console.log(error);
     throw error;
+  }
+}
+
+export async function editCommunityAction(params: any) {
+  try {
+    connectToDatabase();
+
+    const { communityId, name, bio, profilePhoto, coverPhoto, path } = params;
+
+    const community = await Community.findById(communityId)
+      .populate("members")
+      .populate("admins");
+
+    if (!community) {
+      throw new Error("Community not found");
+    }
+
+    community.name = name;
+    community.bio = bio;
+    community.profilePhoto = profilePhoto;
+    community.coverPhoto = coverPhoto;
+
+    await community.save();
+
+    revalidatePath(path);
+  } catch (error) {
+    console.log(error);
   }
 }
 

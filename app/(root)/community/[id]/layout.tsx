@@ -1,5 +1,5 @@
 import { CommunityHeader, TabLinks } from "@/components/shared";
-import { getCommunityInfoAction } from "@/lib/actions/community.action";
+import { getCommunityByIdAction } from "@/lib/actions/community.action";
 import React from "react";
 
 async function layout({
@@ -9,7 +9,7 @@ async function layout({
   children: React.ReactNode;
   params: { id: string };
 }) {
-  const communityInfo = await getCommunityInfoAction({
+  const communityInfo = await getCommunityByIdAction({
     communityId: params.id,
   });
 

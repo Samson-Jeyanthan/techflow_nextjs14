@@ -15,6 +15,7 @@ import Question from "@/database/question.model";
 import Answer from "@/database/answer.model";
 import { FilterQuery } from "mongoose";
 import Post from "@/database/post.model";
+import Community from "@/database/community.model";
 export async function getUserById(params: any) {
   try {
     connectToDatabase();
@@ -152,12 +153,16 @@ export async function getUserInfo(params: IGetUserByIdParams) {
     const totalQuestions = await Question.countDocuments({ author: user._id });
     const totalAnswers = await Answer.countDocuments({ author: user._id });
     const totalPosts = await Post.countDocuments({ author: user._id });
+    const totalCreatedCommunities = await Community.countDocuments({
+      createdBy: user._id,
+    });
 
     return {
       user,
       totalQuestions,
       totalAnswers,
       totalPosts,
+      totalCreatedCommunities,
     };
   } catch (error) {
     console.log(error);
@@ -239,6 +244,29 @@ export async function getUserPosts(params: IGetUserStatsParams) {
     const isNextPost = totalPosts > skipAmount + userPosts.length;
 
     return { totalPosts, posts: userPosts, isNextPost };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function getUserCreatedCommunitiesAction(
+  params: IGetUserStatsParams
+) {
+  try {
+    connectToDatabase();
+
+    const { userId, page = 1, pageSize = 20 } = params;
+
+    const skipAmount = (page - 1) * pageSize;
+
+    const communities = await Community.find({ createdBy: userId })
+      .skip(skipAmount)
+      .limit(pageSize)
+      .sort({ createdAt: -1 })
+      .populate("createdBy", "_id clerkId username name avatar");
+
+    return { communities };
   } catch (error) {
     console.log(error);
     throw error;

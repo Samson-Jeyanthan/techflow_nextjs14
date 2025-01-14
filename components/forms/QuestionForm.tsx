@@ -249,17 +249,26 @@ const QuestionForm = ({ type, mongoUserId, questionDetails }: Props) => {
           )}
         />
 
-        <Button
-          type="submit"
-          className="bg-primary-100_primary-500 text-sm font-medium text-light-900"
-          disabled={form.formState.isSubmitting}
-        >
-          {form.formState.isSubmitting ? (
-            <>{type ? "Updating..." : "Posting..."}</>
-          ) : (
-            <>{type ? "Edit Question" : "Ask Question"}</>
-          )}
-        </Button>
+        <footer className="flex w-full flex-col items-center justify-center gap-4 pb-6">
+          <Button
+            type="submit"
+            className="bg-primary-100_primary-500 text-sm font-medium text-light-900"
+            disabled={form.formState.isSubmitting}
+          >
+            {form.formState.isSubmitting ? (
+              <>{type ? "Updating..." : "Posting..."}</>
+            ) : (
+              <>{type ? "Edit Question" : "Ask Question"}</>
+            )}
+          </Button>
+
+          <Button
+            onClick={() => router.back()}
+            className="text-dark-100_light-850 w-max border-0 bg-transparent hover:text-primary-100"
+          >
+            Cancel
+          </Button>
+        </footer>
       </form>
     </Form>
   );
