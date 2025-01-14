@@ -175,3 +175,18 @@ export const JOB_STATUS_OPTIONS = [
     name: "Rejected",
   },
 ];
+
+export const COMMUNITY_UPLOAD_OPTIONS = [
+  {
+    path: "/ask-question",
+    name: "Ask a Question",
+  },
+  {
+    path: "/create-post",
+    name: "Create a Post",
+  },
+  {
+    path: "/share-resource",
+    name: "Share a Resource",
+  },
+];
