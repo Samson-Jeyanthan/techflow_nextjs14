@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import { auth } from "@clerk/nextjs/server";
+import { UploadCommunityModal } from "../modals";
 
 const CommunityHeader = ({ communityInfo }: any) => {
   const { userId: clerkId } = auth();
@@ -37,19 +38,22 @@ const CommunityHeader = ({ communityInfo }: any) => {
           </div>
         </div>
 
-        {clerkId === communityInfo.community.createdBy.clerkId ? (
-          <Link href={`/community/edit/${communityInfo.community._id}`}>
-            <Button className="bg-primary-100_primary-500 text-sm font-medium text-light-900">
-              Edit Community
-            </Button>
-          </Link>
-        ) : (
-          <Link href={`/community/edit/${communityInfo.community._id}`}>
-            <Button className="bg-primary-100_primary-500 text-sm font-medium text-light-900">
-              Join Community
-            </Button>
-          </Link>
-        )}
+        <div className="flex gap-4">
+          <UploadCommunityModal />
+          {clerkId === communityInfo.community.createdBy.clerkId ? (
+            <Link href={`/community/edit/${communityInfo.community._id}`}>
+              <Button className="bg-primary-100_primary-500 text-sm font-medium text-light-900">
+                Edit Community
+              </Button>
+            </Link>
+          ) : (
+            <Link href={`/community/edit/${communityInfo.community._id}`}>
+              <Button className="bg-primary-100_primary-500 text-sm font-medium text-light-900">
+                Join Community
+              </Button>
+            </Link>
+          )}
+        </div>
       </div>
     </header>
   );
