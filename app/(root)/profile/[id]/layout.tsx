@@ -21,7 +21,7 @@ async function layout({
               tabName: "Posts",
               value: "",
               href: `/profile/${userInfo.user.clerkId}`,
-              totalNumbers: 0,
+              totalNumbers: userInfo.totalPosts,
             },
             {
               tabName: "Questions",
