@@ -140,7 +140,7 @@ export type TCreatePostParams = {
   media?: IMediaProps[];
   tags?: string[];
   author: Schema.Types.ObjectId | IUser;
-  groupId?: string;
+  communityId?: string;
   path: string;
 };
 

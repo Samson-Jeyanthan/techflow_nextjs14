@@ -15,7 +15,10 @@ async function layout({
 
   return (
     <section className="flex w-full flex-col gap-8">
-      <CommunityHeader communityInfo={communityInfo} />
+      <CommunityHeader
+        communityInfo={communityInfo.community}
+        communityId={params.id}
+      />
 
       <TabLinks
         tabs={[
@@ -45,7 +48,7 @@ async function layout({
           },
         ]}
       />
-      {children}
+      <div className="flex w-full justify-center">{children}</div>
     </section>
   );
 }

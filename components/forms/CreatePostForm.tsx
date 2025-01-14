@@ -30,9 +30,15 @@ interface Props {
   type?: string;
   currentUserId: string;
   postDetails?: string;
+  communityId?: string;
 }
 
-const CreatePostForm = ({ type, currentUserId, postDetails }: Props) => {
+const CreatePostForm = ({
+  type,
+  currentUserId,
+  postDetails,
+  communityId,
+}: Props) => {
   const { mode } = useTheme();
   const editorRef = useRef(null);
   const router = useRouter();
@@ -133,12 +139,16 @@ const CreatePostForm = ({ type, currentUserId, postDetails }: Props) => {
           media: uploadedMedia,
           tags: values.tags,
           author: JSON.parse(currentUserId),
-          groupId: "",
+          communityId: communityId || "",
           path: pathname,
         });
       }
 
-      router.push("/");
+      if (communityId) {
+        router.push(`/community/${communityId}`);
+      } else {
+        router.push("/");
+      }
     } catch (error) {
       console.log(error);
     }

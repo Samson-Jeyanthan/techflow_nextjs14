@@ -15,7 +15,7 @@ import Image from "next/image";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { HomePostPhoto } from "../inputs";
-import { createPost } from "@/lib/actions/post.action";
+import { createPostAction } from "@/lib/actions/post.action";
 import { getSignedURL } from "@/lib/actions/utils.action";
 import { useRouter } from "next/navigation";
 import { useMedia } from "@/lib/hooks/useMedia";
@@ -61,9 +61,9 @@ const HomePostForm = ({ avatar, mongoUserId }: any) => {
         }
       }
 
-      await createPost({
+      await createPostAction({
         description: values.description,
-        mediaFiles: [
+        media: [
           {
             mediaType: "image",
             mediaURL: postImageURL,

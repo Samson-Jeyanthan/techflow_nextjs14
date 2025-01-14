@@ -16,13 +16,14 @@ export async function createPostAction(params: TCreatePostParams) {
   try {
     connectToDatabase();
 
-    const { title, description, media, tags, author, groupId, path } = params;
+    const { title, description, media, tags, author, communityId, path } =
+      params;
 
     const post = await Post.create({
       title,
       description,
       media,
-      groupId,
+      communityId,
       author,
     });
 

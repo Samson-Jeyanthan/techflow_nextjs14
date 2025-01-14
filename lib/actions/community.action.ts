@@ -4,6 +4,7 @@ import Community from "@/database/community.model";
 import { connectToDatabase } from "../mongoose";
 import { revalidatePath } from "next/cache";
 import User from "@/database/user.model";
+import Post from "@/database/post.model";
 
 export async function createCommunity(params: any) {
   try {
@@ -67,6 +68,34 @@ export async function getCommunityInfoAction(params: any) {
       });
 
     return { community };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function getCommunityPostsAction(params: any) {
+  try {
+    connectToDatabase();
+
+    const { communityId, page = 1, pageSize = 20 } = params;
+
+    const skipAmount = (page - 1) * pageSize;
+
+    const totalPosts = await Post.countDocuments({
+      communityId,
+    });
+
+    const communityPosts = await Post.find({ communityId })
+      .skip(skipAmount)
+      .limit(pageSize)
+      .sort({ createdAt: -1, views: -1, upvotes: -1 })
+      .populate("tags", "_id name")
+      .populate("author", "_id clerkId name username avatar");
+
+    const isNextPost = totalPosts > skipAmount + communityPosts.length;
+
+    return { totalPosts, posts: communityPosts, isNextPost };
   } catch (error) {
     console.log(error);
     throw error;

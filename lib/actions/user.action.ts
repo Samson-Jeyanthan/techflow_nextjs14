@@ -182,7 +182,7 @@ export async function getUserQuestions(params: IGetUserStatsParams) {
       .limit(pageSize)
       .sort({ createdAt: -1, views: -1, upvotes: -1 })
       .populate("tags", "_id name")
-      .populate("author", "_id clerkId name avatar");
+      .populate("author", "_id clerkId username name avatar");
 
     const isNextQuestion = totalQuestions > skipAmount + userQuestions.length;
 
@@ -208,7 +208,7 @@ export async function getUserAnswers(params: IGetUserStatsParams) {
       .limit(pageSize)
       .sort({ upvotes: -1 })
       .populate("question", "_id title")
-      .populate("author", "_id clerkId name avatar");
+      .populate("author", "_id clerkId name username avatar");
 
     const isNextAnswer = totalAnswers > skipAmount + userAnswers.length;
 

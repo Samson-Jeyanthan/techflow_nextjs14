@@ -82,7 +82,7 @@ const PostCard = async ({
               alt={title}
               width={1200}
               height={1200}
-              className="mt-6 size-full rounded-lg object-cover"
+              className="mt-6 size-full max-h-[28rem] rounded-lg bg-dark-100 object-contain"
             />
           ))}
       </div>
