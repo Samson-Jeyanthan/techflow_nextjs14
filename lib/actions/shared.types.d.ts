@@ -2,6 +2,8 @@ import { Schema } from "mongoose";
 import { IUser } from "@/database/user.model";
 import { IMediaProps } from "@/types/utils.types";
 
+// ------------------------ question actions ------------------------------
+
 export type TGetQuestionsParams = {
   page?: number;
   pageSize?: number;
@@ -15,7 +17,46 @@ export type TCreateQuestionParams = {
   tags: string[];
   author: Schema.Types.ObjectId | IUser;
   path: string;
+  communityId?: string;
 };
+
+export interface IGetQuestionByIdParams {
+  questionId: string;
+}
+
+export interface IQuestionVoteParams {
+  questionId: string;
+  userId: string;
+  hasUpvoted: boolean;
+  hasDownvoted: boolean;
+  path: string;
+}
+
+export interface IViewQuestionParams {
+  questionId: string;
+  userId: string | undefined;
+}
+
+export interface IGetQuestionsByTagIdParams {
+  tagId: string;
+  page?: number;
+  pageSize?: number;
+  searchQuery?: string;
+}
+
+export interface IDeleteQuestionParams {
+  questionId: string;
+  path: string;
+}
+
+export interface IEditQuestionParams {
+  questionId: string;
+  title: string;
+  content: string;
+  path: string;
+}
+
+// ------------------------ user actions ------------------------------
 
 export type TCreateUserParams = {
   clerkId: string;
@@ -42,6 +83,18 @@ export interface IGetAllUsersParams {
   searchQuery?: string; // Add searchQuery parameter
 }
 
+export interface IGetUserByIdParams {
+  userId: string;
+}
+
+export interface IGetUserStatsParams {
+  userId: string;
+  page?: number;
+  pageSize?: number;
+}
+
+// ------------------------ tag actions ------------------------------
+
 export interface IGetTopInteractedTagsParams {
   userId: string;
   limit?: number;
@@ -54,9 +107,7 @@ export interface TGetAllTagsParams {
   searchQuery?: string;
 }
 
-export interface IGetQuestionByIdParams {
-  questionId: string;
-}
+// ------------------------ answer actions ------------------------------
 
 export interface ICreateAnswerParams {
   content: string;
@@ -72,14 +123,6 @@ export interface IGetAnswersParams {
   pageSize?: number;
 }
 
-export interface IQuestionVoteParams {
-  questionId: string;
-  userId: string;
-  hasUpvoted: boolean;
-  hasDownvoted: boolean;
-  path: string;
-}
-
 export interface IAnswerVoteParams {
   answerId: string;
   userId: string;
@@ -88,6 +131,12 @@ export interface IAnswerVoteParams {
   path: string;
 }
 
+export interface IDeleteAnswerParams {
+  answerId: string;
+  path: string;
+}
+
+// ------------------------ saved actions ------------------------------
 export interface IToggleSaveParams {
   userId: string;
   saveFor: "QUESTION" | "POST" | "JOB" | "RESOURCE";
@@ -95,45 +144,7 @@ export interface IToggleSaveParams {
   path: string;
 }
 
-export interface IViewQuestionParams {
-  questionId: string;
-  userId: string | undefined;
-}
-
-export interface IGetQuestionsByTagIdParams {
-  tagId: string;
-  page?: number;
-  pageSize?: number;
-  searchQuery?: string;
-}
-
-export interface IGetUserByIdParams {
-  userId: string;
-}
-
-export interface IGetUserStatsParams {
-  userId: string;
-  page?: number;
-  pageSize?: number;
-}
-
-export interface IDeleteQuestionParams {
-  questionId: string;
-  path: string;
-}
-
-export interface IEditQuestionParams {
-  questionId: string;
-  title: string;
-  content: string;
-  path: string;
-}
-
-export interface IDeleteAnswerParams {
-  answerId: string;
-  path: string;
-}
-
+// ------------------------ post actions ------------------------------
 export type TCreatePostParams = {
   title?: string;
   description?: string;
@@ -161,6 +172,8 @@ export interface IDeletePostParams {
   path: string;
 }
 
+// ------------------------ job actions ------------------------------
+
 export type TCreateJobParams = {
   title: string;
   description: string;
@@ -175,4 +188,34 @@ export type TCreateJobParams = {
   tags: string[];
   author: Schema.Types.ObjectId | IUser;
   path: string;
+};
+
+// ------------------------ community actions --------------------------
+
+export type TCreateCommunityParams = {
+  name: string;
+  bio: string;
+  profilePhoto: IMediaProps | undefined;
+  coverPhoto: IMediaProps | undefined;
+  createdBy: Schema.Types.ObjectId | IUser;
+  path: string;
+};
+
+export type TGetCommunityByIdParams = {
+  communityId: string;
+};
+
+export type TEditCommunityParams = {
+  communityId: string;
+  name: string;
+  bio: string;
+  profilePhoto: IMediaProps | undefined;
+  coverPhoto: IMediaProps | undefined;
+  path: string;
+};
+
+export type TGetCommunityContentsParams = {
+  id: string;
+  page?: number;
+  pageSize?: number;
 };

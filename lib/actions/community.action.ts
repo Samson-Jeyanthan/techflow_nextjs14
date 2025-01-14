@@ -5,8 +5,15 @@ import { revalidatePath } from "next/cache";
 import User from "@/database/user.model";
 import Post from "@/database/post.model";
 import Community from "@/database/community.model";
+import {
+  TCreateCommunityParams,
+  TEditCommunityParams,
+  TGetCommunityByIdParams,
+  TGetCommunityContentsParams,
+} from "./shared.types";
+import Question from "@/database/question.model";
 
-export async function createCommunity(params: any) {
+export async function createCommunity(params: TCreateCommunityParams) {
   try {
     connectToDatabase();
 
@@ -44,7 +51,7 @@ export async function getAllCommunities() {
   }
 }
 
-export async function getCommunityByIdAction(params: any) {
+export async function getCommunityByIdAction(params: TGetCommunityByIdParams) {
   try {
     connectToDatabase();
 
@@ -74,7 +81,7 @@ export async function getCommunityByIdAction(params: any) {
   }
 }
 
-export async function editCommunityAction(params: any) {
+export async function editCommunityAction(params: TEditCommunityParams) {
   try {
     connectToDatabase();
 
@@ -101,11 +108,15 @@ export async function editCommunityAction(params: any) {
   }
 }
 
-export async function getCommunityPostsAction(params: any) {
+export async function getCommunityPostsAction(
+  params: TGetCommunityContentsParams
+) {
   try {
     connectToDatabase();
 
-    const { communityId, page = 1, pageSize = 20 } = params;
+    const { id: communityId, page = 1, pageSize = 20 } = params;
+
+    console.log(communityId, "communityId");
 
     const skipAmount = (page - 1) * pageSize;
 
@@ -123,6 +134,39 @@ export async function getCommunityPostsAction(params: any) {
     const isNextPost = totalPosts > skipAmount + communityPosts.length;
 
     return { totalPosts, posts: communityPosts, isNextPost };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function getCommunityQuestionsAction(
+  params: TGetCommunityContentsParams
+) {
+  try {
+    connectToDatabase();
+
+    const { id: communityId, page = 1, pageSize = 20 } = params;
+
+    console.log(communityId, "communityId");
+
+    const skipAmount = (page - 1) * pageSize;
+
+    const totalQuestions = await Question.countDocuments({
+      communityId,
+    });
+
+    const communityQuestions = await Question.find({ communityId })
+      .skip(skipAmount)
+      .limit(pageSize)
+      .sort({ createdAt: -1, views: -1, upvotes: -1 })
+      .populate("tags", "_id name")
+      .populate("author", "_id clerkId name username avatar")
+      .populate("communityId", "_id name");
+    const isNextQuestion =
+      totalQuestions > skipAmount + communityQuestions.length;
+
+    return { totalQuestions, questions: communityQuestions, isNextQuestion };
   } catch (error) {
     console.log(error);
     throw error;

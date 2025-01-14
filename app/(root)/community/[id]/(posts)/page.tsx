@@ -15,7 +15,7 @@ const CommunityPage = async ({ params, searchParams }: TURLProps) => {
   }
 
   const results = await getCommunityPostsAction({
-    communityid: params.id,
+    id: params.id,
     page: searchParams.page ? +searchParams.page : 1,
   });
 

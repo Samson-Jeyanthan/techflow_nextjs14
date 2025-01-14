@@ -16,6 +16,51 @@ import { revalidatePath } from "next/cache";
 import Answer from "@/database/answer.model";
 import Interaction from "@/database/interaction.model";
 import { FilterQuery } from "mongoose";
+import Community from "@/database/community.model";
+
+export async function createQuestion(params: TCreateQuestionParams) {
+  try {
+    connectToDatabase();
+
+    const { title, content, author, tags, communityId, path } = params;
+    // create the question in db
+    const question = await Question.create({
+      title,
+      content,
+      author,
+      communityId,
+    });
+
+    const tagDocuments = [];
+
+    // create the tags in db or get them if they already exist
+    for (const tag of tags) {
+      const existingTag = await Tag.findOneAndUpdate(
+        { name: { $regex: new RegExp(`^${tag}$`, "i") } }, // try to find an existing tag
+        {
+          $setOnInsert: { name: tag }, // if no tag is found, it creates a new one
+          $push: { questions: question._id }, // and adds the question id into the questions
+        },
+        { upsert: true, new: true }
+      );
+
+      tagDocuments.push(existingTag._id);
+    }
+
+    await Question.findByIdAndUpdate(question._id, {
+      $push: { tags: { $each: tagDocuments } },
+    });
+
+    // TODO: create an interaction record for the user's ask-question action
+
+    // TODO: increment author's reputation by +5 for ask-question
+
+    revalidatePath(path);
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
 
 export async function getQuestions(params: TGetQuestionsParams) {
   try {
@@ -61,6 +106,10 @@ export async function getQuestions(params: TGetQuestionsParams) {
         path: "author",
         model: User,
       })
+      .populate({
+        path: "communityId",
+        model: Community,
+      })
       .skip(skipAmount)
       .limit(pageSize)
       .sort(sortOptions);
@@ -71,49 +120,6 @@ export async function getQuestions(params: TGetQuestionsParams) {
     const isNext = totalQuestions > skipAmount + questions.length;
 
     return { questions, isNext };
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
-}
-
-export async function createQuestion(params: TCreateQuestionParams) {
-  try {
-    connectToDatabase();
-
-    const { title, content, author, tags, path } = params;
-    // create the question in db
-    const question = await Question.create({
-      title,
-      content,
-      author,
-    });
-
-    const tagDocuments = [];
-
-    // create the tags in db or get them if they already exist
-    for (const tag of tags) {
-      const existingTag = await Tag.findOneAndUpdate(
-        { name: { $regex: new RegExp(`^${tag}$`, "i") } }, // try to find an existing tag
-        {
-          $setOnInsert: { name: tag }, // if no tag is found, it creates a new one
-          $push: { questions: question._id }, // and adds the question id into the questions
-        },
-        { upsert: true, new: true }
-      );
-
-      tagDocuments.push(existingTag._id);
-    }
-
-    await Question.findByIdAndUpdate(question._id, {
-      $push: { tags: { $each: tagDocuments } },
-    });
-
-    // TODO: create an interaction record for the user's ask-question action
-
-    // TODO: increment author's reputation by +5 for ask-question
-
-    revalidatePath(path);
   } catch (error) {
     console.log(error);
     throw error;
@@ -136,6 +142,10 @@ export async function getQuestionById(params: IGetQuestionByIdParams) {
         path: "author",
         model: User,
         select: "_id clerkId name username avatar",
+      })
+      .populate({
+        path: "communityId",
+        model: Community,
       });
 
     return question;

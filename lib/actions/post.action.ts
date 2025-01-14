@@ -11,6 +11,7 @@ import {
 } from "./shared.types";
 import User from "@/database/user.model";
 import Comment from "@/database/comment.model";
+import Community from "@/database/community.model";
 
 export async function createPostAction(params: TCreatePostParams) {
   try {
@@ -63,7 +64,7 @@ export async function getAllPosts(params: any) {
   try {
     connectToDatabase();
 
-    const posts = await Post.find({})
+    const posts = await Post.find({ communityId: null })
       .populate({
         path: "author",
         model: User,
@@ -72,8 +73,13 @@ export async function getAllPosts(params: any) {
         path: "tags",
         model: Tag,
       })
+      .populate({
+        path: "communityId",
+        model: Community,
+      })
       .sort({ createdAt: -1 });
 
+    console.log(posts);
     return { posts };
   } catch (error) {
     console.log(error);
@@ -131,6 +137,10 @@ export async function getPostByIdAction(params: IGetPostByIdParams) {
       .populate({
         path: "tags",
         model: Tag,
+      })
+      .populate({
+        path: "communityId",
+        model: Community,
       });
 
     return post;

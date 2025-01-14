@@ -25,11 +25,17 @@ import { useTheme } from "@/context/ThemeProvider";
 
 interface Props {
   type?: string;
-  mongoUserId: string;
+  currentUserId: string;
   questionDetails?: string;
+  communityId?: string;
 }
 
-const QuestionForm = ({ type, mongoUserId, questionDetails }: Props) => {
+const QuestionForm = ({
+  type,
+  currentUserId,
+  questionDetails,
+  communityId,
+}: Props) => {
   const { mode } = useTheme();
   const editorRef = useRef(null);
   const router = useRouter();
@@ -102,14 +108,19 @@ const QuestionForm = ({ type, mongoUserId, questionDetails }: Props) => {
           title: values.title,
           content: values.explanation,
           tags: values.tags,
-          author: JSON.parse(mongoUserId),
+          author: JSON.parse(currentUserId),
+          communityId: communityId || "",
           path: pathname,
         });
 
-        router.push("/questions-and-answers");
+        if (communityId) {
+          router.push(`/community/${communityId}/questions`);
+        } else {
+          router.push("/questions-and-answers");
+        }
       }
     } catch (error) {
-      // handle errors
+      console.log(error);
     }
   }
 
@@ -249,10 +260,10 @@ const QuestionForm = ({ type, mongoUserId, questionDetails }: Props) => {
           )}
         />
 
-        <footer className="flex w-full flex-col items-center justify-center gap-4 pb-6">
+        <footer className="flex w-full flex-col items-center justify-center gap-4 pb-4 pt-6">
           <Button
             type="submit"
-            className="bg-primary-100_primary-500 text-sm font-medium text-light-900"
+            className="bg-primary-100_primary-500 w-full text-sm font-medium text-light-900"
             disabled={form.formState.isSubmitting}
           >
             {form.formState.isSubmitting ? (
