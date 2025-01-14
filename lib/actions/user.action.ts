@@ -14,7 +14,7 @@ import { revalidatePath } from "next/cache";
 import Question from "@/database/question.model";
 import Answer from "@/database/answer.model";
 import { FilterQuery } from "mongoose";
-
+import Post from "@/database/post.model";
 export async function getUserById(params: any) {
   try {
     connectToDatabase();
@@ -151,11 +151,13 @@ export async function getUserInfo(params: IGetUserByIdParams) {
 
     const totalQuestions = await Question.countDocuments({ author: user._id });
     const totalAnswers = await Answer.countDocuments({ author: user._id });
+    const totalPosts = await Post.countDocuments({ author: user._id });
 
     return {
       user,
       totalQuestions,
       totalAnswers,
+      totalPosts,
     };
   } catch (error) {
     console.log(error);
@@ -211,6 +213,32 @@ export async function getUserAnswers(params: IGetUserStatsParams) {
     const isNextAnswer = totalAnswers > skipAmount + userAnswers.length;
 
     return { totalAnswers, answers: userAnswers, isNextAnswer };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function getUserPosts(params: IGetUserStatsParams) {
+  try {
+    connectToDatabase();
+
+    const { userId, page = 1, pageSize = 20 } = params;
+
+    const skipAmount = (page - 1) * pageSize;
+
+    const totalPosts = await Post.countDocuments({ author: userId });
+
+    const userPosts = await Post.find({ author: userId })
+      .skip(skipAmount)
+      .limit(pageSize)
+      .sort({ createdAt: -1, views: -1, upvotes: -1 })
+      .populate("tags", "_id name")
+      .populate("author", "_id clerkId username name avatar");
+
+    const isNextPost = totalPosts > skipAmount + userPosts.length;
+
+    return { totalPosts, posts: userPosts, isNextPost };
   } catch (error) {
     console.log(error);
     throw error;
