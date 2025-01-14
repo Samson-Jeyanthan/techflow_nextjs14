@@ -4,3 +4,4 @@ export { default as TagCard } from "./TagCard";
 export { default as AnswerCard } from "./AnswerCard";
 export { default as JobCard } from "./JobCard";
 export { default as ApplicationCard } from "./ApplicationCard";
+export { default as AuthorPostCard } from "./AuthorPostCard";

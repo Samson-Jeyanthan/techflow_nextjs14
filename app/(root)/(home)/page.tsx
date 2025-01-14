@@ -52,8 +52,8 @@ const Home = async ({ searchParams }: ISearchParamsProps) => {
           <NoResult
             title="There is no posts to show"
             description="Be the first to break the silence! 🚀 Ask a Question and kickstart the discussion. our query could be the next big thing others learn from. Get involved! 💡"
-            link="/ask-question"
-            linkTitle="Ask Question"
+            link="/create-post"
+            linkTitle="Create a Post"
           />
         )}
       </div>
