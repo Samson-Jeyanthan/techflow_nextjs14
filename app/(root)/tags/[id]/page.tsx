@@ -1,19 +1,19 @@
 import { QuestionCard } from "@/components/cards";
-import { LocalSearchbar, NoResult } from "@/components/shared";
+import { LocalSearchbar, NoResult, Pagination } from "@/components/shared";
 import { getQuestionByTagId } from "@/lib/actions/tag.action";
 import { TURLProps } from "@/types/utils.types";
 
 const TagDetailPage = async ({ params, searchParams }: TURLProps) => {
-  const result = await getQuestionByTagId({
+  const results = await getQuestionByTagId({
     tagId: params.id,
-    page: 1,
     searchQuery: searchParams.q,
+    page: searchParams.page ? +searchParams.page : 1,
   });
 
   return (
     <>
       <h1 className="text-dark-100_light-900 text-3xl font-semibold">
-        {result.tagTitle}
+        {results.tagTitle}
       </h1>
 
       <div className="mt-11 w-full">
@@ -26,8 +26,8 @@ const TagDetailPage = async ({ params, searchParams }: TURLProps) => {
       </div>
 
       <div className="mt-10 flex w-full flex-col gap-6">
-        {result.questions.length > 0 ? (
-          result.questions.map((question: any) => (
+        {results.questions.length > 0 ? (
+          results.questions.map((question: any) => (
             <QuestionCard
               key={question._id}
               _id={question._id}
@@ -48,6 +48,13 @@ const TagDetailPage = async ({ params, searchParams }: TURLProps) => {
             linkTitle="Ask Question"
           />
         )}
+      </div>
+
+      <div className="mt-10">
+        <Pagination
+          pageNumber={searchParams?.page ? +searchParams.page : 1}
+          isNext={results.isNext}
+        />
       </div>
     </>
   );

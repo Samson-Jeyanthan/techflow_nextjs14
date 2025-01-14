@@ -8,11 +8,11 @@ import {
   SystemIcon,
   CommunityIcon,
   SaveIcon,
-  ExploreIcon,
   QuestionIcon,
   TagIcon,
-  ProfileIcon,
   JobsIcon,
+  MultiUserIcon,
+  ResourceIcon,
 } from "@/public/svgs";
 
 interface ThemeItems {
@@ -32,68 +32,161 @@ interface ISidebarLinks {
   name: string;
   route: string;
   icon: IconType | React.ComponentType<TConvertedSvgJsxProps>;
-  isLink: boolean;
 }
 
 export const SIDEBAR_LINKS: ISidebarLinks[] = [
   {
     name: "Home",
-    route: "/home",
+    route: "/",
     icon: HomeIcon,
-    isLink: true,
   },
   {
     name: "Q&As Hub",
     route: "/questions-and-answers",
     icon: QuestionIcon,
-    isLink: true,
-  },
-  {
-    name: "Explore",
-    route: "/explore",
-    icon: ExploreIcon,
-    isLink: true,
   },
   {
     name: "All Users",
     route: "/users",
-    icon: CommunityIcon,
-    isLink: true,
+    icon: MultiUserIcon,
   },
   {
     name: "Tags",
     route: "/tags",
     icon: TagIcon,
-    isLink: true,
   },
   {
     name: "Jobs",
     route: "/jobs",
     icon: JobsIcon,
-    isLink: true,
   },
   {
     name: "Resources",
     route: "/resources",
-    icon: JobsIcon,
-    isLink: true,
+    icon: ResourceIcon,
   },
   {
     name: "Saved Collections",
     route: "/saved-collections",
     icon: SaveIcon,
-    isLink: true,
   },
   {
-    name: "Community",
-    route: "/community",
+    name: "Communities",
+    route: "/communities",
     icon: CommunityIcon,
-    isLink: true,
+  },
+];
+
+export const WORKMODE_OPTIONS = [
+  {
+    _id: "remote",
+    name: "Remote",
   },
   {
-    name: "Profile",
-    route: "/profile",
-    icon: ProfileIcon,
-    isLink: true,
+    _id: "onsite",
+    name: "On-site",
+  },
+  {
+    _id: "hybrid",
+    name: "Hybrid",
+  },
+];
+
+export const EMPLOYMENTTYPE_OPTIONS = [
+  {
+    _id: "fullTime",
+    name: "Full-time",
+  },
+  {
+    _id: "partTime",
+    name: "Part-time",
+  },
+  {
+    _id: "contract",
+    name: "Contract",
+  },
+  {
+    _id: "freelance",
+    name: "Freelance",
+  },
+  {
+    _id: "internship",
+    name: "Internship",
+  },
+];
+
+export const SALARY_PER_OPTIONS = [
+  {
+    _id: "hour",
+    name: "Hour",
+  },
+  {
+    _id: "day",
+    name: "Day",
+  },
+  {
+    _id: "month",
+    name: "Month",
+  },
+  {
+    _id: "year",
+    name: "Year",
+  },
+];
+
+export const SALARY_CURRENCY_OPTIONS = [
+  {
+    _id: "lkr",
+    name: "LKR",
+  },
+  {
+    _id: "inr",
+    name: "INR",
+  },
+  {
+    _id: "usd",
+    name: "USD",
+  },
+  {
+    _id: "eur",
+    name: "EUR",
+  },
+  {
+    _id: "gbp",
+    name: "GBP",
+  },
+];
+
+export const JOB_STATUS_OPTIONS = [
+  {
+    _id: "pending",
+    name: "Pending",
+  },
+  {
+    _id: "reviewed",
+    name: "Reviewed",
+  },
+  {
+    _id: "accepted",
+    name: "Accepted",
+  },
+  {
+    _id: "rejected",
+    name: "Rejected",
+  },
+];
+
+export const COMMUNITY_UPLOAD_OPTIONS = [
+  {
+    path: "/ask-question",
+    name: "Ask a Question",
+  },
+  {
+    path: "/create-post",
+    name: "Create a Post",
+  },
+  {
+    path: "/share-resource",
+    name: "Share a Resource",
   },
 ];

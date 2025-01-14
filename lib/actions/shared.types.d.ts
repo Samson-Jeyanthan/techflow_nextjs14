@@ -1,5 +1,6 @@
 import { Schema } from "mongoose";
 import { IUser } from "@/database/user.model";
+import { IMediaProps } from "@/types/utils.types";
 
 export type TGetQuestionsParams = {
   page?: number;
@@ -132,3 +133,46 @@ export interface IDeleteAnswerParams {
   answerId: string;
   path: string;
 }
+
+export type TCreatePostParams = {
+  title?: string;
+  description?: string;
+  media?: IMediaProps[];
+  tags?: string[];
+  author: Schema.Types.ObjectId | IUser;
+  groupId?: string;
+  path: string;
+};
+
+export interface IGetCommentsParams {
+  isClientSide: boolean;
+  postId: string;
+  sortBy?: string;
+  page?: number;
+  pageSize?: number;
+}
+
+export interface IGetPostByIdParams {
+  postId: string;
+}
+
+export interface IDeletePostParams {
+  postId: string;
+  path: string;
+}
+
+export type TCreateJobParams = {
+  title: string;
+  description: string;
+  workMode: string;
+  employmentType: string;
+  furtherDetailLink: string | undefined;
+  salaryPer: string | undefined;
+  salaryCurrency: string | undefined;
+  salary: number | undefined;
+  location: string;
+  deadline: string;
+  tags: string[];
+  author: Schema.Types.ObjectId | IUser;
+  path: string;
+};

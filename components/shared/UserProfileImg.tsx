@@ -20,7 +20,7 @@ const UserProfileImg = ({
   return (
     <Link href={`/profile/${userId}`} className="flex items-center gap-2">
       <Image
-        src={src || "/images/default_profile_pic.png"}
+        src={src || "/images/default-user-profile-pic.png"}
         alt={userId + "profilePic"}
         width={512}
         height={512}

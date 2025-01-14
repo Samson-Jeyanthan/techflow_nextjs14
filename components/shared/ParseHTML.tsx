@@ -25,17 +25,19 @@ import "prismjs/components/prism-mongodb";
 import "prismjs/plugins/line-numbers/prism-line-numbers.js";
 import "prismjs/plugins/line-numbers/prism-line-numbers.css";
 import { useEffect } from "react";
+import { cn } from "@/lib/utils";
 
 interface Props {
   data: string;
+  className?: string;
 }
 
-const ParseHTML = ({ data }: Props) => {
+const ParseHTML = ({ data, className }: Props) => {
   useEffect(() => {
     Prism.highlightAll();
   }, []);
 
-  return <div className="text-dark-100_light-850">{parse(data)}</div>;
+  return <div className={cn(className)}>{parse(data)}</div>;
 };
 
 export default ParseHTML;
