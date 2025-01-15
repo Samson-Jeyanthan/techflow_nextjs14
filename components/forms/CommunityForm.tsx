@@ -8,11 +8,14 @@ import { CommunitySchema } from "@/lib/validations";
 import { CoverPhoto, FormInput, ProfilePhoto, TextArea } from "../inputs";
 import { Button } from "../ui/button";
 import { getSignedURL } from "@/lib/actions/utils.action";
-import { createCommunity } from "@/lib/actions/community.action";
+import {
+  createCommunity,
+  editCommunityAction,
+} from "@/lib/actions/community.action";
 import { usePathname, useRouter } from "next/navigation";
 
 type Props = {
-  type?: string;
+  type?: "edit";
   mongoUserId: string;
   communityDetails?: string;
 };
@@ -29,13 +32,14 @@ const CommunityForm = ({ type, mongoUserId, communityDetails }: Props) => {
     defaultValues: {
       name: parsedCommunityDetails?.name || "",
       bio: parsedCommunityDetails?.bio || "",
-      profilePhoto: parsedCommunityDetails?.profilePhoto || [],
-      coverPhoto: parsedCommunityDetails?.coverPhoto || [],
+      profilePhoto: [],
+      coverPhoto: [],
     },
   });
 
   async function onSubmit(values: z.infer<typeof CommunitySchema>) {
     let profilePicURL = "";
+    let coverPicURL = "";
 
     try {
       if (values.profilePhoto) {
@@ -64,16 +68,57 @@ const CommunityForm = ({ type, mongoUserId, communityDetails }: Props) => {
         }
       }
 
-      await createCommunity({
-        name: values.name,
-        bio: values.bio,
-        profilePhoto: profilePicURL,
-        coverPhoto: "",
-        createdBy: JSON.parse(mongoUserId),
-        path: pathname,
-      });
+      if (values.coverPhoto) {
+        const signedURLResult = await getSignedURL({
+          fileType: "image/jpeg",
+        });
+        console.log(signedURLResult);
 
-      router.push("/communities");
+        if (signedURLResult.failure !== undefined) {
+          console.log(signedURLResult.failure);
+          return;
+        }
+
+        const url = signedURLResult.success;
+
+        const res = await fetch(url, {
+          method: "PUT",
+          body: values.coverPhoto[0],
+          headers: {
+            "Content-Type": "image/jpeg",
+          },
+        });
+
+        if (res.ok) {
+          coverPicURL = url.split("?")[0];
+        }
+      }
+
+      if (type === "edit") {
+        await editCommunityAction({
+          communityId: parsedCommunityDetails?._id,
+          name: values.name,
+          bio: values.bio,
+          profilePhoto: profilePicURL || parsedCommunityDetails?.profilePhoto,
+          coverPhoto: coverPicURL || parsedCommunityDetails?.coverPhoto,
+          path: pathname,
+        });
+      } else {
+        await createCommunity({
+          name: values.name,
+          bio: values.bio,
+          profilePhoto: profilePicURL || "",
+          coverPhoto: coverPicURL || "",
+          createdBy: JSON.parse(mongoUserId),
+          path: pathname,
+        });
+      }
+
+      if (type === "edit") {
+        router.push(`/community/${parsedCommunityDetails?._id}`);
+      } else {
+        router.push("/communities");
+      }
     } catch (error) {
       console.log(error);
     }
@@ -88,7 +133,12 @@ const CommunityForm = ({ type, mongoUserId, communityDetails }: Props) => {
         <FormField
           control={form.control}
           name="coverPhoto"
-          render={({ field }) => <CoverPhoto fieldChange={field.onChange} />}
+          render={({ field }) => (
+            <CoverPhoto
+              fieldChange={field.onChange}
+              mediaUrl={parsedCommunityDetails?.coverPhoto}
+            />
+          )}
         />
 
         <FormField
@@ -97,6 +147,7 @@ const CommunityForm = ({ type, mongoUserId, communityDetails }: Props) => {
           render={({ field }) => (
             <ProfilePhoto
               fieldChange={field.onChange}
+              mediaUrl={parsedCommunityDetails?.profilePhoto}
               defaultPic="/images/default-community-profile-pic.png"
             />
           )}
@@ -104,34 +155,43 @@ const CommunityForm = ({ type, mongoUserId, communityDetails }: Props) => {
 
         <FormInput
           form={form}
-          inputName={"name"}
-          formLabel={"Community Name"}
+          inputName="name"
+          formLabel="Community Name"
           formDescription={
-            "Introduce the problem and expand on what you put in the title"
+            "Enter a name for your community. This will be visible to your members."
           }
         />
 
         <TextArea
           form={form}
-          inputName={"bio"}
-          formLabel={"Bio"}
+          inputName="bio"
+          formLabel="Bio"
           formDescription={
-            "Introduce the problem and expand on what you put in the title"
+            "Write a short description for your community. This will be visible to your members."
           }
           maxLength={120}
         />
 
-        <Button
-          type="submit"
-          className="bg-primary-100_primary-500 text-sm font-medium text-light-900"
-          disabled={form.formState.isSubmitting}
-        >
-          {form.formState.isSubmitting ? (
-            <>{type ? "Updating..." : "Creating..."}</>
-          ) : (
-            <>{type ? "Edit Community Detail" : "Create Community"}</>
-          )}
-        </Button>
+        <footer className="flex w-full flex-col items-center justify-center gap-4 pt-6">
+          <Button
+            type="submit"
+            className="bg-primary-100_primary-500 w-full text-sm font-medium text-light-900"
+            disabled={form.formState.isSubmitting}
+          >
+            {form.formState.isSubmitting ? (
+              <>{type ? "Updating..." : "Creating..."}</>
+            ) : (
+              <>{type ? "Edit Community Details" : "Create Community"}</>
+            )}
+          </Button>
+
+          <Button
+            onClick={() => router.back()}
+            className="text-dark-100_light-850 w-max border-0 bg-transparent hover:text-primary-100"
+          >
+            Cancel
+          </Button>
+        </footer>
       </form>
     </Form>
   );

@@ -14,18 +14,14 @@ const Home = async ({ searchParams }: ISearchParamsProps) => {
 
   const mongoUser = await getUserById({ userId });
 
-  const results = await getAllPosts({
-    searchQuery: searchParams.q,
-    filter: searchParams.filter,
-    page: searchParams.page ? +searchParams.page : 1,
-  });
+  const results = await getAllPosts();
 
   return (
     <section className="flex w-full flex-col items-center gap-8">
       <HomePostForm
         userId={userId}
         avatar={mongoUser?.avatar}
-        mongoUserId={JSON.stringify(mongoUser._id)}
+        mongoUserId={JSON.stringify(mongoUser?._id)}
       />
 
       <div className="mt-10 flex w-4/6 flex-col items-center gap-6">

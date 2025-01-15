@@ -1,6 +1,6 @@
-import { CommunityHeader, TabLinks } from "@/components/shared";
-import { getCommunityInfoAction } from "@/lib/actions/community.action";
 import React from "react";
+import { CommunityHeader, TabLinks } from "@/components/shared";
+import { getCommunityByIdAction } from "@/lib/actions/community.action";
 
 async function layout({
   children,
@@ -9,43 +9,47 @@ async function layout({
   children: React.ReactNode;
   params: { id: string };
 }) {
-  const communityInfo = await getCommunityInfoAction({
+  const communityInfo = await getCommunityByIdAction({
     communityId: params.id,
   });
 
   return (
     <section className="flex w-full flex-col gap-8">
-      <CommunityHeader communityInfo={communityInfo} />
-
-      <TabLinks
-        tabs={[
-          {
-            tabName: "Posts",
-            value: "",
-            href: `/community/${params.id}`,
-            totalNumbers: 0,
-          },
-          {
-            tabName: "Questions",
-            value: "questions",
-            href: `/community/${params.id}/questions`,
-            totalNumbers: 0,
-          },
-          {
-            tabName: "Shared Resources",
-            value: "resources",
-            href: `/community/${params.id}/resources`,
-            totalNumbers: 0,
-          },
-          {
-            tabName: "Members",
-            value: "members",
-            href: `/community/${params.id}/members`,
-            totalNumbers: 0,
-          },
-        ]}
+      <CommunityHeader
+        communityInfo={communityInfo.community}
+        communityId={params.id}
       />
-      {children}
+      <section className="flex w-full flex-col items-center gap-8">
+        <TabLinks
+          tabs={[
+            {
+              tabName: "Posts",
+              value: "",
+              href: `/community/${params.id}`,
+              totalNumbers: 0,
+            },
+            {
+              tabName: "Questions",
+              value: "questions",
+              href: `/community/${params.id}/questions`,
+              totalNumbers: 0,
+            },
+            {
+              tabName: "Shared Resources",
+              value: "resources",
+              href: `/community/${params.id}/resources`,
+              totalNumbers: 0,
+            },
+            {
+              tabName: "People",
+              value: "people",
+              href: `/community/${params.id}/people`,
+              totalNumbers: 0,
+            },
+          ]}
+        />
+        {children}
+      </section>
     </section>
   );
 }

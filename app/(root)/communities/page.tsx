@@ -1,9 +1,9 @@
-import CommunityCard from "@/components/cards/CommunityCard";
+import { CommunityCard } from "@/components/cards";
 import {
   Filter,
   LocalSearchbar,
   NoResult,
-  Pagination,
+  // Pagination,
   QandAFilters,
 } from "@/components/shared";
 import { Button } from "@/components/ui/button";
@@ -13,13 +13,12 @@ import { ISearchParamsProps } from "@/types/utils.types";
 import Link from "next/link";
 
 const CommunitiesPage = async ({ searchParams }: ISearchParamsProps) => {
-  const results =
-    await getAllCommunities();
-    // {
-    // searchQuery: searchParams.q,
-    // filter: searchParams.filter,
-    // page: searchParams.page ? +searchParams.page : 1,
-    // }
+  const results = await getAllCommunities();
+  // {
+  // searchQuery: searchParams.q,
+  // filter: searchParams.filter,
+  // page: searchParams.page ? +searchParams.page : 1,
+  // }
 
   return (
     <>
@@ -47,7 +46,7 @@ const CommunitiesPage = async ({ searchParams }: ISearchParamsProps) => {
           />
         </div>
         <QandAFilters />
-        <div className="mt-10 flex w-full flex-col gap-6">
+        <div className="mt-10 flex w-full flex-wrap gap-4">
           {results.communities.length > 0 ? (
             results.communities.map((community, index) => (
               <CommunityCard key={index} community={community} />
@@ -62,12 +61,12 @@ const CommunitiesPage = async ({ searchParams }: ISearchParamsProps) => {
           )}
         </div>
       </section>
-      <div className="mt-10">
+      {/* <div className="mt-10">
         <Pagination
           pageNumber={searchParams?.page ? +searchParams.page : 1}
           isNext={true}
         />
-      </div>
+      </div> */}
     </>
   );
 };

@@ -18,7 +18,7 @@ const UserProfileImg = ({
   isShowUsername,
 }: Props) => {
   return (
-    <Link href={`/profile/${userId}`} className="flex items-center gap-2">
+    <Link href={`/profile/${userId}`} className="flex w-max items-center gap-2">
       <Image
         src={src || "/images/default-user-profile-pic.png"}
         alt={userId + "profilePic"}

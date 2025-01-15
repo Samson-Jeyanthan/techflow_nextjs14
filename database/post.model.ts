@@ -14,7 +14,7 @@ export interface IPost extends Document {
   likes: Schema.Types.ObjectId[];
   comments: Schema.Types.ObjectId[];
   views: number;
-  groupId: string;
+  communityId: Schema.Types.ObjectId;
   author: Schema.Types.ObjectId;
   createdAt: Date;
 }
@@ -33,7 +33,11 @@ const PostSchema = new Schema({
   likes: [{ type: Schema.Types.ObjectId, ref: "User" }],
   comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
   views: { type: Number, default: 0 },
-  groupId: { type: String, default: "" },
+  communityId: {
+    type: Schema.Types.ObjectId,
+    default: null,
+    ref: "Community",
+  },
   author: { type: Schema.Types.ObjectId, ref: "User" },
   createdAt: { type: Date, default: Date.now },
 });

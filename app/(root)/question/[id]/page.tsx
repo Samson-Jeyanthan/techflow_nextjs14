@@ -11,15 +11,10 @@ import { getQuestionById } from "@/lib/actions/question.action";
 import { getUserById } from "@/lib/actions/user.action";
 import { formatAndDivideNumber, getTimestamp } from "@/lib/utils";
 import { CommentIcon, EyeIcon, LikeIcon } from "@/public/svgs";
+import { TURLProps } from "@/types/utils.types";
 import { auth } from "@clerk/nextjs/server";
 
-const QuestionDetail = async ({
-  params,
-  searchParams,
-}: {
-  params: { id: string };
-  searchParams: any;
-}) => {
+const QuestionDetail = async ({ params, searchParams }: TURLProps) => {
   const { userId: clerkId } = auth();
   const result = await getQuestionById({ questionId: params.id });
 
@@ -104,7 +99,7 @@ const QuestionDetail = async ({
         questionId={result._id}
         userId={mongoUser?._id}
         totalAnswers={result.answers.length}
-        page={searchParams?.page}
+        page={Number(searchParams?.page)}
         filter={searchParams?.filter}
       />
 

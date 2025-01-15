@@ -45,7 +45,7 @@ async function layout({
               tabName: "Communities",
               value: "communities",
               href: `/profile/${userInfo.user.clerkId}/communities`,
-              totalNumbers: 0,
+              totalNumbers: userInfo.totalCreatedCommunities,
             },
           ]}
         />
