@@ -3,7 +3,7 @@ import {
   Filter,
   LocalSearchbar,
   NoResult,
-  Pagination,
+  // Pagination,
   QandAFilters,
 } from "@/components/shared";
 import { Button } from "@/components/ui/button";
@@ -61,12 +61,12 @@ const CommunitiesPage = async ({ searchParams }: ISearchParamsProps) => {
           )}
         </div>
       </section>
-      <div className="mt-10">
+      {/* <div className="mt-10">
         <Pagination
           pageNumber={searchParams?.page ? +searchParams.page : 1}
           isNext={true}
         />
-      </div>
+      </div> */}
     </>
   );
 };

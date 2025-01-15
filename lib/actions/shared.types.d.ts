@@ -195,8 +195,8 @@ export type TCreateJobParams = {
 export type TCreateCommunityParams = {
   name: string;
   bio: string;
-  profilePhoto: IMediaProps | undefined;
-  coverPhoto: IMediaProps | undefined;
+  profilePhoto: string;
+  coverPhoto: string;
   createdBy: Schema.Types.ObjectId | IUser;
   path: string;
 };
@@ -209,8 +209,8 @@ export type TEditCommunityParams = {
   communityId: string;
   name: string;
   bio: string;
-  profilePhoto: IMediaProps | undefined;
-  coverPhoto: IMediaProps | undefined;
+  profilePhoto: string;
+  coverPhoto: string;
   path: string;
 };
 
@@ -219,3 +219,8 @@ export type TGetCommunityContentsParams = {
   page?: number;
   pageSize?: number;
 };
+
+export interface IDeleteCommunityParams {
+  communityId: string;
+  path: string;
+}

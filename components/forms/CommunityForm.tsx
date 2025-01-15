@@ -15,7 +15,7 @@ import {
 import { usePathname, useRouter } from "next/navigation";
 
 type Props = {
-  type?: string;
+  type?: "edit";
   mongoUserId: string;
   communityDetails?: string;
 };
@@ -39,6 +39,7 @@ const CommunityForm = ({ type, mongoUserId, communityDetails }: Props) => {
 
   async function onSubmit(values: z.infer<typeof CommunitySchema>) {
     let profilePicURL = "";
+    let coverPicURL = "";
 
     try {
       if (values.profilePhoto) {
@@ -67,21 +68,47 @@ const CommunityForm = ({ type, mongoUserId, communityDetails }: Props) => {
         }
       }
 
+      if (values.coverPhoto) {
+        const signedURLResult = await getSignedURL({
+          fileType: "image/jpeg",
+        });
+        console.log(signedURLResult);
+
+        if (signedURLResult.failure !== undefined) {
+          console.log(signedURLResult.failure);
+          return;
+        }
+
+        const url = signedURLResult.success;
+
+        const res = await fetch(url, {
+          method: "PUT",
+          body: values.coverPhoto[0],
+          headers: {
+            "Content-Type": "image/jpeg",
+          },
+        });
+
+        if (res.ok) {
+          coverPicURL = url.split("?")[0];
+        }
+      }
+
       if (type === "edit") {
         await editCommunityAction({
           communityId: parsedCommunityDetails?._id,
           name: values.name,
           bio: values.bio,
           profilePhoto: profilePicURL || parsedCommunityDetails?.profilePhoto,
-          coverPhoto: "",
+          coverPhoto: coverPicURL || parsedCommunityDetails?.coverPhoto,
           path: pathname,
         });
       } else {
         await createCommunity({
           name: values.name,
           bio: values.bio,
-          profilePhoto: profilePicURL,
-          coverPhoto: "",
+          profilePhoto: profilePicURL || "",
+          coverPhoto: coverPicURL || "",
           createdBy: JSON.parse(mongoUserId),
           path: pathname,
         });
@@ -128,19 +155,19 @@ const CommunityForm = ({ type, mongoUserId, communityDetails }: Props) => {
 
         <FormInput
           form={form}
-          inputName={"name"}
-          formLabel={"Community Name"}
+          inputName="name"
+          formLabel="Community Name"
           formDescription={
-            "Introduce the problem and expand on what you put in the title"
+            "Enter a name for your community. This will be visible to your members."
           }
         />
 
         <TextArea
           form={form}
-          inputName={"bio"}
-          formLabel={"Bio"}
+          inputName="bio"
+          formLabel="Bio"
           formDescription={
-            "Introduce the problem and expand on what you put in the title"
+            "Write a short description for your community. This will be visible to your members."
           }
           maxLength={120}
         />

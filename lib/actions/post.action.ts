@@ -60,7 +60,7 @@ export async function createPostAction(params: TCreatePostParams) {
   }
 }
 
-export async function getAllPosts(params: any) {
+export async function getAllPosts() {
   try {
     connectToDatabase();
 

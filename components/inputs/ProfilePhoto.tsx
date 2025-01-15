@@ -5,6 +5,7 @@ import { MdEdit } from "react-icons/md";
 import { CameraIcon } from "@/public/svgs";
 import Image from "next/image";
 import { useMedia } from "@/lib/hooks/useMedia";
+import { PhotoActionModal } from "../modals";
 
 type Props = {
   fieldChange: (e: any) => void;
@@ -36,6 +37,11 @@ const ProfilePhoto = ({ fieldChange, mediaUrl, defaultPic }: Props) => {
     fieldChange(e.target.files);
   };
 
+  const handleDelete = () => {
+    setPrevMedia(null);
+    setIsActionOpen(false);
+  };
+
   return (
     <>
       <div className="flex-center bg-light-750_dark-250 relative -mt-20 ml-12 size-36 rounded-full border border-solid border-light-750 shadow-lg dark:border-dark-350">
@@ -65,6 +71,14 @@ const ProfilePhoto = ({ fieldChange, mediaUrl, defaultPic }: Props) => {
           )}
         </div>
       </div>
+
+      <PhotoActionModal
+        photoActionFor="profile"
+        open={isActionOpen}
+        onOpenChange={() => setIsActionOpen(false)}
+        onInputChange={handleInputChange}
+        onDelete={handleDelete}
+      />
     </>
   );
 };

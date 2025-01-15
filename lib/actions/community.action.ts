@@ -6,6 +6,7 @@ import User from "@/database/user.model";
 import Post from "@/database/post.model";
 import Community from "@/database/community.model";
 import {
+  IDeleteCommunityParams,
   TCreateCommunityParams,
   TEditCommunityParams,
   TGetCommunityByIdParams,
@@ -170,5 +171,148 @@ export async function getCommunityQuestionsAction(
   } catch (error) {
     console.log(error);
     throw error;
+  }
+}
+
+export async function joinCommunityAction(params: any) {
+  try {
+    connectToDatabase();
+
+    const { communityId, hasJoined, userId, path } = params;
+
+    let updateQuery = {};
+
+    if (hasJoined) {
+      updateQuery = {
+        $pull: { members: userId },
+      };
+    } else {
+      updateQuery = {
+        $addToSet: { members: userId },
+      };
+    }
+
+    const community = await Community.findByIdAndUpdate(
+      communityId,
+      updateQuery,
+      { new: true }
+    );
+
+    if (!community) {
+      return {
+        status: 400,
+        message: "Community not found",
+      };
+    }
+
+    revalidatePath(path);
+
+    return {
+      status: 200,
+      message: "Success",
+    };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function getAllMembersOfCommunityAction(params: any) {
+  try {
+    connectToDatabase();
+
+    const { communityId } = params;
+
+    const community = await Community.findById(communityId)
+      .populate({
+        path: "members",
+        model: User,
+        select: "_id clerkId name username avatar followings followers",
+      })
+      .sort({ createdAt: -1 });
+
+    return { community };
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function communityAdminAction(params: any) {
+  try {
+    connectToDatabase();
+
+    const { communityId, adminUserId, isAdmin, path } = params;
+
+    let updateQuery = {};
+
+    if (isAdmin) {
+      updateQuery = {
+        $pull: { admins: adminUserId },
+      };
+    } else {
+      updateQuery = {
+        $addToSet: { admins: adminUserId },
+      };
+    }
+
+    const community = await Community.findByIdAndUpdate(
+      communityId,
+      updateQuery,
+      { new: true }
+    );
+
+    if (!community) {
+      return {
+        status: 400,
+        message: "Community not found",
+      };
+    }
+
+    revalidatePath(path);
+
+    return {
+      status: 200,
+      message: "Success",
+    };
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function getAllAdminsOfCommunityAction(params: any) {
+  try {
+    connectToDatabase();
+
+    const { communityId } = params;
+
+    const admins = await Community.findById(communityId)
+      .populate({
+        path: "admins",
+        model: User,
+      })
+      .sort({ createdAt: -1 });
+
+    const creator = await Community.findById(communityId).populate({
+      path: "createdBy",
+      model: User,
+    });
+
+    return { admins, creator };
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function deleteCommunityAction(params: IDeleteCommunityParams) {
+  try {
+    connectToDatabase();
+
+    const { communityId, path } = params;
+
+    await Community.deleteOne({ _id: communityId });
+
+    revalidatePath(path);
+  } catch (error) {
+    console.log(error);
   }
 }

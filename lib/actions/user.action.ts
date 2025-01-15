@@ -272,3 +272,49 @@ export async function getUserCreatedCommunitiesAction(
     throw error;
   }
 }
+
+export async function getUserAdminCommunitiesAction(
+  params: IGetUserStatsParams
+) {
+  try {
+    connectToDatabase();
+
+    const { userId, page = 1, pageSize = 20 } = params;
+
+    const skipAmount = (page - 1) * pageSize;
+
+    const communities = await Community.find({ admins: userId })
+      .skip(skipAmount)
+      .limit(pageSize)
+      .sort({ createdAt: -1 })
+      .populate("admins", "_id clerkId username name avatar");
+
+    return { communities };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function getUserMemberCommunitiesAction(
+  params: IGetUserStatsParams
+) {
+  try {
+    connectToDatabase();
+
+    const { userId, page = 1, pageSize = 20 } = params;
+
+    const skipAmount = (page - 1) * pageSize;
+
+    const communities = await Community.find({ members: userId })
+      .skip(skipAmount)
+      .limit(pageSize)
+      .sort({ createdAt: -1 })
+      .populate("members", "_id clerkId username name avatar");
+
+    return { communities };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}

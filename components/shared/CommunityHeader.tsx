@@ -3,9 +3,25 @@ import { Button } from "../ui/button";
 import Link from "next/link";
 import { auth } from "@clerk/nextjs/server";
 import { UploadCommunityModal } from "../modals";
+import { JoinButton } from "../buttons";
+import { getUserById } from "@/lib/actions/user.action";
+import { redirect } from "next/navigation";
 
-const CommunityHeader = ({ communityInfo, communityId }: any) => {
+type Props = {
+  communityInfo: any;
+  communityId: string;
+};
+
+const CommunityHeader = async ({ communityInfo, communityId }: Props) => {
   const { userId: clerkId } = auth();
+
+  if (!clerkId) redirect("/sign-in");
+
+  const mongoUser = await getUserById({ userId: clerkId });
+
+  const userHasJoined = communityInfo.members.some(
+    (member: any) => member.clerkId === clerkId
+  );
 
   return (
     <header className="flex w-full flex-col items-start gap-6">
@@ -29,9 +45,15 @@ const CommunityHeader = ({ communityInfo, communityId }: any) => {
             <h1 className="text-dark-100_light-900 text-2xl font-semibold">
               {communityInfo.name}
             </h1>
-            <p className="text-sm lowercase text-light-500">
-              Created By @{communityInfo.createdBy.username}
-            </p>
+            <div className="text-sm lowercase text-light-500">
+              Created By
+              <Link
+                href={`/profile/${communityInfo.createdBy.clerkId}`}
+                className="text-sm lowercase text-light-500"
+              >
+                @{communityInfo.createdBy.username}
+              </Link>
+            </div>
             {communityInfo.members.length > 0 && (
               <p className="text-sm lowercase text-light-500">
                 {communityInfo.members.length} Members
@@ -41,7 +63,10 @@ const CommunityHeader = ({ communityInfo, communityId }: any) => {
         </div>
 
         <div className="flex gap-4">
-          <UploadCommunityModal communityId={communityId} />
+          {clerkId === communityInfo.createdBy.clerkId || userHasJoined ? (
+            <UploadCommunityModal communityId={communityId} />
+          ) : null}
+
           {clerkId === communityInfo.createdBy.clerkId ? (
             <Link href={`/community/edit/${communityInfo._id}`}>
               <Button className="bg-primary-100_primary-500 text-sm font-medium text-light-900">
@@ -49,11 +74,11 @@ const CommunityHeader = ({ communityInfo, communityId }: any) => {
               </Button>
             </Link>
           ) : (
-            <Link href={`/community/edit/${communityInfo._id}`}>
-              <Button className="bg-primary-100_primary-500 text-sm font-medium text-light-900">
-                Join Community
-              </Button>
-            </Link>
+            <JoinButton
+              communityId={communityId}
+              currentUserId={JSON.stringify(mongoUser?._id)}
+              hasJoined={userHasJoined}
+            />
           )}
         </div>
       </div>

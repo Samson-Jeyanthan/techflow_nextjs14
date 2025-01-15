@@ -1,6 +1,6 @@
+import React from "react";
 import { CommunityHeader, TabLinks } from "@/components/shared";
 import { getCommunityByIdAction } from "@/lib/actions/community.action";
-import React from "react";
 
 async function layout({
   children,
@@ -19,36 +19,37 @@ async function layout({
         communityInfo={communityInfo.community}
         communityId={params.id}
       />
-
-      <TabLinks
-        tabs={[
-          {
-            tabName: "Posts",
-            value: "",
-            href: `/community/${params.id}`,
-            totalNumbers: 0,
-          },
-          {
-            tabName: "Questions",
-            value: "questions",
-            href: `/community/${params.id}/questions`,
-            totalNumbers: 0,
-          },
-          {
-            tabName: "Shared Resources",
-            value: "resources",
-            href: `/community/${params.id}/resources`,
-            totalNumbers: 0,
-          },
-          {
-            tabName: "Members",
-            value: "members",
-            href: `/community/${params.id}/members`,
-            totalNumbers: 0,
-          },
-        ]}
-      />
-      <div className="flex w-full justify-center">{children}</div>
+      <section className="flex w-full flex-col items-center gap-8">
+        <TabLinks
+          tabs={[
+            {
+              tabName: "Posts",
+              value: "",
+              href: `/community/${params.id}`,
+              totalNumbers: 0,
+            },
+            {
+              tabName: "Questions",
+              value: "questions",
+              href: `/community/${params.id}/questions`,
+              totalNumbers: 0,
+            },
+            {
+              tabName: "Shared Resources",
+              value: "resources",
+              href: `/community/${params.id}/resources`,
+              totalNumbers: 0,
+            },
+            {
+              tabName: "People",
+              value: "people",
+              href: `/community/${params.id}/people`,
+              totalNumbers: 0,
+            },
+          ]}
+        />
+        {children}
+      </section>
     </section>
   );
 }

@@ -33,7 +33,7 @@ const UploadCommunityModal = ({ communityId }: Props) => {
 
   return (
     <Dialog>
-      <DialogTrigger className="flex-center flex size-10 cursor-pointer gap-2 rounded-md bg-primary-500 fill-black p-2 text-sm text-light-850 dark:fill-white">
+      <DialogTrigger className="flex-center flex size-10 cursor-pointer gap-2 rounded-md border border-primary-500 bg-none fill-black p-2 text-sm text-primary-500 hover:bg-primary-500 hover:text-light-900">
         <LuPlus className="text-lg" />
       </DialogTrigger>
       <DialogContent
