@@ -151,8 +151,14 @@ body {
   .bg-light-750_dark-200 {
     @apply bg-light-750 dark:bg-dark-200;
   }
-  .bg-light-750_dark-350 {
+  .bg-light-750_dark-300 {
     @apply bg-light-750 dark:bg-dark-300;
+  }
+  .bg-light-750_dark-350 {
+    @apply bg-light-750 dark:bg-dark-350;
+  }
+  .bg-light-750_dark-400 {
+    @apply bg-light-750 dark:bg-dark-400;
   }
 
   /* inverse background uc */

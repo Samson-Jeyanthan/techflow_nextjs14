@@ -1,4 +1,4 @@
-import { CreatePostForm } from "@/components/forms";
+import { PostForm } from "@/components/forms";
 import { getUserById } from "@/lib/actions/user.action";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
@@ -15,7 +15,7 @@ const CreatePost = async () => {
         Create a Post
       </h1>
       <div className="my-8">
-        <CreatePostForm currentUserId={JSON.stringify(mongoUser._id)} />
+        <PostForm currentUserId={JSON.stringify(mongoUser._id)} />
       </div>
     </section>
   );

@@ -5,10 +5,12 @@ import { MdEdit } from "react-icons/md";
 import { CameraIcon } from "@/public/svgs";
 import Image from "next/image";
 import { useMedia } from "@/lib/hooks/useMedia";
+import { PhotoActionModal } from "../modals";
 
 const CoverPhoto = ({ fieldChange, mediaUrl }: any) => {
   const photoRef = useRef<HTMLInputElement>(null);
   const [isActionOpen, setIsActionOpen] = useState(false);
+  const [prevMedia, setPrevMedia] = useState(mediaUrl || null);
   const { handleImageInput, media } = useMedia();
 
   // handle the photo action modal open and input change
@@ -21,9 +23,24 @@ const CoverPhoto = ({ fieldChange, mediaUrl }: any) => {
   };
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    handleImageInput(e);
+    handleImageInput({
+      e,
+      isMultiple: false,
+      acceptFileType: ["image/jpeg", "image/jpg", "image/png", "image/webp"],
+    });
     fieldChange(e.target.files);
   };
+
+  const handleDelete = () => {
+    setPrevMedia(null);
+    setIsActionOpen(false);
+  };
+
+  // handling invalid media
+  // const handleOkClick = () => {
+  //   setError("");
+  //   setIsOpen(false);
+  // };
 
   return (
     <>
@@ -38,7 +55,7 @@ const CoverPhoto = ({ fieldChange, mediaUrl }: any) => {
 
         {media.preview ? (
           <Image
-            src={media.preview || ""}
+            src={media.preview || prevMedia || ""}
             alt="cropped-cover-image"
             width={2048}
             height={1024}
@@ -56,7 +73,7 @@ const CoverPhoto = ({ fieldChange, mediaUrl }: any) => {
           className="absolute bottom-2 right-2 flex cursor-pointer gap-2 rounded-lg bg-dark-100 fill-light-900 p-3 text-sm text-light-900"
           onClick={handleInputBtn}
         >
-          {media.preview ? (
+          {media.preview || prevMedia ? (
             <div className="grid place-items-center text-base">
               <MdEdit fill="white" />
             </div>
@@ -66,6 +83,14 @@ const CoverPhoto = ({ fieldChange, mediaUrl }: any) => {
           {media.preview ? "Edit Cover Photo" : "Add Cover Photo"}
         </div>
       </div>
+
+      <PhotoActionModal
+        photoActionFor="cover"
+        open={isActionOpen}
+        onOpenChange={() => setIsActionOpen(false)}
+        onInputChange={handleInputChange}
+        onDelete={handleDelete}
+      />
     </>
   );
 };

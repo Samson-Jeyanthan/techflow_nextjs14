@@ -1,4 +1,4 @@
-import { CreatePostForm } from "@/components/forms";
+import { PostForm } from "@/components/forms";
 import { getPostByIdAction } from "@/lib/actions/post.action";
 import { getUserById } from "@/lib/actions/user.action";
 import { IParamsProps } from "@/types/utils.types";
@@ -19,7 +19,7 @@ const EditPost = async ({ params }: IParamsProps) => {
       </h1>
 
       <div className="mt-9">
-        <CreatePostForm
+        <PostForm
           type="edit"
           currentUserId={mongoUser._id}
           postDetails={JSON.stringify(result)}

@@ -1,4 +1,4 @@
-import PostCard from "@/components/cards/PostCard";
+import { PostCard } from "@/components/cards";
 import { NoResult, Pagination } from "@/components/shared";
 import {
   getUserById,

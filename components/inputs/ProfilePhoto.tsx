@@ -5,6 +5,7 @@ import { MdEdit } from "react-icons/md";
 import { CameraIcon } from "@/public/svgs";
 import Image from "next/image";
 import { useMedia } from "@/lib/hooks/useMedia";
+import { PhotoActionModal } from "../modals";
 
 type Props = {
   fieldChange: (e: any) => void;
@@ -15,6 +16,7 @@ type Props = {
 const ProfilePhoto = ({ fieldChange, mediaUrl, defaultPic }: Props) => {
   const photoRef = useRef<HTMLInputElement>(null);
   const [isActionOpen, setIsActionOpen] = useState(false);
+  const [prevMedia, setPrevMedia] = useState(mediaUrl || null);
   const { handleImageInput, media } = useMedia();
 
   // handle the photo action modal open and input change
@@ -27,8 +29,17 @@ const ProfilePhoto = ({ fieldChange, mediaUrl, defaultPic }: Props) => {
   };
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    handleImageInput(e);
+    handleImageInput({
+      e,
+      isMultiple: false,
+      acceptFileType: ["image/jpeg", "image/jpg", "image/png", "image/webp"],
+    });
     fieldChange(e.target.files);
+  };
+
+  const handleDelete = () => {
+    setPrevMedia(null);
+    setIsActionOpen(false);
   };
 
   return (
@@ -42,24 +53,32 @@ const ProfilePhoto = ({ fieldChange, mediaUrl, defaultPic }: Props) => {
           accept="image/jpeg,image/jpg,image/png,image/webp"
         />
         <Image
-          src={media.preview || defaultPic}
+          src={media.preview || prevMedia || defaultPic}
           alt="profile_pic"
           width={512}
           height={512}
-          className={`${media.preview ? "size-36 rounded-full" : "size-24 pt-3"}  object-cover`}
+          className={`${media.preview || prevMedia ? "size-36 rounded-full" : "size-24 pt-3"}  object-cover`}
         />
 
         <div
           className="absolute bottom-0 right-1 cursor-pointer rounded-full bg-dark-100 fill-white p-2 text-white"
           onClick={handleInputBtn}
         >
-          {media.preview ? (
+          {media.preview || prevMedia ? (
             <MdEdit fill="white" />
           ) : (
             <CameraIcon fill="white" width="21px" height="21px" />
           )}
         </div>
       </div>
+
+      <PhotoActionModal
+        photoActionFor="profile"
+        open={isActionOpen}
+        onOpenChange={() => setIsActionOpen(false)}
+        onInputChange={handleInputChange}
+        onDelete={handleDelete}
+      />
     </>
   );
 };

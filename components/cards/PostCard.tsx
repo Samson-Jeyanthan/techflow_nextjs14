@@ -48,7 +48,7 @@ const PostCard = async ({
 }: Props) => {
   const parsedAuthor = JSON.stringify(author._id);
   return (
-    <div className="w-full rounded-xl bg-light-900 p-7 shadow-md dark:bg-dark-250 sm:px-9">
+    <div className="w-full rounded-xl bg-light-900 p-7 pb-4 shadow-md dark:bg-dark-250 sm:px-9">
       <header className="flex items-center justify-between">
         <div className="flex items-start gap-2">
           <UserProfileImg
@@ -82,7 +82,7 @@ const PostCard = async ({
               alt={title}
               width={1200}
               height={1200}
-              className="mt-6 size-full rounded-lg object-cover"
+              className={`mt-6 ${media.length === 1 ? "size-full" : "w-1/2"} max-h-[28rem] rounded-lg bg-dark-100 object-contain`}
             />
           ))}
       </div>
