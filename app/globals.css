@@ -69,6 +69,14 @@ body {
     scrollbar-width: none; /* Firefox */
   }
 
+  .connection-title {
+    @apply w-full cursor-pointer border-b border-light-500 dark:border-dark-500 pb-5 text-center text-light-500;
+  }
+
+  .active-connection-title {
+    @apply w-full cursor-pointer border-b border-dark-100 dark:border-light-900 pb-5 text-center dark:text-light-900 text-dark-100;
+  }
+
   /* cc - color code */
   /* uc - utility classes */
 

@@ -93,6 +93,13 @@ export interface IGetUserStatsParams {
   pageSize?: number;
 }
 
+export interface IFollowParams {
+  followerId: string;
+  followingId: string;
+  isFollowing: boolean;
+  path: string;
+}
+
 // ------------------------ tag actions ------------------------------
 
 export interface IGetTopInteractedTagsParams {

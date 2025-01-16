@@ -5,10 +5,20 @@ import {
   getAllMembersOfCommunityAction,
   getCommunityByIdAction,
 } from "@/lib/actions/community.action";
+import { getUserById } from "@/lib/actions/user.action";
 import { TURLProps } from "@/types/utils.types";
+import { auth } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 
 const PeoplePage = async ({ params }: TURLProps) => {
+  const { userId } = auth();
+  if (!userId) redirect("/sign-in");
+  const currentUser = await getUserById({ userId });
+
+  console.log(currentUser._id.toString(), currentUser?.followings);
+
   const communityId = params.id;
+
   const results = await getAllMembersOfCommunityAction({
     communityId,
   });
@@ -38,7 +48,17 @@ const PeoplePage = async ({ params }: TURLProps) => {
             />
             <p className="text-xs text-light-500">(Owner of the community)</p>
           </div>
-          <FollowButton isSmall={true} />
+          {communityInfo.createdBy.clerkId !== userId && (
+            <FollowButton
+              isSmall={true}
+              hasFollowed={currentUser?.followings.some(
+                (following: any) =>
+                  following.userId === communityInfo.createdBy._id
+              )}
+              followingId={JSON.stringify(communityInfo.createdBy._id)}
+              followerId={JSON.stringify(currentUser?._id)}
+            />
+          )}
         </div>
         {admins?.length > 0
           ? admins?.map((admin, index) => (
@@ -49,7 +69,15 @@ const PeoplePage = async ({ params }: TURLProps) => {
                   userId={admin.clerkId}
                   userName={admin.username}
                 />
-                <FollowButton isSmall={true} />
+                <p>{currentUser?._id}</p>
+                <FollowButton
+                  isSmall={true}
+                  hasFollowed={currentUser?.followings.some(
+                    (following: any) => following.userId === admin?._id
+                  )}
+                  followingId={JSON.stringify(admin?._id)}
+                  followerId={JSON.stringify(currentUser?._id)}
+                />
               </div>
             ))
           : ""}
@@ -68,7 +96,16 @@ const PeoplePage = async ({ params }: TURLProps) => {
                   userId={member.clerkId}
                   userName={member.username}
                 />
-                <FollowButton isSmall={true} />
+
+                <FollowButton
+                  isSmall={true}
+                  hasFollowed={currentUser?.followings?.some(
+                    (following: any) =>
+                      following?.userId?.toString() === member?._id?.toString()
+                  )}
+                  followingId={JSON.stringify(member?._id)}
+                  followerId={JSON.stringify(currentUser?._id)}
+                />
               </div>
             ))
           : "No members"}

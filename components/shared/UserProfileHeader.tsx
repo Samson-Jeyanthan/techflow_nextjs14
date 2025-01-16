@@ -3,6 +3,7 @@ import { SignedIn } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 import Image from "next/image";
 import Link from "next/link";
+import { ConnectionModal } from "../modals";
 
 const UserProfileHeader = ({ userInfo }: { userInfo: any }) => {
   const { userId: clerkId } = auth();
@@ -22,22 +23,35 @@ const UserProfileHeader = ({ userInfo }: { userInfo: any }) => {
           <h2 className="text-dark-100_light-800 text-xl font-semibold">
             {userInfo.user.name}
           </h2>
-          <p className="text-light-500_dark-500 text-sm">
+          <p className="text-dark-500_light-600 text-sm">
             @{userInfo.user.username}
           </p>
-          <p className="text-light-500_dark-500 text-sm">
-            {userInfo.user.location}
-          </p>
+          {userInfo.user.location && (
+            <p className="text-dark-500_light-600 text-sm">
+              {userInfo.user.location}
+            </p>
+          )}
 
           <div className="mt-5 flex flex-wrap items-center justify-start gap-5">
-            <p className="text-light-500_dark-500 text-sm">
+            <p className="text-dark-500_light-600 text-sm">
               {getJoinedDate(userInfo.user.joinedAt)}
             </p>
             {userInfo.user.bio && (
-              <p className="text-light-500_dark-500 mt-8 text-sm">
+              <p className="text-dark-500_light-600 mt-8 text-sm">
                 {userInfo.user.bio}
               </p>
             )}
+          </div>
+
+          <div className="mt-4 flex gap-6">
+            <ConnectionModal
+              modalFor="followers"
+              userInfo={JSON.stringify(userInfo.user)}
+            />
+            <ConnectionModal
+              modalFor="followings"
+              userInfo={JSON.stringify(userInfo.user)}
+            />
           </div>
         </div>
       </div>

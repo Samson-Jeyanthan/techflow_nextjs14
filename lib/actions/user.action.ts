@@ -3,6 +3,7 @@
 import { connectToDatabase } from "../mongoose";
 import User from "@/database/user.model";
 import {
+  IFollowParams,
   IGetAllUsersParams,
   IGetUserByIdParams,
   IGetUserStatsParams,
@@ -16,6 +17,7 @@ import Answer from "@/database/answer.model";
 import { FilterQuery } from "mongoose";
 import Post from "@/database/post.model";
 import Community from "@/database/community.model";
+
 export async function getUserById(params: any) {
   try {
     connectToDatabase();
@@ -144,7 +146,15 @@ export async function getUserInfo(params: IGetUserByIdParams) {
 
     const { userId } = params;
 
-    const user = await User.findOne({ clerkId: userId });
+    const user = await User.findOne({ clerkId: userId })
+      .populate({
+        path: "followings.userId",
+        select: "_id clerkId username avatar",
+      })
+      .populate({
+        path: "followers.userId",
+        select: "_id clerkId username avatar",
+      });
 
     if (!user) {
       throw new Error("User not found");
@@ -313,6 +323,81 @@ export async function getUserMemberCommunitiesAction(
       .populate("members", "_id clerkId username name avatar");
 
     return { communities };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+// you follow a user -> you r follower, a user follows you -> you r following
+export async function followUserAction(params: IFollowParams) {
+  try {
+    connectToDatabase();
+
+    const { followerId, isFollowing, followingId, path } = params;
+
+    //  this query for follower user
+    let updateFollowerQuery = {};
+
+    if (isFollowing) {
+      updateFollowerQuery = {
+        $pull: { followings: { userId: followingId } },
+      };
+    } else {
+      updateFollowerQuery = {
+        $addToSet: {
+          followings: { userId: followingId, followedAt: new Date() },
+        },
+      };
+    }
+
+    const followerUser = await User.findByIdAndUpdate(
+      followerId,
+      updateFollowerQuery,
+      { new: true }
+    );
+
+    if (!followerUser) {
+      return {
+        status: 401,
+        message: "Could not do the action",
+      };
+    }
+
+    // this query for following user
+    let updateFollowingQuery = {};
+
+    if (isFollowing) {
+      updateFollowingQuery = {
+        $pull: { followers: { followerId } },
+      };
+    } else {
+      updateFollowingQuery = {
+        $addToSet: {
+          followers: { userId: followerId, followedAt: new Date() },
+        },
+      };
+    }
+
+    const followingUser = await User.findByIdAndUpdate(
+      followingId,
+      updateFollowingQuery,
+      { new: true }
+    );
+
+    if (!followingUser) {
+      return {
+        status: 402,
+        message: "User not found",
+      };
+    }
+
+    revalidatePath(path);
+
+    return {
+      status: 200,
+      message: "Success",
+    };
   } catch (error) {
     console.log(error);
     throw error;
