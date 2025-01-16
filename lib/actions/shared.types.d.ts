@@ -17,7 +17,7 @@ export type TCreateQuestionParams = {
   tags: string[];
   author: Schema.Types.ObjectId | IUser;
   path: string;
-  communityId?: string;
+  communityId?: string | null;
 };
 
 export interface IGetQuestionByIdParams {

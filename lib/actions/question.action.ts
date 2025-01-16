@@ -52,8 +52,16 @@ export async function createQuestion(params: TCreateQuestionParams) {
     });
 
     // TODO: create an interaction record for the user's ask-question action
+    await Interaction.create({
+      user: author,
+      action: "ask_question",
+      question: question._id,
+    });
 
     // TODO: increment author's reputation by +5 for ask-question
+    await User.findByIdAndUpdate(author, {
+      $inc: { reputation: 5 },
+    });
 
     revalidatePath(path);
   } catch (error) {
@@ -191,6 +199,16 @@ export async function upvoteQuestion(params: IQuestionVoteParams) {
 
     // TODO: Add interaction for the reputation
 
+    // increment user's reputation by +1 for giving upvote && -1 for revoking upvote
+    await User.findByIdAndUpdate(userId, {
+      $inc: { reputation: hasUpvoted ? -1 : 1 },
+    });
+
+    // increment author's reputation by +2 for recieving upvote && -2 for recieving revoked /upvote
+    await User.findByIdAndUpdate(question.author, {
+      $inc: { reputation: hasUpvoted ? -2 : 2 },
+    });
+
     revalidatePath(path);
   } catch (error) {
     console.log(error);
@@ -233,6 +251,14 @@ export async function downvoteQuestion(params: IQuestionVoteParams) {
     }
 
     // TODO: Add interaction for the reputation
+
+    await User.findByIdAndUpdate(userId, {
+      $inc: { reputation: hasDownvoted ? -2 : 2 },
+    });
+
+    await User.findByIdAndUpdate(question.author, {
+      $inc: { reputation: hasDownvoted ? -5 : 5 },
+    });
 
     revalidatePath(path);
   } catch (error) {

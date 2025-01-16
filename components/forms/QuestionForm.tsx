@@ -109,7 +109,7 @@ const QuestionForm = ({
           content: values.explanation,
           tags: values.tags,
           author: JSON.parse(currentUserId),
-          communityId: communityId || "",
+          communityId: communityId || null,
           path: pathname,
         });
 

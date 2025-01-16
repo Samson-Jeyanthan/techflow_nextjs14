@@ -91,10 +91,14 @@ const Votes = ({
   const handleSave = async () => {};
 
   useEffect(() => {
-    viewQuestion({
-      questionId: JSON.parse(itemId),
-      userId: userId ? JSON.parse(userId) : undefined,
-    });
+    const interactAction = async () => {
+      await viewQuestion({
+        questionId: JSON.parse(itemId),
+        userId: userId ? JSON.parse(userId) : undefined,
+      });
+    };
+
+    interactAction();
   }, [itemId, userId, pathname, router]);
 
   return (

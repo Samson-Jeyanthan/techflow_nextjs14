@@ -19,7 +19,9 @@ const InteractionSchema = new Schema({
   answer: { type: Schema.Types.ObjectId, ref: "Answer" },
   tags: [{ type: Schema.Types.ObjectId, ref: "Tag" }],
   post: { type: Schema.Types.ObjectId, ref: "Post" },
+  comment: { type: Schema.Types.ObjectId, ref: "Comment" },
   resource: { type: Schema.Types.ObjectId, ref: "Resource" },
+  community: { type: Schema.Types.ObjectId, ref: "Community" },
   job: { type: Schema.Types.ObjectId, ref: "Job" },
   createdAt: { type: Date, default: Date.now },
 });
