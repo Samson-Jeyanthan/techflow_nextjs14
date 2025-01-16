@@ -38,7 +38,7 @@ const QandAFilters = () => {
       {QANDAS_FILTERS.map((item, index) => (
         <Button
           key={index}
-          className={`${isActive === item.value ? "text-dark-100_light-800 bg-primary-500/20" : "bg-light-800_dark-250 text-light-500"}  hover:text-dark-100_light-800 h-8 px-3 text-xs hover:bg-primary-500/20 `}
+          className={`${isActive === item.value ? "text-dark-100_light-800 bg-primary-500/20" : "bg-light-800_dark-250 text-light-500"} hover:text-dark-100_light-800 h-8 px-3 text-xs hover:bg-primary-500/20`}
           onClickCapture={() => handleFilterClick(item.value)}
         >
           {item.name}

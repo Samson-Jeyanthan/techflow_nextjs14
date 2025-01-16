@@ -32,3 +32,10 @@ export const USERS_FILTERS = [
   { name: "Old Users", value: "old_users" },
   { name: "Top Contributors", value: "top_contributors" },
 ];
+
+export const GLOBAL_SEARCH_FILTERS = [
+  { name: "Questions", value: "question" },
+  { name: "Answers", value: "answer" },
+  { name: "Tags", value: "tag" },
+  { name: "Users", value: "user" },
+];

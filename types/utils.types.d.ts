@@ -13,6 +13,11 @@ export interface ISearchParamsProps {
   searchParams: { [key: string]: string | undefined };
 }
 
+export interface IGlobalSearchParamsProps {
+  query?: string | null;
+  type?: string | null;
+}
+
 export interface IParamsProps {
   params: { id: string };
 }
