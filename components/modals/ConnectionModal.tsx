@@ -15,18 +15,20 @@ import { UserProfileImg } from "../client";
 type Props = {
   userInfo: string;
   modalFor: "followers" | "followings";
+  currentUserInfo?: string;
 };
 
-const ConnectionModal = ({ userInfo, modalFor }: Props) => {
-  const user = userInfo && JSON.parse(userInfo);
-
+const ConnectionModal = ({ userInfo, modalFor, currentUserInfo }: Props) => {
   const [activeTab, setActiveTab] = useState(modalFor);
+
+  const user = userInfo && JSON.parse(userInfo);
+  const currentUser = currentUserInfo && JSON.parse(currentUserInfo);
 
   return (
     <Dialog>
       {modalFor === "followers" ? (
         <DialogTrigger
-          className="text-dark-100_light-800 flex gap-2 text-sm"
+          className="text-dark-100_light-800 flex flex-col gap-2 text-sm"
           onClick={() => setActiveTab("followers")}
         >
           {user.followers?.length}
@@ -34,7 +36,7 @@ const ConnectionModal = ({ userInfo, modalFor }: Props) => {
         </DialogTrigger>
       ) : (
         <DialogTrigger
-          className="text-dark-100_light-800 flex gap-2 text-sm"
+          className="text-dark-100_light-800 flex flex-col gap-2 text-sm"
           onClick={() => setActiveTab("followings")}
         >
           {user.followings?.length}
@@ -71,15 +73,17 @@ const ConnectionModal = ({ userInfo, modalFor }: Props) => {
                     userId={item.userId?.clerkId}
                     userName={item.userId?.username}
                   />
-                  <FollowButton
-                    isSmall={true}
-                    followingId={item.userId}
-                    parsedFollowerId={user._id}
-                    hasFollowed={user?.followings.some(
-                      (following: any) =>
-                        following.userId?._id === item.userId?._id
-                    )}
-                  />
+                  {currentUser._id !== item.userId?._id && (
+                    <FollowButton
+                      isSmall={true}
+                      parsedFollowerId={currentUser._id}
+                      parsedFollowingId={item.userId}
+                      hasFollowed={user?.followings.some(
+                        (following: any) =>
+                          following.userId?._id === item.userId?._id
+                      )}
+                    />
+                  )}
                 </div>
               ))
             : user.followings?.map((item: any, index: number) => (
@@ -90,15 +94,17 @@ const ConnectionModal = ({ userInfo, modalFor }: Props) => {
                     userId={item.userId?.clerkId}
                     userName={item.userId?.username}
                   />
-                  <FollowButton
-                    isSmall={true}
-                    followingId={item.userId}
-                    parsedFollowerId={user._id}
-                    hasFollowed={user?.followings.some(
-                      (following: any) =>
-                        following.userId?._id === item.userId?._id
-                    )}
-                  />
+                  {currentUser._id !== item.userId?._id && (
+                    <FollowButton
+                      isSmall={true}
+                      parsedFollowerId={currentUser._id}
+                      parsedFollowingId={item.userId}
+                      hasFollowed={user?.followings.some(
+                        (following: any) =>
+                          following.userId?._id === item.userId?._id
+                      )}
+                    />
+                  )}
                 </div>
               ))}
 

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { LikeButton, RenderTag, UserProfileImg } from "../shared";
+import { LikeButton, ParseHTML, RenderTag, UserProfileImg } from "../shared";
 import { getTimestamp } from "@/lib/utils";
 import Link from "next/link";
 import { CommentInput } from "../inputs";
@@ -70,7 +70,14 @@ const PostCard = async ({
       </header>
 
       <p className="text-dark-100_light-850 mt-8">
-        {title === "" ? description : title}
+        {title === "" ? (
+          <ParseHTML
+            data={description}
+            className="text-dark-100_light-850 text-sm"
+          />
+        ) : (
+          title
+        )}
       </p>
 
       <div className="flex w-full gap-2">
@@ -88,8 +95,11 @@ const PostCard = async ({
       </div>
 
       {title !== "" && (
-        <p className="text-dark-100_light-850 font-regular mt-4 line-clamp-6 text-sm">
-          {description}
+        <p className="text-dark-100_light-850 font-regular mt-4 text-sm">
+          <ParseHTML
+            data={description}
+            className="text-dark-100_light-850 text-sm"
+          />
         </p>
       )}
 

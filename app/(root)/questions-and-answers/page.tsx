@@ -32,7 +32,7 @@ async function QandAs({ searchParams }: ISearchParamsProps) {
         <h1 className="text-dark-100_light-900 flex-between text-3xl font-semibold">
           All Questions
           <Link href="/ask-question">
-            <Button className="bg-primary-100_primary-500 text-sm font-medium text-light-900">
+            <Button className="bg-primary-100 text-sm font-medium text-light-900">
               Ask Question
             </Button>
           </Link>

@@ -1,3 +1,5 @@
+import { BADGE_CRITERIA } from "@/constants";
+
 export type TConvertedSvgJsxProps = {
   height?: string;
   width?: string;
@@ -27,3 +29,11 @@ export interface IMediaProps {
   mediaURL: string;
   thumbnailURL: string;
 }
+
+export interface IBadgeCounts {
+  GOLD: number;
+  SILVER: number;
+  BRONZE: number;
+}
+
+export type BadgeCriteriaType = keyof typeof BADGE_CRITERIA;

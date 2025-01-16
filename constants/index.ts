@@ -190,3 +190,38 @@ export const COMMUNITY_UPLOAD_OPTIONS = [
     name: "Share a Resource",
   },
 ];
+
+export const BADGE_CRITERIA = {
+  QUESTION_COUNT: {
+    BRONZE: 10,
+    SILVER: 50,
+    GOLD: 100,
+  },
+  ANSWER_COUNT: {
+    BRONZE: 10,
+    SILVER: 50,
+    GOLD: 100,
+  },
+  QUESTION_UPVOTES: {
+    BRONZE: 10,
+    SILVER: 50,
+    GOLD: 100,
+  },
+  ANSWER_UPVOTES: {
+    BRONZE: 10,
+    SILVER: 50,
+    GOLD: 100,
+  },
+  QUESTION_VIEWS: {
+    BRONZE: 1000,
+    SILVER: 10000,
+    GOLD: 100000,
+  },
+};
+
+export const UPLOAD_DRAWER_OPTIONS = [
+  { name: "Ask a Question", path: "/ask-question" },
+  { name: "Create a Post", path: "/create-post" },
+  { name: "Share a Resource", path: "/share-resource" },
+  { name: "Create a Job", path: "/create-job" },
+];

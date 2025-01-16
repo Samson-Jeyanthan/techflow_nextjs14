@@ -15,8 +15,6 @@ const PeoplePage = async ({ params }: TURLProps) => {
   if (!userId) redirect("/sign-in");
   const currentUser = await getUserById({ userId });
 
-  console.log(currentUser._id.toString(), currentUser?.followings);
-
   const communityId = params.id;
 
   const results = await getAllMembersOfCommunityAction({
@@ -48,15 +46,15 @@ const PeoplePage = async ({ params }: TURLProps) => {
             />
             <p className="text-xs text-light-500">(Owner of the community)</p>
           </div>
-          {communityInfo.createdBy.clerkId !== userId && (
+          {communityInfo.createdBy.clerkId !== currentUser?.clerkId && (
             <FollowButton
               isSmall={true}
               hasFollowed={currentUser?.followings.some(
                 (following: any) =>
                   following.userId === communityInfo.createdBy._id
               )}
-              followingId={JSON.stringify(communityInfo.createdBy._id)}
-              followerId={JSON.stringify(currentUser?._id)}
+              parsedFollowerId={JSON.stringify(currentUser?._id)}
+              parsedFollowingId={JSON.stringify(communityInfo.createdBy._id)}
             />
           )}
         </div>
@@ -75,8 +73,8 @@ const PeoplePage = async ({ params }: TURLProps) => {
                   hasFollowed={currentUser?.followings.some(
                     (following: any) => following.userId === admin?._id
                   )}
-                  followingId={JSON.stringify(admin?._id)}
-                  followerId={JSON.stringify(currentUser?._id)}
+                  parsedFollowerId={JSON.stringify(currentUser?._id)}
+                  parsedFollowingId={JSON.stringify(admin?._id)}
                 />
               </div>
             ))
@@ -99,12 +97,12 @@ const PeoplePage = async ({ params }: TURLProps) => {
 
                 <FollowButton
                   isSmall={true}
+                  followerId={JSON.stringify(currentUser?._id)}
+                  followingId={JSON.stringify(member?._id)}
                   hasFollowed={currentUser?.followings?.some(
                     (following: any) =>
                       following?.userId?.toString() === member?._id?.toString()
                   )}
-                  followingId={JSON.stringify(member?._id)}
-                  followerId={JSON.stringify(currentUser?._id)}
                 />
               </div>
             ))

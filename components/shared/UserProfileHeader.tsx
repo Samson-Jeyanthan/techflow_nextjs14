@@ -3,9 +3,15 @@ import { SignedIn } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 import Image from "next/image";
 import Link from "next/link";
-import { ConnectionModal } from "../modals";
+import { IoCalendarOutline } from "react-icons/io5";
+import { FollowButton } from "../buttons";
 
-const UserProfileHeader = ({ userInfo }: { userInfo: any }) => {
+type Props = {
+  userInfo: any;
+  currentUserId: string;
+};
+
+const UserProfileHeader = ({ userInfo, currentUserId }: Props) => {
   const { userId: clerkId } = auth();
 
   return (
@@ -33,7 +39,8 @@ const UserProfileHeader = ({ userInfo }: { userInfo: any }) => {
           )}
 
           <div className="mt-5 flex flex-wrap items-center justify-start gap-5">
-            <p className="text-dark-500_light-600 text-sm">
+            <p className="text-dark-500_light-600 flex items-center gap-2 text-sm">
+              <IoCalendarOutline className="text-base" />
               {getJoinedDate(userInfo.user.joinedAt)}
             </p>
             {userInfo.user.bio && (
@@ -42,29 +49,27 @@ const UserProfileHeader = ({ userInfo }: { userInfo: any }) => {
               </p>
             )}
           </div>
-
-          <div className="mt-4 flex gap-6">
-            <ConnectionModal
-              modalFor="followers"
-              userInfo={JSON.stringify(userInfo.user)}
-            />
-            <ConnectionModal
-              modalFor="followings"
-              userInfo={JSON.stringify(userInfo.user)}
-            />
-          </div>
         </div>
       </div>
 
       <div className="flex justify-end max-sm:mb-5 max-sm:w-full sm:mt-3">
         <SignedIn>
-          {clerkId === userInfo.user.clerkId && (
+          {clerkId === userInfo.user.clerkId ? (
             <Link
               href={`/profile/edit/${clerkId}`}
-              className="text-dark-100_light-850 flex-center min-h-[46px] min-w-[175px] rounded-md bg-light-500 px-4 py-3 text-sm dark:bg-dark-350"
+              className="text-dark-100_light-850 flex-center min-h-[46px] min-w-[150px] rounded-md bg-light-500 px-4 py-3 text-sm dark:bg-dark-350"
             >
               Edit Profile
             </Link>
+          ) : (
+            <FollowButton
+              isSmall={false}
+              hasFollowed={userInfo?.user.followers.some(
+                (following: any) => following.userId?.clerkId === clerkId
+              )}
+              followerId={JSON.stringify(currentUserId)}
+              followingId={JSON.stringify(userInfo.user._id)}
+            />
           )}
         </SignedIn>
       </div>

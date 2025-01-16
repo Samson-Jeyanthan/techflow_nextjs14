@@ -10,7 +10,8 @@ type Props = {
   hasFollowed: boolean;
   followerId?: string;
   parsedFollowerId?: string;
-  followingId: string;
+  parsedFollowingId?: string;
+  followingId?: string;
 };
 
 const FollowButton = ({
@@ -19,13 +20,15 @@ const FollowButton = ({
   followerId,
   followingId,
   parsedFollowerId,
+  parsedFollowingId,
 }: Props) => {
   const pathname = usePathname();
   const [isFollowing, setIsFollowing] = useState(hasFollowed);
   const handleFollow = async () => {
     await followUserAction({
       followerId: parsedFollowerId || (followerId && JSON.parse(followerId)),
-      followingId,
+      followingId:
+        parsedFollowingId || (followingId && JSON.parse(followingId)),
       isFollowing: hasFollowed,
       path: pathname,
     });
@@ -34,7 +37,7 @@ const FollowButton = ({
 
   return (
     <Button
-      className={`${isSmall ? "h-8 rounded-full py-1" : "rounded-md"} ${isFollowing ? "border border-primary-100 bg-transparent text-primary-500" : "bg-primary-100 text-white"} w-max`}
+      className={`${isSmall ? "h-8 w-max rounded-full py-1" : "min-w-[150px] rounded-md"} ${isFollowing ? "border border-primary-100 bg-transparent text-primary-500" : "bg-primary-100 text-white"}`}
       onClick={handleFollow}
     >
       {isFollowing ? "Following" : "Follow"}

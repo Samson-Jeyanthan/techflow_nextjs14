@@ -7,3 +7,4 @@ export { default as ApplicationCard } from "./ApplicationCard";
 export { default as AuthorPostCard } from "./AuthorPostCard";
 export { default as PostCard } from "./PostCard";
 export { default as CommunityCard } from "./CommunityCard";
+export { default as BadgeCards } from "./BadgeCards";

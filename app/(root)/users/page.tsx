@@ -27,8 +27,7 @@ const AllUsers = async ({ searchParams }: ISearchParamsProps) => {
 
           <Filter
             filters={USERS_FILTERS}
-            otherClasses="min-h-[48px] sm:min-w-[160px]"
-            containerClasses="hidden max-md:flex"
+            otherClasses="min-h-[48px] sm:min-w-[170px]"
           />
         </div>
 

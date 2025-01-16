@@ -1,6 +1,8 @@
-import { TabLinks, UserProfileHeader } from "@/components/shared";
-import { getUserInfo } from "@/lib/actions/user.action";
 import React from "react";
+import { TabLinks, UserProfileHeader, UserStats } from "@/components/shared";
+import { getUserInfo, getUserById } from "@/lib/actions/user.action";
+import { auth } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 
 async function layout({
   children,
@@ -11,9 +13,19 @@ async function layout({
 }) {
   const userInfo = await getUserInfo({ userId: params.id });
 
+  const { userId } = auth();
+  if (!userId) redirect("/sign-in");
+
+  const currentUser = await getUserById({ userId });
+
   return (
     <main className="flex w-full flex-col gap-12 py-8">
-      <UserProfileHeader userInfo={userInfo} />
+      <UserProfileHeader userInfo={userInfo} currentUserId={currentUser?._id} />
+      <UserStats
+        userInfo={userInfo}
+        badges={userInfo.badgeCounts}
+        currentUser={currentUser}
+      />
       <section className="flex w-full flex-col items-center gap-8">
         <TabLinks
           tabs={[

@@ -25,7 +25,7 @@ const LeftSidebar = () => {
             <li key={index}>
               <Link
                 href={item.route}
-                className={`${isActive ? "text-dark-100_light-900 fill-dark-100_light-900 bg-primary-500/20" : "text-dark-500_light-600 fill-light-600"} flex-start  hover:fill-dark-100_light-900 hover:text-dark-100_light-900 w-full cursor-pointer gap-4 rounded-lg p-3 text-sm hover:bg-primary-500/20`}
+                className={`${isActive ? "text-dark-100_light-900 fill-dark-100_light-900 bg-primary-500/20" : "text-dark-500_light-600 fill-dark-500 dark:fill-light-600"} flex-start  hover:fill-dark-100_light-900 hover:text-dark-100_light-900 w-full cursor-pointer gap-4 rounded-lg p-3 text-sm hover:bg-primary-500/20`}
               >
                 <item.icon width="20px" height="20px" />
                 <p className="max-lg:hidden">{item.name}</p>
@@ -39,7 +39,7 @@ const LeftSidebar = () => {
         <div className="flex flex-col gap-3">
           <Link
             href={`/profile/${userId}`}
-            className={`${isProfile ? "text-dark-100_light-900 bg-primary-500/20 fill-dark-100 dark:fill-light-900" : "text-dark-500_light-600 fill-light-600"} flex-center hover:text-dark-100_light-900 hover:fill-dark-100_light-900 cursor-pointer gap-4 rounded-lg border border-primary-500/20 p-3 text-sm hover:bg-primary-500/20`}
+            className={`${isProfile ? "text-dark-100_light-900 bg-primary-500/20 fill-dark-100 dark:fill-light-900" : "text-dark-500_light-600 fill-dark-500 dark:fill-light-600"} flex-center hover:text-dark-100_light-900 hover:fill-dark-100_light-900 cursor-pointer gap-4 rounded-lg border border-primary-500/20 p-3 text-sm hover:bg-primary-500/20`}
           >
             <ProfileIcon width="20px" height="20px" />
             <p className="max-lg:hidden">Profile</p>

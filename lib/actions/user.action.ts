@@ -17,6 +17,8 @@ import Answer from "@/database/answer.model";
 import { FilterQuery } from "mongoose";
 import Post from "@/database/post.model";
 import Community from "@/database/community.model";
+import { BadgeCriteriaType } from "@/types/utils.types";
+import { assignBadges } from "../utils";
 
 export async function getUserById(params: any) {
   try {
@@ -167,12 +169,62 @@ export async function getUserInfo(params: IGetUserByIdParams) {
       createdBy: user._id,
     });
 
+    const [questionUpvotes] = await Question.aggregate([
+      { $match: { author: user._id } },
+      {
+        $project: {
+          _id: 0,
+          upvotes: { $size: "$upvotes" },
+        },
+      },
+      { $group: { _id: null, totalUpvotes: { $sum: "$upvotes" } } },
+      { $sort: { totalUpvotes: -1 } },
+    ]);
+
+    const [answerUpvotes] = await Answer.aggregate([
+      { $match: { author: user._id } },
+      {
+        $project: {
+          _id: 0,
+          upvotes: { $size: "$upvotes" },
+        },
+      },
+      { $group: { _id: null, totalUpvotes: { $sum: "$upvotes" } } },
+    ]);
+
+    const [questionViews] = await Question.aggregate([
+      { $match: { author: user._id } },
+      { $group: { _id: null, totalViews: { $sum: "$views" } } },
+    ]);
+
+    const criteria = [
+      { type: "QUESTION_COUNT" as BadgeCriteriaType, count: totalQuestions },
+      { type: "ANSWER_COUNT" as BadgeCriteriaType, count: totalAnswers },
+      {
+        type: "QUESTION_UPVOTES" as BadgeCriteriaType,
+        count: questionUpvotes?.totalUpvotes || 0,
+      },
+      {
+        type: "ANSWER_UPVOTES" as BadgeCriteriaType,
+        count: answerUpvotes?.totalUpvotes || 0,
+      },
+      {
+        type: "QUESTION_VIEWS" as BadgeCriteriaType,
+        count: questionViews?.totalViews || 0,
+      },
+      // { type: 'POST_COUNT' as BadgeCriteriaType, count: totalPosts },
+      // { type: 'COMMUNITY_COUNT' as BadgeCriteriaType, count: totalCreatedCommunities },
+    ];
+
+    const badgeCounts = assignBadges({ criteria });
+
     return {
       user,
       totalQuestions,
       totalAnswers,
       totalPosts,
       totalCreatedCommunities,
+      badgeCounts,
     };
   } catch (error) {
     console.log(error);
@@ -336,7 +388,7 @@ export async function followUserAction(params: IFollowParams) {
 
     const { followerId, isFollowing, followingId, path } = params;
 
-    //  this query for follower user
+    //  this query for follower user - user who follows another user
     let updateFollowerQuery = {};
 
     if (isFollowing) {
@@ -364,12 +416,12 @@ export async function followUserAction(params: IFollowParams) {
       };
     }
 
-    // this query for following user
+    // this query for following user - user who is followed by another user
     let updateFollowingQuery = {};
 
     if (isFollowing) {
       updateFollowingQuery = {
-        $pull: { followers: { followerId } },
+        $pull: { followers: { userId: followerId } },
       };
     } else {
       updateFollowingQuery = {
