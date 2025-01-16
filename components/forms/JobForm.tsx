@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { JobsSchema } from "@/lib/validations";
 import { useForm } from "react-hook-form";
-import { number, z } from "zod";
+import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "@/components/ui/form";
 import { Button } from "../ui/button";
@@ -21,7 +21,7 @@ import {
   SALARY_PER_OPTIONS,
   WORKMODE_OPTIONS,
 } from "@/constants";
-import { createJobAction } from "@/lib/actions/job.action";
+import { createJobAction, editJobAction } from "@/lib/actions/job.action";
 
 interface Props {
   type?: string;
@@ -42,33 +42,40 @@ const JobForm = ({ type, currentUserId, jobDetails }: Props) => {
     resolver: zodResolver(JobsSchema),
     defaultValues: {
       title: parsedJobDetails?.title || "",
-      description: parsedJobDetails?.content || "",
+      description: parsedJobDetails?.description || "",
       workMode: parsedJobDetails?.workMode || "",
       employmentType: parsedJobDetails?.employmentType || "",
       location: parsedJobDetails?.location || "",
       furtherDetailLink: parsedJobDetails?.furtherDetailLink || "",
-      salary: parsedJobDetails?.salary || number(),
+      salary: Number(parsedJobDetails?.salary) || 0,
       salaryPer: parsedJobDetails?.salaryPer || "",
       salaryCurrency: parsedJobDetails?.salaryCurrency || "",
-      deadline: parsedJobDetails?.deadline || "",
+      deadline:
+        parsedJobDetails?.deadline && new Date(parsedJobDetails.deadline),
       tags: groupedTags || [],
     },
   });
 
   async function onSubmit(values: z.infer<typeof JobsSchema>) {
-    console.log(values);
-
     const convertedDeadline = new Date(values.deadline).toISOString();
     try {
       // make an async API call
       if (type === "edit") {
-        // await editQuestion({
-        //   questionId: parsedQuestionDetails._id,
-        //   title: values.title,
-        //   content: values.explanation,
-        //   path: pathname,
-        // });
-        // router.push(`/question/${parsedQuestionDetails._id}`);
+        await editJobAction({
+          jobId: parsedJobDetails._id,
+          title: values.title,
+          description: values.description,
+          workMode: values.workMode,
+          employmentType: values.employmentType,
+          furtherDetailLink: values.furtherDetailLink,
+          location: values.location,
+          salary: values.salary?.toString(),
+          salaryPer: values.salaryPer,
+          salaryCurrency: values.salaryCurrency,
+          deadline: convertedDeadline,
+          path: pathname,
+        });
+        router.push(`/job/${parsedJobDetails._id}`);
       } else {
         await createJobAction({
           title: values.title,
@@ -77,7 +84,7 @@ const JobForm = ({ type, currentUserId, jobDetails }: Props) => {
           employmentType: values.employmentType,
           furtherDetailLink: values.furtherDetailLink,
           location: values.location,
-          salary: values.salary,
+          salary: values.salary?.toString(),
           salaryPer: values.salaryPer,
           salaryCurrency: values.salaryCurrency,
           deadline: convertedDeadline,
@@ -193,7 +200,6 @@ const JobForm = ({ type, currentUserId, jobDetails }: Props) => {
             type="submit"
             className="bg-primary-100_primary-500 w-full text-sm font-medium text-light-900"
             disabled={form.formState.isSubmitting}
-            onClick={() => console.log(form.getValues())}
           >
             {form.formState.isSubmitting ? (
               <>{type ? "Updating..." : "Posting..."}</>

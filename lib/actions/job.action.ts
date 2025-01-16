@@ -127,6 +127,52 @@ export async function getJobByIdAction(params: { jobId: string }) {
   }
 }
 
+export async function editJobAction(params: any) {
+  try {
+    connectToDatabase();
+
+    const {
+      jobId,
+      title,
+      description,
+      workMode,
+      employmentType,
+      furtherDetailLink,
+      salaryPer,
+      salaryCurrency,
+      salary,
+      location,
+      deadline,
+      path,
+    } = params;
+
+    console.log(params);
+
+    const job = await Job.findById(jobId).populate("tags");
+
+    if (!job) {
+      throw new Error("Job not found");
+    }
+
+    job.title = title;
+    job.description = description;
+    job.workMode = workMode;
+    job.employmentType = employmentType;
+    job.furtherDetailLink = furtherDetailLink;
+    job.salaryPer = salaryPer;
+    job.salaryCurrency = salaryCurrency;
+    job.salary = salary;
+    job.location = location;
+    job.deadline = deadline;
+
+    await job.save();
+
+    revalidatePath(path);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export async function deleteJobAction(params: any) {
   try {
     connectToDatabase();
@@ -183,12 +229,37 @@ export async function getAllApplicationsAction(params: any) {
   try {
     connectToDatabase();
 
-    const { jobId } = params;
+    const { jobId, sortBy } = params;
 
-    const applications = await Application.find({ jobId }).populate(
-      "applicant",
-      "_id clerkId name username avatar"
-    );
+    let sortOptions = {};
+    let filterOptions: any = { jobId }; // Default filter is by jobId
+
+    switch (sortBy) {
+      case "newest":
+        sortOptions = { appliedOn: -1 };
+        break;
+      case "old":
+        sortOptions = { appliedOn: 1 };
+        break;
+      case "pending":
+        filterOptions.status = "pending";
+        break;
+      case "reviewed":
+        filterOptions.status = "reviewed";
+        break;
+      case "accepted":
+        filterOptions.status = "accepted";
+        break;
+      case "rejected":
+        filterOptions.status = "rejected";
+        break;
+      default:
+        break;
+    }
+
+    const applications = await Application.find(filterOptions)
+      .populate("applicant", "_id clerkId name username avatar")
+      .sort(sortOptions);
 
     return { applications };
   } catch (error) {
@@ -202,6 +273,8 @@ export async function setApplicationStatusAction(params: any) {
     connectToDatabase();
 
     const { applicationId, status, path } = params;
+
+    console.log(params);
 
     await Application.findByIdAndUpdate(applicationId, {
       $set: { status },

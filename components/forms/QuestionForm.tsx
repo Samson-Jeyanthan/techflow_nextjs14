@@ -90,8 +90,6 @@ const QuestionForm = ({
   };
 
   async function onSubmit(values: z.infer<typeof QuestionsSchema>) {
-    console.log(values);
-
     try {
       // make an async API call
       if (type === "Edit") {

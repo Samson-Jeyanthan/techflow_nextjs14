@@ -189,7 +189,7 @@ export type TCreateJobParams = {
   furtherDetailLink: string | undefined;
   salaryPer: string | undefined;
   salaryCurrency: string | undefined;
-  salary: number | undefined;
+  salary: string | undefined;
   location: string;
   deadline: string;
   tags: string[];

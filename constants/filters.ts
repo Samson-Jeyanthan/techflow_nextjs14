@@ -39,3 +39,11 @@ export const GLOBAL_SEARCH_FILTERS = [
   { name: "Tags", value: "tag" },
   { name: "Users", value: "user" },
 ];
+
+export const JOB_FILTERS = [
+  { name: "Newest", value: "newest" },
+  { name: "Old", value: "old" },
+  { name: "Pending", value: "pending" },
+  { name: "Reviewed", value: "reviewed" },
+  { name: "Accepted", value: "accepted" },
+];

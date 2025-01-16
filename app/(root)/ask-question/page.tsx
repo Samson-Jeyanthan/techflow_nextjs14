@@ -9,7 +9,6 @@ const AskQuestion = async () => {
 
   const mongoUser = await getUserById({ userId });
 
-  console.log(mongoUser);
   return (
     <section>
       <h1 className="text-dark-100_light-850 text-3xl font-semibold">

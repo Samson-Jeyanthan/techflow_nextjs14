@@ -37,7 +37,7 @@ const ResumeInput = ({ fieldChange, urlSelected, setUrlSelected }: Props) => {
       />
       {media.preview ? (
         <div
-          className={`${urlSelected ? "border-light-750 dark:border-dark-350" : "border-primary-500"} flex-center z-0 h-44 w-full cursor-pointer gap-3 rounded-xl border `}
+          className={`${urlSelected ? "border-light-750 dark:border-dark-350" : "border-primary-500"} flex-start z-0 h-44 w-full cursor-pointer gap-3 rounded-xl border `}
           onClick={() => setUrlSelected(false)}
         >
           <Image

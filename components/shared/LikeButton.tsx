@@ -1,5 +1,6 @@
 "use client";
 
+import { useToast } from "@/hooks/use-toast";
 import { likePost } from "@/lib/actions/post.action";
 import { useState } from "react";
 import { GoHeart, GoHeartFill } from "react-icons/go";
@@ -12,12 +13,16 @@ type Props = {
 };
 
 const LikeButton = ({ userId, postId, likeCounts, isUserLiked }: Props) => {
+  const { toast } = useToast();
   const [isLiked, setIsLiked] = useState(isUserLiked || false);
   const [likeCount, setLikeCount] = useState(likeCounts);
 
   const handleLike = async () => {
     if (!userId) {
-      return;
+      return toast({
+        title: "You are not logged in",
+        description: "You need to be logged in to like this post",
+      });
     }
 
     setIsLiked(!isLiked);

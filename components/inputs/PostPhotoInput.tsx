@@ -85,16 +85,6 @@ const PostPhotoInput = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [multipleMedia]);
 
-  useEffect(() => {
-    console.log(
-      previousMedia,
-      multipleMedia,
-      selectedItem,
-      "useeffcet",
-      allMedia
-    );
-  }, [previousMedia, multipleMedia, selectedItem, allMedia]);
-
   return (
     <div className="flex w-full flex-col gap-4">
       <input

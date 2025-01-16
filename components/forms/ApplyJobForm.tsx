@@ -2,14 +2,7 @@
 
 import { useForm } from "react-hook-form";
 import { FormInput, ResumeInput } from "../inputs";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "../ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import { z } from "zod";
 import { ApplicationSchema } from "@/lib/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -34,6 +27,7 @@ const ApplyJobForm = ({ userDetails, jobId, setModalOpen }: Props) => {
   const [urlSelected, setUrlSelected] = useState<boolean>(
     parsedUserDetails?.cvResume?.url || false
   );
+  const [error, setError] = useState<string>("");
 
   const form = useForm<z.infer<typeof ApplicationSchema>>({
     resolver: zodResolver(ApplicationSchema),
@@ -45,15 +39,18 @@ const ApplyJobForm = ({ userDetails, jobId, setModalOpen }: Props) => {
   });
 
   const handleSubmit = async (values: z.infer<typeof ApplicationSchema>) => {
-    console.log(values);
+    if (urlSelected === false && values.resumeFile?.length === 0) {
+      setError("Please select a resume file");
+      return;
+    }
 
     let uploadedCVResumeURL = "";
 
     try {
       // uploading resume file
-      if (values.resumeFile.length !== 0 && urlSelected === false) {
+      if (values.resumeFile?.length !== 0 && urlSelected === false) {
         const resumeUpload = await getFileUpload({
-          file: values.resumeFile[0],
+          file: values.resumeFile && values.resumeFile[0],
           fileType: "application/pdf",
         });
 
@@ -69,7 +66,7 @@ const ApplyJobForm = ({ userDetails, jobId, setModalOpen }: Props) => {
           : uploadedCVResumeURL,
         name: urlSelected
           ? parsedUserDetails?.cvResume?.name
-          : values.resumeFile[0].name,
+          : values.resumeFile && values.resumeFile[0].name,
       };
 
       // application form submission
@@ -112,7 +109,8 @@ const ApplyJobForm = ({ userDetails, jobId, setModalOpen }: Props) => {
                     setUrlSelected={setUrlSelected}
                   />
                 </FormControl>
-                <FormMessage className="text-xs text-custom-red" />
+                {/* <FormMessage className="text-xs text-custom-red" /> */}
+                {error && <p className="text-xs text-custom-red">{error}</p>}
               </FormItem>
             )}
           />

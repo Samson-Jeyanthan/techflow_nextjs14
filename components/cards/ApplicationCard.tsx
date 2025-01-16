@@ -8,6 +8,7 @@ import { ApplicationOptions } from "../options";
 type Props = {
   _id: string;
   jobId: string;
+  applicantId: string;
   applicantName: string;
   applicantEmail: string;
   profilePic: string;
@@ -22,6 +23,7 @@ type Props = {
 const ApplicationCard = ({
   _id,
   jobId,
+  applicantId,
   applicantName,
   applicantEmail,
   profilePic,
@@ -32,25 +34,33 @@ const ApplicationCard = ({
   return (
     <article className="bg-light-800_dark-200 flex w-full flex-col items-start gap-2 rounded-2xl p-6">
       <div className="flex w-full items-start justify-center gap-4">
-        <Image
-          width={1024}
-          height={1024}
-          src={profilePic}
-          alt="profile-pic"
-          className="size-16 min-w-16 rounded-full bg-light-700 object-cover dark:bg-dark-400"
-        />
+        <Link href={`/profile/${applicantId}`} className="rounded-full">
+          <Image
+            width={1024}
+            height={1024}
+            src={profilePic}
+            alt="profile-pic"
+            className="size-16 min-w-16 rounded-full bg-light-700 object-cover dark:bg-dark-400"
+          />
+        </Link>
 
         <div className="flex w-full items-start justify-between gap-2">
           <div className="flex flex-col gap-1">
-            <h2 className="text-dark-100_light-850 text-sm font-medium capitalize">
+            <Link
+              href={`/profile/${applicantId}`}
+              className="text-dark-100_light-850 text-sm font-medium capitalize"
+            >
               {applicantName}
-            </h2>
+            </Link>
             <p className="text-dark-500_light-600 text-xs">
               Applied {getTimestamp(appliedOn)}
             </p>
           </div>
 
-          <ApplicationOptions applicationId={_id} jobId={jobId} />
+          <ApplicationOptions
+            applicationId={JSON.stringify(_id)}
+            jobId={JSON.stringify(jobId)}
+          />
         </div>
       </div>
 
@@ -68,9 +78,11 @@ const ApplicationCard = ({
           </Button>
         </Link>
 
-        <Button className="text-dark-500_light-600 w-full border border-primary-500/20">
-          Contact
-        </Button>
+        <Link href={`mailto:${applicantEmail}`}>
+          <Button className="text-dark-500_light-600 w-full border border-primary-500/20">
+            Contact
+          </Button>
+        </Link>
       </div>
     </article>
   );

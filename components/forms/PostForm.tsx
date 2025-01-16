@@ -34,7 +34,6 @@ interface Props {
 }
 
 const PostForm = ({ type, currentUserId, postDetails, communityId }: Props) => {
-  console.log(communityId, "communityId");
   const { mode } = useTheme();
   const editorRef = useRef(null);
   const router = useRouter();

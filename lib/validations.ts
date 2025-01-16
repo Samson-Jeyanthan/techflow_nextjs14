@@ -54,10 +54,9 @@ export const PostSchema = z.object({
 export const ApplicationSchema = z.object({
   name: z.string().min(5).max(40),
   email: z.string().email(),
-  resumeFile: z
-    .custom<File[]>()
-    .refine(
-      (files) => Array.isArray(files) && files.length > 0,
-      "Resume file is required"
-    ),
+  resumeFile: z.custom<File[]>().optional(),
+  // .refine(
+  //   (files) => Array.isArray(files) && files.length > 0,
+  //   "Resume file is required"
+  // ),
 });

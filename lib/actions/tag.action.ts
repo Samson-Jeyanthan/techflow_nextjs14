@@ -134,10 +134,30 @@ export async function getTopPopularTags() {
   try {
     connectToDatabase();
 
+    // const popularTags = await Tag.aggregate([
+    //   { $project: { name: 1, numberOfQuestions: { $size: "$questions" } } },
+    //   { $sort: { numberOfQuestions: -1 } },
+    //   { $limit: 5 },
+    // ]);
+
     const popularTags = await Tag.aggregate([
-      { $project: { name: 1, numberOfQuestions: { $size: "$questions" } } },
-      { $sort: { numberOfQuestions: -1 } },
-      { $limit: 5 },
+      {
+        $project: {
+          name: 1,
+          numberOfQuestions: { $size: "$questions" },
+          numberOfPosts: { $size: "$posts" },
+          numberOfJobs: { $size: "$jobs" },
+        },
+      },
+      {
+        $addFields: {
+          totalUsage: {
+            $add: ["$numberOfQuestions", "$numberOfPosts", "$numberOfJobs"],
+          },
+        },
+      },
+      { $sort: { totalUsage: -1 } },
+      { $limit: 6 },
     ]);
 
     return popularTags;

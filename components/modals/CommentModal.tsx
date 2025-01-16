@@ -27,7 +27,6 @@ const CommentModal = ({ commentsCount, postId, currentUserId }: any) => {
           isClientSide: true,
           postId: JSON.parse(postId),
         });
-        console.log(res);
         setData(res);
       }
     };

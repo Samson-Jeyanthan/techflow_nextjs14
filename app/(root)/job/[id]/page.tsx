@@ -15,13 +15,14 @@ import {
   SalaryIcon,
   WorkModeIcon,
 } from "@/public/svgs";
+import { TURLProps } from "@/types/utils.types";
 import { SignedIn } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 import Image from "next/image";
 import Link from "next/link";
 import { MdEdit } from "react-icons/md";
 
-const JobDetailPage = async ({ params }: { params: { id: string } }) => {
+const JobDetailPage = async ({ params, searchParams }: TURLProps) => {
   const { userId: clerkId } = auth();
   const result = await getJobByIdAction({ jobId: params.id });
 
@@ -30,7 +31,6 @@ const JobDetailPage = async ({ params }: { params: { id: string } }) => {
   if (clerkId) {
     mongoUser = await getUserById({ userId: clerkId });
   }
-  console.log(mongoUser);
 
   const isAuthor = clerkId && clerkId === result?.author.clerkId;
   return (
@@ -130,6 +130,7 @@ const JobDetailPage = async ({ params }: { params: { id: string } }) => {
         <AllApplications
           jobId={result?._id}
           totalApplications={result?.applications?.length}
+          filter={searchParams?.filter}
         />
       )}
     </section>

@@ -26,7 +26,6 @@ const CommunitiesPage = async ({ searchParams, params }: TURLProps) => {
     page: searchParams.page ? +searchParams.page : 1,
   });
 
-  console.log(currentUser._id, userInfo.user._id);
   return (
     <>
       <div className="flex w-full flex-col gap-4">

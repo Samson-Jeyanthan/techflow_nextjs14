@@ -16,6 +16,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { downvoteAnswer, upvoteAnswer } from "@/lib/actions/answer.action";
 import { useEffect } from "react";
 import { viewQuestion } from "@/lib/actions/interaction.action";
+import { useToast } from "@/hooks/use-toast";
 
 interface Props {
   type: string;
@@ -40,9 +41,14 @@ const Votes = ({
 }: Props) => {
   const pathname = usePathname();
   const router = useRouter();
+  const { toast } = useToast();
+
   const handleVote = async (actionType: string) => {
     if (!userId) {
-      return;
+      return toast({
+        title: "You are not logged in",
+        description: "You need to be logged in to vote on this question",
+      });
     }
 
     if (actionType === "upvote") {
@@ -62,8 +68,11 @@ const Votes = ({
           hasDownvoted,
           path: pathname,
         });
-        // TODO: show toast message
       }
+      return toast({
+        title: `Upvote ${!hasUpvoted ? "Success" : "Removed"}`,
+        variant: !hasUpvoted ? "default" : "destructive",
+      });
     }
 
     if (actionType === "downvote") {
@@ -83,8 +92,13 @@ const Votes = ({
           hasDownvoted,
           path: pathname,
         });
-        // TODO: show toast message
       }
+      // TODO: show toast message
+
+      return toast({
+        title: `Downvote ${!hasDownvoted ? "Success" : "Removed"}`,
+        variant: !hasDownvoted ? "default" : "destructive",
+      });
     }
   };
 

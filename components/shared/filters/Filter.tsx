@@ -41,9 +41,9 @@ const Filter = ({ filters, otherClasses, containerClasses }: Props) => {
         defaultValue={paramFilter || undefined}
       >
         <SelectTrigger
-          className={`${otherClasses} bg-light-800_dark-250 border-none px-5 py-2.5 text-sm text-light-500`}
+          className={`${otherClasses} bg-light-800_dark-250 border-none px-5 py-2.5 text-sm text-light-500 no-focus`}
         >
-          <div className="line-clamp-1 flex-1 text-left">
+          <div className="line-clamp-1 flex text-left">
             <SelectValue placeholder="Select a Filter" />
           </div>
         </SelectTrigger>

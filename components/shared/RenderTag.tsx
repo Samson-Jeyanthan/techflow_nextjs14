@@ -5,11 +5,11 @@ import { Badge } from "../ui/badge";
 interface Props {
   _id: string;
   name: string;
-  totalQuestions?: number;
+  totalContent?: number;
   showCount?: boolean;
 }
 
-const RenderTag = ({ _id, name, totalQuestions, showCount }: Props) => {
+const RenderTag = ({ _id, name, totalContent, showCount }: Props) => {
   return (
     <Link
       href={`/tags/${_id}`}
@@ -20,7 +20,7 @@ const RenderTag = ({ _id, name, totalQuestions, showCount }: Props) => {
       </Badge>
 
       {showCount && (
-        <p className="text-dark-400_light-500 text-xs">{totalQuestions}</p>
+        <p className="text-dark-400_light-500 text-xs">{totalContent}</p>
       )}
     </Link>
   );
