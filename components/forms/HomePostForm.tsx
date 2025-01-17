@@ -63,13 +63,15 @@ const HomePostForm = ({ avatar, mongoUserId }: any) => {
 
       await createPostAction({
         description: values.description,
-        media: [
-          {
-            mediaType: "image",
-            mediaURL: postImageURL,
-            thumbnailURL: "",
-          },
-        ],
+        media: postImageURL
+          ? [
+              {
+                mediaType: "image",
+                mediaURL: postImageURL,
+                thumbnailURL: "",
+              },
+            ]
+          : [],
         author: JSON.parse(mongoUserId),
         path: "/",
       });

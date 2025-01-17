@@ -42,7 +42,7 @@ const CommunitiesPage = async ({ searchParams, params }: TURLProps) => {
           ) : (
             <NoResult
               title="There is no communties to show"
-              description="Be the first to break the silence! 🚀 Ask a Question and kickstart the discussion. our query could be the next big thing others learn from. Get involved! 💡"
+              description="Be the first to break the silence! 🚀 Create a community and kickstart the discussion. our query could be the next big thing others learn from. Get involved! 💡"
               link="/create-community"
               linkTitle="Create a Community"
             />
@@ -62,9 +62,8 @@ const CommunitiesPage = async ({ searchParams, params }: TURLProps) => {
               ) : (
                 <NoResult
                   title="There is no communties to show"
-                  description="Be the first to break the silence! 🚀 Ask a Question and kickstart the discussion. our query could be the next big thing others learn from. Get involved! 💡"
-                  link="/create-community"
-                  linkTitle="Create a Community"
+                  description="Be the first to break the silence! 🚀 Create a community and kickstart the discussion. our query could be the next big thing others learn from. Get involved! 💡"
+                  noLink={true}
                 />
               )}
             </div>

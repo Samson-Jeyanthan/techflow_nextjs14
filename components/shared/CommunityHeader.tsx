@@ -6,6 +6,7 @@ import { UploadCommunityModal } from "../modals";
 import { JoinButton } from "../buttons";
 import { getUserById } from "@/lib/actions/user.action";
 import { redirect } from "next/navigation";
+import { CommunityOptions } from "../options";
 
 type Props = {
   communityInfo: any;
@@ -63,6 +64,11 @@ const CommunityHeader = async ({ communityInfo, communityId }: Props) => {
                 {communityInfo.members.length} Members
               </p>
             )}
+            {communityInfo.bio && (
+              <p className="text-dark-300_light-750 mt-2 text-sm lowercase first-letter:capitalize">
+                {communityInfo.bio}
+              </p>
+            )}
           </div>
         </div>
 
@@ -72,7 +78,6 @@ const CommunityHeader = async ({ communityInfo, communityId }: Props) => {
           adminUser ? (
             <UploadCommunityModal communityId={communityId} />
           ) : null}
-
           {clerkId === communityInfo.createdBy.clerkId || adminUser ? (
             <Link href={`/community/edit/${communityInfo._id}`}>
               <Button className="bg-primary-100_primary-500 text-sm font-medium text-light-900">
@@ -85,6 +90,9 @@ const CommunityHeader = async ({ communityInfo, communityId }: Props) => {
               currentUserId={JSON.stringify(mongoUser?._id)}
               hasJoined={userHasJoined}
             />
+          )}
+          {clerkId === communityInfo.createdBy.clerkId && (
+            <CommunityOptions communityId={communityId} />
           )}
         </div>
       </div>

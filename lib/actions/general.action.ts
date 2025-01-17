@@ -44,7 +44,7 @@ export async function globalSearchAction(params: IGlobalSearchParamsProps) {
             type,
             id:
               type === "user"
-                ? item.clerkid
+                ? item.clerkId
                 : type === "answer"
                   ? item.question
                   : item._id,

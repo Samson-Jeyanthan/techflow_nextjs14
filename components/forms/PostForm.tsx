@@ -134,7 +134,7 @@ const PostForm = ({ type, currentUserId, postDetails, communityId }: Props) => {
           media: uploadedMedia,
           tags: values.tags,
           author: JSON.parse(currentUserId),
-          communityId: communityId || "",
+          communityId: communityId || null,
           path: pathname,
         });
       }

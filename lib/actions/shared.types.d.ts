@@ -165,7 +165,7 @@ export type TCreatePostParams = {
   media?: IMediaProps[];
   tags?: string[];
   author: Schema.Types.ObjectId | IUser;
-  communityId?: string;
+  communityId?: string | null;
   path: string;
 };
 
@@ -236,5 +236,4 @@ export type TGetCommunityContentsParams = {
 
 export interface IDeleteCommunityParams {
   communityId: string;
-  path: string;
 }

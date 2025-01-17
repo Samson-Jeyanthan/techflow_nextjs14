@@ -7,7 +7,6 @@ import {
 } from "@/lib/actions/user.action";
 import { TURLProps } from "@/types/utils.types";
 import { auth } from "@clerk/nextjs/server";
-import { redirect } from "next/navigation";
 
 interface Props extends TURLProps {
   userId: string;
@@ -16,7 +15,6 @@ interface Props extends TURLProps {
 const UserPostsPage = async ({ searchParams, params }: Props) => {
   const { userId } = auth();
 
-  if (!userId) redirect("/sign-in");
   const mongoUser = await getUserById({ userId });
 
   const userInfo = await getUserInfo({ userId: params.id });

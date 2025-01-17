@@ -37,7 +37,7 @@ export async function getAllTags(params: TGetAllTagsParams) {
   try {
     connectToDatabase();
 
-    const { searchQuery, filter, page = 1, pageSize = 10 } = params;
+    const { searchQuery, filter, page = 1, pageSize = 12 } = params;
 
     const skipAmount = (page - 1) * pageSize;
 

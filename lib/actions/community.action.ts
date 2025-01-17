@@ -13,6 +13,7 @@ import {
   TGetCommunityContentsParams,
 } from "./shared.types";
 import Question from "@/database/question.model";
+import { FilterQuery } from "mongoose";
 
 export async function createCommunity(params: TCreateCommunityParams) {
   try {
@@ -39,11 +40,22 @@ export async function createCommunity(params: TCreateCommunityParams) {
   }
 }
 
-export async function getAllCommunities() {
+export async function getAllCommunities(params: any) {
   try {
     connectToDatabase();
 
-    const communities = await Community.find({});
+    const { searchQuery } = params;
+
+    const query: FilterQuery<typeof Community> = {};
+
+    if (searchQuery) {
+      query.$or = [
+        { name: { $regex: new RegExp(searchQuery, "i") } },
+        { bio: { $regex: new RegExp(searchQuery, "i") } },
+      ];
+    }
+
+    const communities = await Community.find(query);
 
     return { communities };
   } catch (error) {
@@ -353,11 +365,14 @@ export async function deleteCommunityAction(params: IDeleteCommunityParams) {
   try {
     connectToDatabase();
 
-    const { communityId, path } = params;
+    const { communityId } = params;
 
     await Community.deleteOne({ _id: communityId });
 
-    revalidatePath(path);
+    return {
+      status: 200,
+      message: "Success",
+    };
   } catch (error) {
     console.log(error);
   }

@@ -3,6 +3,7 @@ import { Filter, LocalSearchbar, NoResult } from "@/components/shared";
 import { Button } from "@/components/ui/button";
 import { QANDAS_FILTERS } from "@/constants/filters";
 import { getAllJobsAction } from "@/lib/actions/job.action";
+import { ISearchParamsProps } from "@/types/utils.types";
 import { Metadata } from "next";
 import React from "react";
 
@@ -10,8 +11,10 @@ export const metadata: Metadata = {
   title: "All Jobs | Techflow",
 };
 
-async function JobsSection() {
-  const results = await getAllJobsAction({});
+async function JobsSection({ searchParams }: ISearchParamsProps) {
+  const results = await getAllJobsAction({
+    searchQuery: searchParams.q,
+  });
 
   return (
     <section>

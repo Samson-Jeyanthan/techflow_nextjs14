@@ -52,6 +52,13 @@ async function layout({
               totalNumbers: 0,
             },
             {
+              tabName: "Jobs",
+              value: "jobs",
+              href: `/profile/${userInfo?.user.clerkId}/jobs`,
+              totalNumbers: userInfo?.totalCreatedJobs,
+              dontShow: userInfo?.totalCreatedJobs === 0,
+            },
+            {
               tabName: "Communities",
               value: "communities",
               href: `/profile/${userInfo?.user.clerkId}/communities`,

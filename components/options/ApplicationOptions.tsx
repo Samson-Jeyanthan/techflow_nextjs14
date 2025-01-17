@@ -43,7 +43,7 @@ const ApplicationOptions = ({ applicationId, jobId }: Props) => {
           </div>
           {JOB_STATUS_OPTIONS.map((item, index) => (
             <MenubarItem
-              className="bg-light-850_dark-200 hover:bg-light-800_dark-300 hover:text-dark-100_light-900 hover:fill-dark-100_light-900 w-32 cursor-pointer rounded fill-light-500 p-1 pl-3 text-sm text-light-500 no-focus"
+              className="bg-light-850_dark-200 hover:bg-light-800_dark-300 hover:text-dark-100_light-900 hover:fill-dark-100_light-900 no-focus w-32 cursor-pointer rounded fill-light-500 p-1 pl-3 text-sm text-light-500"
               key={index}
               onClick={() => handleApplicationStatus(item._id)}
             >

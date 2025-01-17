@@ -7,6 +7,25 @@ import { HiOutlineOfficeBuilding } from "react-icons/hi";
 import { IoMdTime } from "react-icons/io";
 import Link from "next/link";
 
+type Props = {
+  _id: string;
+  title: string;
+  author: {
+    name: string;
+    username: string;
+    avatar: string;
+  };
+  description: string;
+  salary: number;
+  salaryPer: string;
+  salaryCurrency: string;
+  location: string;
+  deadline: string;
+  workMode: string;
+  employmentType: string;
+  createdAt: Date;
+};
+
 const JobCard = ({
   _id,
   title,
@@ -20,7 +39,7 @@ const JobCard = ({
   workMode,
   employmentType,
   createdAt,
-}: any) => {
+}: Props) => {
   return (
     <div className="relative flex w-full items-start gap-4 rounded-2xl bg-light-900 p-8 shadow-sm dark:bg-dark-250">
       <Image

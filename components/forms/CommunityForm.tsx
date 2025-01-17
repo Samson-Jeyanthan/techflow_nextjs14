@@ -27,6 +27,8 @@ const CommunityForm = ({ type, mongoUserId, communityDetails }: Props) => {
   const parsedCommunityDetails =
     communityDetails && JSON.parse(communityDetails || "");
 
+  console.log(parsedCommunityDetails);
+
   const form = useForm<z.infer<typeof CommunitySchema>>({
     resolver: zodResolver(CommunitySchema),
     defaultValues: {
@@ -41,8 +43,10 @@ const CommunityForm = ({ type, mongoUserId, communityDetails }: Props) => {
     let profilePicURL = "";
     let coverPicURL = "";
 
+    console.log(values.coverPhoto, values.profilePhoto);
+
     try {
-      if (values.profilePhoto) {
+      if (values.profilePhoto?.length !== 0) {
         const signedURLResult = await getSignedURL({
           fileType: "image/jpeg",
         });
@@ -57,7 +61,7 @@ const CommunityForm = ({ type, mongoUserId, communityDetails }: Props) => {
 
         const res = await fetch(url, {
           method: "PUT",
-          body: values.profilePhoto[0],
+          body: values.profilePhoto && values.profilePhoto[0],
           headers: {
             "Content-Type": "image/jpeg",
           },
@@ -68,7 +72,7 @@ const CommunityForm = ({ type, mongoUserId, communityDetails }: Props) => {
         }
       }
 
-      if (values.coverPhoto) {
+      if (values.coverPhoto?.length !== 0) {
         const signedURLResult = await getSignedURL({
           fileType: "image/jpeg",
         });
@@ -83,7 +87,7 @@ const CommunityForm = ({ type, mongoUserId, communityDetails }: Props) => {
 
         const res = await fetch(url, {
           method: "PUT",
-          body: values.coverPhoto[0],
+          body: values.coverPhoto && values.coverPhoto[0],
           headers: {
             "Content-Type": "image/jpeg",
           },

@@ -79,7 +79,6 @@ export async function getAllPosts() {
       })
       .sort({ createdAt: -1 });
 
-    console.log(posts);
     return { posts };
   } catch (error) {
     console.log(error);

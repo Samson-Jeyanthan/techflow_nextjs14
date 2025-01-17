@@ -1,7 +1,7 @@
 "use client";
 
 import { ChangeEvent, useRef } from "react";
-import { DialogClose, DialogContent, DialogTitle } from "../ui/dialog";
+import { Dialog, DialogClose, DialogContent, DialogTitle } from "../ui/dialog";
 import { MdClose, MdDelete } from "react-icons/md";
 import { BiPlus } from "react-icons/bi";
 
@@ -23,7 +23,7 @@ const PhotoActionModal = ({
   const photoRef = useRef<HTMLInputElement>(null);
 
   return (
-    <>
+    <Dialog>
       <DialogContent
         className="flex max-w-96 flex-col items-center gap-3 rounded-2xl border-none bg-dark-250 p-5"
         aria-describedby={undefined}
@@ -63,7 +63,7 @@ const PhotoActionModal = ({
           <BiPlus className="text-xl" /> Choose From Device
         </div>
       </DialogContent>
-    </>
+    </Dialog>
   );
 };
 

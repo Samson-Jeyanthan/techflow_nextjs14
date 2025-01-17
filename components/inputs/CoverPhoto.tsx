@@ -53,7 +53,7 @@ const CoverPhoto = ({ fieldChange, mediaUrl }: any) => {
           accept="image/jpeg,image/jpg,image/png,image/webp"
         />
 
-        {media.preview ? (
+        {media.preview || prevMedia ? (
           <Image
             src={media.preview || prevMedia || ""}
             alt="cropped-cover-image"
@@ -80,7 +80,7 @@ const CoverPhoto = ({ fieldChange, mediaUrl }: any) => {
           ) : (
             <CameraIcon fill="white" width="21px" height="21px" />
           )}
-          {media.preview ? "Edit Cover Photo" : "Add Cover Photo"}
+          {media.preview || prevMedia ? "Edit Cover Photo" : "Add Cover Photo"}
         </div>
       </div>
 

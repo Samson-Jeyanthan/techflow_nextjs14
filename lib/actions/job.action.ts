@@ -7,6 +7,7 @@ import { revalidatePath } from "next/cache";
 import { TCreateJobParams } from "./shared.types";
 import User from "@/database/user.model";
 import Application from "@/database/application.model";
+import { FilterQuery } from "mongoose";
 
 export async function createJobAction(params: TCreateJobParams) {
   try {
@@ -76,8 +77,18 @@ export async function createJobAction(params: TCreateJobParams) {
 export async function getAllJobsAction(params: any) {
   try {
     connectToDatabase();
+    const { searchQuery } = params;
 
-    const jobs = await Job.find({})
+    const query: FilterQuery<typeof Job> = {};
+
+    if (searchQuery) {
+      query.$or = [
+        { title: { $regex: new RegExp(searchQuery, "i") } },
+        { description: { $regex: new RegExp(searchQuery, "i") } },
+      ];
+    }
+
+    const jobs = await Job.find(query)
       .populate({
         path: "tags",
         model: Tag,
@@ -232,7 +243,7 @@ export async function getAllApplicationsAction(params: any) {
     const { jobId, sortBy } = params;
 
     let sortOptions = {};
-    let filterOptions: any = { jobId }; // Default filter is by jobId
+    const filterOptions: any = { jobId }; // Default filter is by jobId
 
     switch (sortBy) {
       case "newest":

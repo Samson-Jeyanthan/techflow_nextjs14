@@ -14,7 +14,7 @@ const Tags = async ({ searchParams }: ISearchParamsProps) => {
 
   return (
     <>
-      <section>
+      <section className="h-[75vh]">
         <h1 className="text-dark-100_light-900 flex-between text-3xl font-semibold">
           All Tags
         </h1>
@@ -33,7 +33,7 @@ const Tags = async ({ searchParams }: ISearchParamsProps) => {
           />
         </div>
 
-        <div className="mt-12 flex flex-wrap gap-4">
+        <div className="mt-12 grid grid-cols-2 gap-4 md:grid-cols-4">
           {results.tags.length > 0 ? (
             results.tags.map((tag, index) => <TagCard key={index} tag={tag} />)
           ) : (

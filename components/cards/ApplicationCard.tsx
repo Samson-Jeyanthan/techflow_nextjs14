@@ -73,7 +73,7 @@ const ApplicationCard = ({
 
       <div className="mt-3 flex w-full gap-2">
         <Link href={resume.url} target="_blank">
-          <Button className="text-dark-400_light-500 bg-light-800_dark-350">
+          <Button className="text-dark-400_light-500 bg-light-750 dark:bg-dark-350">
             View CV Resume
           </Button>
         </Link>

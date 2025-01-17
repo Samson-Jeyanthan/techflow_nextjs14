@@ -1,12 +1,14 @@
 import Link from "next/link";
 import { Tabs, TabsList, TabsTrigger } from "../ui/tabs";
 import { formatAndDivideNumber } from "@/lib/utils";
+import React from "react";
 
 type ITab = {
   tabName: string;
   value: string;
   totalNumbers: number;
   href: string;
+  dontShow?: boolean;
 };
 
 interface Props {
@@ -22,16 +24,20 @@ const TabLinks = ({ tabs }: Props) => {
       <TabsList>
         {tabs.map((tab, index) => {
           return (
-            <TabsTrigger key={index} value={tab.value} className="active-tab">
-              <Link
-                href={tab.href}
-                className="flex size-full items-center justify-center gap-1 px-5 py-1.5"
-              >
-                {tab.totalNumbers !== 0 &&
-                  formatAndDivideNumber(tab.totalNumbers)}
-                <p>{tab.tabName}</p>
-              </Link>
-            </TabsTrigger>
+            <React.Fragment key={index}>
+              {!tab.dontShow && (
+                <TabsTrigger value={tab.value} className="active-tab">
+                  <Link
+                    href={tab.href}
+                    className="flex size-full items-center justify-center gap-1 px-5 py-1.5"
+                  >
+                    {tab.totalNumbers !== 0 &&
+                      formatAndDivideNumber(tab.totalNumbers)}
+                    <p>{tab.tabName}</p>
+                  </Link>
+                </TabsTrigger>
+              )}
+            </React.Fragment>
           );
         })}
       </TabsList>

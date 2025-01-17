@@ -19,6 +19,7 @@ import Post from "@/database/post.model";
 import Community from "@/database/community.model";
 import { BadgeCriteriaType } from "@/types/utils.types";
 import { assignBadges } from "../utils";
+import Job from "@/database/job.model";
 
 export async function getUserById(params: any) {
   try {
@@ -168,6 +169,7 @@ export async function getUserInfo(params: IGetUserByIdParams) {
     const totalCreatedCommunities = await Community.countDocuments({
       createdBy: user._id,
     });
+    const totalCreatedJobs = await Job.countDocuments({ author: user._id });
 
     const [questionUpvotes] = await Question.aggregate([
       { $match: { author: user._id } },
@@ -224,6 +226,7 @@ export async function getUserInfo(params: IGetUserByIdParams) {
       totalAnswers,
       totalPosts,
       totalCreatedCommunities,
+      totalCreatedJobs,
       badgeCounts,
     };
   } catch (error) {
@@ -306,6 +309,31 @@ export async function getUserPosts(params: IGetUserStatsParams) {
     const isNextPost = totalPosts > skipAmount + userPosts.length;
 
     return { totalPosts, posts: userPosts, isNextPost };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function getUserJobsAction(params: IGetUserStatsParams) {
+  try {
+    connectToDatabase();
+
+    const { userId, page = 1, pageSize = 20 } = params;
+    const skipAmount = (page - 1) * pageSize;
+
+    const totalJobs = await Job.countDocuments({ author: userId });
+
+    const userJobs = await Job.find({ author: userId })
+      .skip(skipAmount)
+      .limit(pageSize)
+      .sort({ createdAt: -1, views: -1, upvotes: -1 })
+      .populate("tags", "_id name")
+      .populate("author", "_id clerkId username name avatar");
+
+    const isNextJob = totalJobs > skipAmount + userJobs.length;
+
+    return { totalJobs, jobs: userJobs, isNextJob };
   } catch (error) {
     console.log(error);
     throw error;
