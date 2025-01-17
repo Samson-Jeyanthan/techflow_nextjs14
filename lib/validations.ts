@@ -60,3 +60,11 @@ export const ApplicationSchema = z.object({
   //   "Resume file is required"
   // ),
 });
+
+export const ResourceSchema = z.object({
+  title: z.string().min(5).max(100),
+  description: z.string().min(5).max(1000),
+  mediaFile: z.array(MediaFileSchema).optional(),
+  websiteLink: z.string().url().optional(),
+  tags: z.array(z.string().min(1).max(15)).min(1).max(5),
+});

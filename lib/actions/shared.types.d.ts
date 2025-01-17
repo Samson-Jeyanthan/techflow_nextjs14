@@ -237,3 +237,23 @@ export type TGetCommunityContentsParams = {
 export interface IDeleteCommunityParams {
   communityId: string;
 }
+
+// ------------------------ resource actions --------------------------
+export type TCreateResourceParams = {
+  title: string;
+  description: string;
+  media?: string;
+  websiteLink?: string;
+  tags: string[];
+  author: Schema.Types.ObjectId | IUser;
+  communityId?: string | null;
+  path: string;
+};
+
+export interface IResourceVoteParams {
+  resourceId: string;
+  userId: string;
+  hasUpvoted: boolean;
+  hasDownvoted: boolean;
+  path: string;
+}

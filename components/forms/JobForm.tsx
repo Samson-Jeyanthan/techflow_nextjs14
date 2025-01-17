@@ -192,7 +192,7 @@ const JobForm = ({ type, currentUserId, jobDetails }: Props) => {
         <TagInput
           form={form}
           type={type}
-          formDescription="Add up to 5 tags to describe what your job is about. Start typing to see suggestions."
+          formDescription="Add up to 5 tags to describe what your job is about by pressing enter."
         />
 
         <footer className="flex w-full flex-col items-center justify-center gap-4 pb-6">

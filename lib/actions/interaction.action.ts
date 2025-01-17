@@ -57,26 +57,26 @@ export async function getTopInteractedTagsAction(params: any) {
     // Find interactions for the user and group by tags...
     // Interaction...
 
-    // Find the user's interactions
-    const userInteractions = await Interaction.find({ user: user._id })
-      .populate("tags")
-      .exec();
+    // // Find the user's interactions
+    // const userInteractions = await Interaction.find({ user: user._id })
+    //   .populate("tags")
+    //   .exec();
 
-    // Extract tags from user's interactions
-    const userTags = userInteractions.reduce((tags, interaction) => {
-      if (interaction.tags) {
-        tags = tags.concat(interaction.tags);
-      }
-      return tags;
-    }, []);
+    // // Extract tags from user's interactions
+    // const userTags = userInteractions.reduce((tags, interaction) => {
+    //   if (interaction.tags) {
+    //     tags = tags.concat(interaction.tags);
+    //   }
+    //   return tags;
+    // }, []);
 
-    // Get distinct tag IDs from user's interactions
-    const distinctUserTagIds = [
-      // @ts-ignore
-      ...new Set(userTags.map((tag: any) => tag._id)),
-    ];
+    // // Get distinct tag IDs from user's interactions
+    // const distinctUserTagIds = [
+    //   // @ts-ignore
+    //   ...new Set(userTags.map((tag: any) => tag._id)),
+    // ];
 
-    console.log(distinctUserTagIds);
+    // console.log(distinctUserTagIds);
 
     return [
       { _id: "1", name: "tag" },
