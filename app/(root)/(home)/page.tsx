@@ -18,11 +18,13 @@ const Home = async ({ searchParams }: ISearchParamsProps) => {
 
   return (
     <section className="flex w-full flex-col items-center gap-8">
-      <HomePostForm
-        userId={userId}
-        avatar={mongoUser?.avatar}
-        mongoUserId={JSON.stringify(mongoUser?._id)}
-      />
+      {userId && (
+        <HomePostForm
+          userId={userId}
+          avatar={mongoUser?.avatar}
+          mongoUserId={JSON.stringify(mongoUser?._id)}
+        />
+      )}
 
       <div className="mt-10 flex w-4/6 flex-col items-center gap-6">
         {results.posts.length > 0 ? (

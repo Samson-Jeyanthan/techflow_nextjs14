@@ -2,16 +2,18 @@ import { QuestionCard } from "@/components/cards";
 import { Pagination } from "@/components/shared";
 import { getUserInfo, getUserQuestions } from "@/lib/actions/user.action";
 import { TURLProps } from "@/types/utils.types";
+import { auth } from "@clerk/nextjs/server";
 
 interface Props extends TURLProps {
   userId: string;
 }
 
 const UserQuestionsPage = async ({ searchParams, params }: Props) => {
+  const { userId: clerkId } = auth();
   const userInfo = await getUserInfo({ userId: params.id });
 
   const results = await getUserQuestions({
-    userId: userInfo.user._id,
+    userId: userInfo?.user._id,
     page: searchParams.page ? +searchParams.page : 1,
   });
 
@@ -21,7 +23,7 @@ const UserQuestionsPage = async ({ searchParams, params }: Props) => {
         <QuestionCard
           key={question._id}
           _id={question._id}
-          clerkId={params.id}
+          clerkId={clerkId}
           title={question.title}
           tags={question.tags}
           author={question.author}

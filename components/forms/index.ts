@@ -5,3 +5,4 @@ export { default as CommunityForm } from "./CommunityForm";
 export { default as HomePostForm } from "./HomePostForm";
 export { default as PostForm } from "./PostForm";
 export { default as ApplyJobForm } from "./ApplyJobForm";
+export { default as ProfileForm } from "./ProfileForm";

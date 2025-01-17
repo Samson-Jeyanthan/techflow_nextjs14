@@ -56,6 +56,13 @@ export interface IEditQuestionParams {
   path: string;
 }
 
+export interface IRecommendedParams {
+  userId: string;
+  page?: number;
+  pageSize?: number;
+  searchQuery?: string;
+}
+
 // ------------------------ user actions ------------------------------
 
 export type TCreateUserParams = {

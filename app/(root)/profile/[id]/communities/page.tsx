@@ -17,19 +17,19 @@ const CommunitiesPage = async ({ searchParams, params }: TURLProps) => {
   const currentUser = await getUserById({ userId });
 
   const createdCommunities = await getUserCreatedCommunitiesAction({
-    userId: userInfo.user._id,
+    userId: userInfo?.user._id,
     page: searchParams.page ? +searchParams.page : 1,
   });
 
   const joinedCommunities = await getUserMemberCommunitiesAction({
-    userId: userInfo.user._id,
+    userId: userInfo?.user._id,
     page: searchParams.page ? +searchParams.page : 1,
   });
 
   return (
     <>
       <div className="flex w-full flex-col gap-4">
-        {currentUser?.clerkId === userInfo.user.clerkId && (
+        {currentUser?.clerkId === userInfo?.user.clerkId && (
           <h2 className="text-dark-300_light-750 w-full border-b border-light-700 py-3 text-sm dark:border-dark-400">
             Created Community
           </h2>
@@ -49,7 +49,7 @@ const CommunitiesPage = async ({ searchParams, params }: TURLProps) => {
           )}
         </div>
 
-        {currentUser?.clerkId === userInfo.user.clerkId && (
+        {currentUser?.clerkId === userInfo?.user.clerkId && (
           <div className="mt-10 flex w-full flex-col gap-4">
             <h2 className="text-dark-300_light-750 w-full border-b border-light-700 py-3 text-sm dark:border-dark-400">
               Joined Community

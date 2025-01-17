@@ -2,7 +2,6 @@ import React from "react";
 import { TabLinks, UserProfileHeader, UserStats } from "@/components/shared";
 import { getUserInfo, getUserById } from "@/lib/actions/user.action";
 import { auth } from "@clerk/nextjs/server";
-import { redirect } from "next/navigation";
 
 async function layout({
   children,
@@ -14,7 +13,6 @@ async function layout({
   const userInfo = await getUserInfo({ userId: params.id });
 
   const { userId } = auth();
-  if (!userId) redirect("/sign-in");
 
   const currentUser = await getUserById({ userId });
 
@@ -23,7 +21,7 @@ async function layout({
       <UserProfileHeader userInfo={userInfo} currentUserId={currentUser?._id} />
       <UserStats
         userInfo={userInfo}
-        badges={userInfo.badgeCounts}
+        badges={userInfo?.badgeCounts}
         currentUser={currentUser}
       />
       <section className="flex w-full flex-col items-center gap-8">
@@ -32,32 +30,32 @@ async function layout({
             {
               tabName: "Posts",
               value: "",
-              href: `/profile/${userInfo.user.clerkId}`,
-              totalNumbers: userInfo.totalPosts,
+              href: `/profile/${userInfo?.user.clerkId}`,
+              totalNumbers: userInfo?.totalPosts,
             },
             {
               tabName: "Questions",
               value: "questions",
-              href: `/profile/${userInfo.user.clerkId}/questions`,
-              totalNumbers: userInfo.totalQuestions,
+              href: `/profile/${userInfo?.user.clerkId}/questions`,
+              totalNumbers: userInfo?.totalQuestions,
             },
             {
               tabName: "Answers",
               value: "answers",
-              href: `/profile/${userInfo.user.clerkId}/answers`,
-              totalNumbers: userInfo.totalAnswers,
+              href: `/profile/${userInfo?.user.clerkId}/answers`,
+              totalNumbers: userInfo?.totalAnswers,
             },
             {
               tabName: "Shared Resources",
               value: "resources",
-              href: `/profile/${userInfo.user.clerkId}/resources`,
+              href: `/profile/${userInfo?.user.clerkId}/resources`,
               totalNumbers: 0,
             },
             {
               tabName: "Communities",
               value: "communities",
-              href: `/profile/${userInfo.user.clerkId}/communities`,
-              totalNumbers: userInfo.totalCreatedCommunities,
+              href: `/profile/${userInfo?.user.clerkId}/communities`,
+              totalNumbers: userInfo?.totalCreatedCommunities,
             },
           ]}
         />

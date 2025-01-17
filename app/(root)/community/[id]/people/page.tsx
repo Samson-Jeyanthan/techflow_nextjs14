@@ -1,4 +1,5 @@
 import { FollowButton } from "@/components/buttons";
+import { PeopleOptions } from "@/components/options";
 import { UserProfileImg } from "@/components/shared";
 import {
   getAllAdminsOfCommunityAction,
@@ -28,10 +29,10 @@ const PeoplePage = async ({ params }: TURLProps) => {
   });
   const communityInfo = communityRes?.community;
   const members: any[] = results?.community?.members;
-  const admins: any[] = adminResults?.admins;
+  const admins: any[] = adminResults?.admins?.admins;
 
   return (
-    <div className="flex w-full flex-col gap-10">
+    <div className="mb-20 flex w-full flex-col gap-10">
       <div className="flex w-full flex-col gap-4">
         <h2 className="text-dark-300_light-750 w-full border-b border-light-700 py-3 text-sm dark:border-dark-400">
           Admins
@@ -67,15 +68,27 @@ const PeoplePage = async ({ params }: TURLProps) => {
                   userId={admin.clerkId}
                   userName={admin.username}
                 />
-                <p>{currentUser?._id}</p>
-                <FollowButton
-                  isSmall={true}
-                  hasFollowed={currentUser?.followings.some(
-                    (following: any) => following.userId === admin?._id
+                <div className="flex-center gap-1">
+                  {admin.clerkId !== currentUser?.clerkId && (
+                    <FollowButton
+                      isSmall={true}
+                      hasFollowed={currentUser?.followings.some(
+                        (following: any) =>
+                          following.userId.toString() === admin?._id.toString()
+                      )}
+                      parsedFollowerId={JSON.stringify(currentUser?._id)}
+                      parsedFollowingId={JSON.stringify(admin?._id)}
+                    />
                   )}
-                  parsedFollowerId={JSON.stringify(currentUser?._id)}
-                  parsedFollowingId={JSON.stringify(admin?._id)}
-                />
+                  {currentUser?.clerkId.toString() ===
+                    communityInfo.createdBy.clerkId.toString() && (
+                    <PeopleOptions
+                      isMember={false}
+                      communityId={communityId}
+                      userId={JSON.stringify(admin?._id)}
+                    />
+                  )}
+                </div>
               </div>
             ))
           : ""}
@@ -85,28 +98,46 @@ const PeoplePage = async ({ params }: TURLProps) => {
         <h2 className="text-dark-300_light-750 w-full border-b border-light-700 py-3 text-sm dark:border-dark-400">
           Members
         </h2>
-        {members?.length > 0
-          ? members?.map((member, index) => (
-              <div key={index} className="flex-between w-full">
-                <UserProfileImg
-                  isShowUsername={true}
-                  src={member.avatar}
-                  userId={member.clerkId}
-                  userName={member.username}
-                />
+        {members?.length > 0 ? (
+          members?.map((member, index) => (
+            <div key={index} className="flex-between w-full">
+              <UserProfileImg
+                isShowUsername={true}
+                src={member.avatar}
+                userId={member.clerkId}
+                userName={member.username}
+              />
 
-                <FollowButton
-                  isSmall={true}
-                  followerId={JSON.stringify(currentUser?._id)}
-                  followingId={JSON.stringify(member?._id)}
-                  hasFollowed={currentUser?.followings?.some(
-                    (following: any) =>
-                      following?.userId?.toString() === member?._id?.toString()
-                  )}
-                />
+              <div className="flex-center gap-1">
+                {member.clerkId !== currentUser?.clerkId && (
+                  <FollowButton
+                    isSmall={true}
+                    followerId={JSON.stringify(currentUser?._id)}
+                    followingId={JSON.stringify(member?._id)}
+                    hasFollowed={currentUser?.followings?.some(
+                      (following: any) =>
+                        following?.userId?.toString() ===
+                        member?._id?.toString()
+                    )}
+                  />
+                )}
+
+                {currentUser?.clerkId.toString() ===
+                  communityInfo.createdBy.clerkId.toString() && (
+                  <PeopleOptions
+                    isMember={true}
+                    communityId={communityId}
+                    userId={JSON.stringify(member?._id)}
+                  />
+                )}
               </div>
-            ))
-          : "No members"}
+            </div>
+          ))
+        ) : (
+          <p className="flex-center min-h-60 w-full text-sm text-light-500">
+            No Members
+          </p>
+        )}
       </div>
     </div>
   );

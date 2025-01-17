@@ -27,25 +27,25 @@ const UserProfileHeader = ({ userInfo, currentUserId }: Props) => {
 
         <div className="mt-3">
           <h2 className="text-dark-100_light-800 text-xl font-semibold">
-            {userInfo.user.name}
+            {userInfo?.user.name}
           </h2>
           <p className="text-dark-500_light-600 text-sm">
-            @{userInfo.user.username}
+            @{userInfo?.user.username}
           </p>
-          {userInfo.user.location && (
+          {userInfo?.user.location && (
             <p className="text-dark-500_light-600 text-sm">
-              {userInfo.user.location}
+              {userInfo?.user.location}
             </p>
           )}
 
           <div className="mt-5 flex flex-wrap items-center justify-start gap-5">
             <p className="text-dark-500_light-600 flex items-center gap-2 text-sm">
               <IoCalendarOutline className="text-base" />
-              {getJoinedDate(userInfo.user.joinedAt)}
+              {getJoinedDate(userInfo?.user.joinedAt)}
             </p>
-            {userInfo.user.bio && (
+            {userInfo?.user.bio && (
               <p className="text-dark-500_light-600 mt-8 text-sm">
-                {userInfo.user.bio}
+                {userInfo?.user.bio}
               </p>
             )}
           </div>
@@ -54,10 +54,10 @@ const UserProfileHeader = ({ userInfo, currentUserId }: Props) => {
 
       <div className="flex justify-end max-sm:mb-5 max-sm:w-full sm:mt-3">
         <SignedIn>
-          {clerkId === userInfo.user.clerkId ? (
+          {clerkId === userInfo?.user.clerkId ? (
             <Link
-              href={`/profile/edit/${clerkId}`}
-              className="text-dark-100_light-850 flex-center min-h-[46px] min-w-[150px] rounded-md bg-light-500 px-4 py-3 text-sm dark:bg-dark-350"
+              href="/profile/edit"
+              className="text-dark-100_light-850 flex-center min-h-[46px] min-w-[150px] rounded-md bg-light-700 px-4 py-3 text-sm dark:bg-dark-300"
             >
               Edit Profile
             </Link>
@@ -68,7 +68,7 @@ const UserProfileHeader = ({ userInfo, currentUserId }: Props) => {
                 (following: any) => following.userId?.clerkId === clerkId
               )}
               followerId={JSON.stringify(currentUserId)}
-              followingId={JSON.stringify(userInfo.user._id)}
+              followingId={JSON.stringify(userInfo?.user._id)}
             />
           )}
         </SignedIn>

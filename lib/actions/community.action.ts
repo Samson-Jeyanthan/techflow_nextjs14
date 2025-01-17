@@ -248,10 +248,56 @@ export async function communityAdminAction(params: any) {
     if (isAdmin) {
       updateQuery = {
         $pull: { admins: adminUserId },
+        $addToSet: { members: adminUserId },
       };
     } else {
       updateQuery = {
+        $pull: { members: adminUserId },
         $addToSet: { admins: adminUserId },
+      };
+    }
+
+    const community = await Community.findByIdAndUpdate(
+      communityId,
+      updateQuery,
+      { new: true }
+    );
+
+    if (!community) {
+      return {
+        status: 400,
+        message: "Community not found",
+      };
+    }
+
+    revalidatePath(path);
+
+    return {
+      status: 200,
+      message: "Success",
+    };
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function removeMemberAction(params: any) {
+  try {
+    connectToDatabase();
+
+    const { communityId, userId, isAdmin, path } = params;
+
+    console.log(params, "params");
+
+    let updateQuery = {};
+
+    if (isAdmin) {
+      updateQuery = {
+        $pull: { admins: userId },
+      };
+    } else {
+      updateQuery = {
+        $pull: { members: userId },
       };
     }
 

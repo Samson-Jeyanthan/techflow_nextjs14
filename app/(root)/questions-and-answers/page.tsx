@@ -8,8 +8,12 @@ import {
 } from "@/components/shared";
 import { Button } from "@/components/ui/button";
 import { QANDAS_FILTERS } from "@/constants/filters";
-import { getQuestions } from "@/lib/actions/question.action";
+import {
+  getQuestions,
+  getRecommendedQuestions,
+} from "@/lib/actions/question.action";
 import { ISearchParamsProps } from "@/types/utils.types";
+import { auth } from "@clerk/nextjs/server";
 import { Metadata } from "next";
 import Link from "next/link";
 
@@ -18,13 +22,29 @@ export const metadata: Metadata = {
 };
 
 async function QandAs({ searchParams }: ISearchParamsProps) {
-  const results = await getQuestions({
-    searchQuery: searchParams.q,
-    filter: searchParams.filter,
-    page: searchParams.page ? +searchParams.page : 1,
-  });
+  const { userId } = auth();
+  let results;
 
-  // TODO: fetch recommended questions
+  if (searchParams?.filter === "recommended") {
+    if (userId) {
+      results = await getRecommendedQuestions({
+        userId,
+        page: searchParams.page ? +searchParams.page : 1,
+        searchQuery: searchParams.q,
+      });
+    } else {
+      results = {
+        questions: [],
+        isNext: false,
+      };
+    }
+  } else {
+    results = await getQuestions({
+      searchQuery: searchParams.q,
+      filter: searchParams.filter,
+      page: searchParams.page ? +searchParams.page : 1,
+    });
+  }
 
   return (
     <>

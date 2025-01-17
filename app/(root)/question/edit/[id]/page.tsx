@@ -3,14 +3,17 @@ import { getQuestionById } from "@/lib/actions/question.action";
 import { getUserById } from "@/lib/actions/user.action";
 import { IParamsProps } from "@/types/utils.types";
 import { auth } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 
 const EditQuestion = async ({ params }: IParamsProps) => {
   const { userId } = auth();
 
   if (!userId) return null;
 
-  const mongoUser = await getUserById({ userId });
+  const currentUser = await getUserById({ userId });
   const result = await getQuestionById({ questionId: params.id });
+
+  if (result?.author.clerkId !== userId) return redirect("/");
 
   return (
     <section>
@@ -21,7 +24,7 @@ const EditQuestion = async ({ params }: IParamsProps) => {
       <div className="mt-9">
         <QuestionForm
           type="Edit"
-          mongoUserId={mongoUser._id}
+          currentUserId={currentUser?._id}
           questionDetails={JSON.stringify(result)}
         />
       </div>

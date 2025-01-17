@@ -22,7 +22,7 @@ const UserPostsPage = async ({ searchParams, params }: Props) => {
   const userInfo = await getUserInfo({ userId: params.id });
 
   const results = await getUserPosts({
-    userId: userInfo.user._id,
+    userId: userInfo?.user._id,
     page: searchParams.page ? +searchParams.page : 1,
   });
 

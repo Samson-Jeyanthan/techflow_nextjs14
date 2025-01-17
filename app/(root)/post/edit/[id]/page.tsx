@@ -3,6 +3,7 @@ import { getPostByIdAction } from "@/lib/actions/post.action";
 import { getUserById } from "@/lib/actions/user.action";
 import { IParamsProps } from "@/types/utils.types";
 import { auth } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 
 const EditPost = async ({ params }: IParamsProps) => {
   const { userId } = auth();
@@ -11,6 +12,8 @@ const EditPost = async ({ params }: IParamsProps) => {
 
   const mongoUser = await getUserById({ userId });
   const result = await getPostByIdAction({ postId: params.id });
+
+  if (result?.author.clerkId !== userId) return redirect("/");
 
   return (
     <section>
@@ -21,7 +24,7 @@ const EditPost = async ({ params }: IParamsProps) => {
       <div className="mt-9">
         <PostForm
           type="edit"
-          currentUserId={mongoUser._id}
+          currentUserId={mongoUser?._id}
           postDetails={JSON.stringify(result)}
         />
       </div>

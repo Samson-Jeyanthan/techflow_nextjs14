@@ -23,6 +23,10 @@ const CommunityHeader = async ({ communityInfo, communityId }: Props) => {
     (member: any) => member.clerkId === clerkId
   );
 
+  const adminUser = communityInfo.admins.some(
+    (admin: any) => admin.clerkId === clerkId
+  );
+
   return (
     <header className="flex w-full flex-col items-start gap-6">
       <Image
@@ -63,11 +67,13 @@ const CommunityHeader = async ({ communityInfo, communityId }: Props) => {
         </div>
 
         <div className="flex gap-4">
-          {clerkId === communityInfo.createdBy.clerkId || userHasJoined ? (
+          {clerkId === communityInfo.createdBy.clerkId ||
+          userHasJoined ||
+          adminUser ? (
             <UploadCommunityModal communityId={communityId} />
           ) : null}
 
-          {clerkId === communityInfo.createdBy.clerkId ? (
+          {clerkId === communityInfo.createdBy.clerkId || adminUser ? (
             <Link href={`/community/edit/${communityInfo._id}`}>
               <Button className="bg-primary-100_primary-500 text-sm font-medium text-light-900">
                 Edit Community
