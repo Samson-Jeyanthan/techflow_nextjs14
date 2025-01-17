@@ -2,7 +2,7 @@ import { getJoinedDate } from "@/lib/utils";
 import { SignedIn } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 import Image from "next/image";
-import Link from "next/link";
+// import Link from "next/link";
 import { IoCalendarOutline } from "react-icons/io5";
 import { FollowButton } from "../buttons";
 import { JobsIcon } from "@/public/svgs";
@@ -66,12 +66,7 @@ const UserProfileHeader = ({ userInfo, currentUserId, isHiring }: Props) => {
       <div className="flex justify-end max-sm:mb-5 max-sm:w-full sm:mt-3">
         <SignedIn>
           {clerkId === userInfo?.user.clerkId ? (
-            <Link
-              href="/profile/edit"
-              className="text-dark-100_light-850 flex-center min-h-[46px] min-w-[150px] rounded-md bg-light-700 px-4 py-3 text-sm dark:bg-dark-300"
-            >
-              Edit Profile
-            </Link>
+            ""
           ) : (
             <FollowButton
               isSmall={false}
@@ -89,3 +84,10 @@ const UserProfileHeader = ({ userInfo, currentUserId, isHiring }: Props) => {
 };
 
 export default UserProfileHeader;
+
+// <Link
+//   href="/profile/edit"
+//   className="text-dark-100_light-850 flex-center min-h-[46px] min-w-[150px] rounded-md bg-light-700 px-4 py-3 text-sm dark:bg-dark-300"
+// >
+//   Edit Profile
+// </Link>;

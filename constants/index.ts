@@ -12,7 +12,7 @@ import {
   TagIcon,
   JobsIcon,
   MultiUserIcon,
-  ResourceIcon,
+  // ResourceIcon,
 } from "@/public/svgs";
 
 interface ThemeItems {
@@ -60,11 +60,11 @@ export const SIDEBAR_LINKS: ISidebarLinks[] = [
     route: "/jobs",
     icon: JobsIcon,
   },
-  {
-    name: "Resources",
-    route: "/resources",
-    icon: ResourceIcon,
-  },
+  // {
+  //   name: "Resources",
+  //   route: "/resources",
+  //   icon: ResourceIcon,
+  // },
   {
     name: "Saved Collections",
     route: "/saved-collections",

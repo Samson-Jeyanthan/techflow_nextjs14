@@ -44,6 +44,9 @@ const Home = async ({ searchParams }: ISearchParamsProps) => {
               isLiked={post.likes.includes(mongoUser?._id)}
               likesCount={post.likes.length}
               commentsCounts={post.comments.length}
+              hasSaved={mongoUser?.saved.some(
+                (saved: any) => saved._id.toString() === post._id.toString()
+              )}
             />
           ))
         ) : (

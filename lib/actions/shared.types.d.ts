@@ -153,9 +153,10 @@ export interface IDeleteAnswerParams {
 // ------------------------ saved actions ------------------------------
 export interface IToggleSaveParams {
   userId: string;
-  saveFor: "QUESTION" | "POST" | "JOB" | "RESOURCE";
+  saveFor: "Question" | "Post" | "Job" | "Resource";
   savedItemId: string;
   path: string;
+  isSaved: boolean;
 }
 
 // ------------------------ post actions ------------------------------

@@ -49,12 +49,12 @@ async function layout({
               href: `/profile/${userInfo?.user.clerkId}/answers`,
               totalNumbers: userInfo?.totalAnswers,
             },
-            {
-              tabName: "Shared Resources",
-              value: "resources",
-              href: `/profile/${userInfo?.user.clerkId}/resources`,
-              totalNumbers: 0,
-            },
+            // {
+            //   tabName: "Shared Resources",
+            //   value: "resources",
+            //   href: `/profile/${userInfo?.user.clerkId}/resources`,
+            //   totalNumbers: 0,
+            // },
             {
               tabName: "Jobs",
               value: "jobs",

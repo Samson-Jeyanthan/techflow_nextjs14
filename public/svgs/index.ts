@@ -17,3 +17,4 @@ export { default as ResourceIcon } from "./ResourceIcon";
 export { default as WorkModeIcon } from "./WorkModeIcon";
 export { default as SalaryIcon } from "./SalaryIcon";
 export { default as LocationIcon } from "./LocationIcon";
+export { default as SaveFillIcon } from "./SaveFillIcon";

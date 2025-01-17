@@ -48,7 +48,10 @@ const QuestionDetail = async ({ params, searchParams }: TURLProps) => {
               hasUpvoted={result.upvotes.includes(mongoUser?._id)}
               downvotes={result.downvotes.length}
               hasDownvoted={result.downvotes.includes(mongoUser?._id)}
-              hasSaved={mongoUser?.saved?.includes(result._id)}
+              hasSaved={mongoUser?.saved?.some(
+                (item: any) => item._id.toString() === result._id.toString()
+              )}
+              saveFor="Question"
             />
           </div>
         </div>

@@ -6,6 +6,7 @@ import { CommentInput } from "../inputs";
 import { CommentModal } from "../modals";
 import React from "react";
 import { PostOptions } from "../options";
+import { SaveButton } from "../buttons";
 
 interface Props {
   _id: string;
@@ -30,6 +31,7 @@ interface Props {
   isLiked: boolean;
   likesCount: number;
   commentsCounts: number;
+  hasSaved: boolean;
 }
 
 const PostCard = async ({
@@ -45,6 +47,7 @@ const PostCard = async ({
   isLiked,
   likesCount,
   commentsCounts,
+  hasSaved,
 }: Props) => {
   const parsedAuthor = JSON.stringify(author._id);
   return (
@@ -111,17 +114,25 @@ const PostCard = async ({
         </div>
       )}
 
-      <div className="mt-6 flex items-center justify-start gap-8 ">
-        <LikeButton
-          userId={JSON.parse(currentUserId)}
-          postId={JSON.stringify(_id)}
-          likeCounts={likesCount}
-          isUserLiked={isLiked}
-        />
-        <CommentModal
-          postId={JSON.stringify(_id)}
-          currentUserId={JSON.parse(currentUserId)}
-          commentsCount={commentsCounts}
+      <div className="flex-between mt-6 w-full">
+        <div className="flex items-center justify-start gap-8 ">
+          <LikeButton
+            userId={JSON.parse(currentUserId)}
+            postId={JSON.stringify(_id)}
+            likeCounts={likesCount}
+            isUserLiked={isLiked}
+          />
+          <CommentModal
+            postId={JSON.stringify(_id)}
+            currentUserId={JSON.parse(currentUserId)}
+            commentsCount={commentsCounts}
+          />
+        </div>
+        <SaveButton
+          userId={currentUserId}
+          itemId={JSON.stringify(_id)}
+          saveFor="Post"
+          hasSaved={hasSaved}
         />
       </div>
 

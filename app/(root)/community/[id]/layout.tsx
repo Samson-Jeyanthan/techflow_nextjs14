@@ -34,12 +34,12 @@ async function layout({
               href: `/community/${params.id}/questions`,
               totalNumbers: 0,
             },
-            {
-              tabName: "Shared Resources",
-              value: "resources",
-              href: `/community/${params.id}/resources`,
-              totalNumbers: 0,
-            },
+            // {
+            //   tabName: "Shared Resources",
+            //   value: "resources",
+            //   href: `/community/${params.id}/resources`,
+            //   totalNumbers: 0,
+            // },
             {
               tabName: "People",
               value: "people",

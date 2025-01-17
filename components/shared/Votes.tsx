@@ -7,7 +7,6 @@ import {
   TiArrowUpThick,
   TiArrowDownThick,
 } from "react-icons/ti";
-import { FaBookmark, FaRegBookmark } from "react-icons/fa";
 import {
   downvoteQuestion,
   upvoteQuestion,
@@ -17,6 +16,8 @@ import { downvoteAnswer, upvoteAnswer } from "@/lib/actions/answer.action";
 import { useEffect } from "react";
 import { viewQuestion } from "@/lib/actions/interaction.action";
 import { useToast } from "@/hooks/use-toast";
+import { saveAnItemAction } from "@/lib/actions/save.action";
+import { SaveFillIcon, SaveIcon } from "@/public/svgs";
 
 interface Props {
   type: string;
@@ -26,7 +27,8 @@ interface Props {
   hasUpvoted: boolean;
   downvotes: number;
   hasDownvoted: boolean;
-  hasSaved?: boolean;
+  hasSaved: boolean;
+  saveFor: "Question" | "Post" | "Job" | "Resource";
 }
 
 const Votes = ({
@@ -38,6 +40,7 @@ const Votes = ({
   downvotes,
   hasDownvoted,
   hasSaved,
+  saveFor,
 }: Props) => {
   const pathname = usePathname();
   const router = useRouter();
@@ -102,7 +105,15 @@ const Votes = ({
     }
   };
 
-  const handleSave = async () => {};
+  const handleSave = async () => {
+    await saveAnItemAction({
+      isSaved: !!hasSaved,
+      saveFor,
+      savedItemId: JSON.parse(itemId),
+      userId: JSON.parse(userId),
+      path: pathname,
+    });
+  };
 
   useEffect(() => {
     const interactAction = async () => {
@@ -156,13 +167,13 @@ const Votes = ({
 
         {type === "question" && (
           <div
-            className="flex-center text-light-500_dark-500 text-xl"
+            className="flex-center text-light-500_dark-500 cursor-pointer fill-dark-100 text-xl dark:fill-light-900"
             onClick={handleSave}
           >
             {hasSaved ? (
-              <FaBookmark className="text-custom-yellow" />
+              <SaveFillIcon width="20px" height="20px" />
             ) : (
-              <FaRegBookmark />
+              <SaveIcon width="20px" height="20px" />
             )}
           </div>
         )}
