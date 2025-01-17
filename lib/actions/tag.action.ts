@@ -66,6 +66,35 @@ export async function getAllTags(params: TGetAllTagsParams) {
         break;
     }
 
+    if (filter === "popular") {
+      // Use aggregation to sort by array lengths
+      const tags = await Tag.aggregate([
+        { $match: query },
+        {
+          $addFields: {
+            popularityScore: {
+              $add: [
+                { $size: "$questions" },
+                { $size: "$posts" },
+                { $size: "$resources" },
+                { $size: "$jobs" },
+              ],
+            },
+          },
+        },
+        { $sort: { popularityScore: -1 } },
+        { $skip: skipAmount },
+        { $limit: pageSize },
+      ]);
+
+      const totalTags = await Tag.countDocuments(query);
+
+      const isNext = totalTags > skipAmount + tags.length;
+
+      return { tags, isNext };
+    }
+
+    // other filters and none
     const tags = await Tag.find(query)
       .skip(skipAmount)
       .limit(pageSize)

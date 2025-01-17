@@ -38,7 +38,9 @@ const AllUsers = async ({ searchParams }: ISearchParamsProps) => {
             ))
           ) : (
             <div>
-              <p>No users found</p>
+              <p className="text-dark-500_light-600 h-[30rem] text-sm">
+                No users found
+              </p>
             </div>
           )}
         </div>

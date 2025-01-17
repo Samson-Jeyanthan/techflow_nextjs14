@@ -14,7 +14,7 @@ const Tags = async ({ searchParams }: ISearchParamsProps) => {
 
   return (
     <>
-      <section className="h-[75vh]">
+      <section className="min-h-[75vh]">
         <h1 className="text-dark-100_light-900 flex-between text-3xl font-semibold">
           All Tags
         </h1>
@@ -29,7 +29,7 @@ const Tags = async ({ searchParams }: ISearchParamsProps) => {
           <Filter
             filters={TAGS_FILTERS}
             otherClasses="min-h-[48px] sm:min-w-[160px]"
-            containerClasses="hidden max-md:flex"
+            // containerClasses="hidden max-md:flex"
           />
         </div>
 

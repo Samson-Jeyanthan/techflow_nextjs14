@@ -1,17 +1,19 @@
 import React from "react";
 import Filter from "./filters/Filter";
 import { JOB_FILTERS } from "@/constants/filters";
-import { getAllApplicationsAction } from "@/lib/actions/job.action";
 import { ApplicationCard } from "../cards";
 
 type Props = {
   totalApplications: number;
   jobId: string;
-  filter?: string;
+  applications: any[];
 };
 
-const AllApplications = async ({ totalApplications, jobId, filter }: Props) => {
-  const results = await getAllApplicationsAction({ jobId, sortBy: filter });
+const AllApplications = async ({
+  totalApplications,
+  applications,
+  jobId,
+}: Props) => {
   return (
     <div className="mt-11 flex flex-col gap-12">
       <div className="flex items-center justify-between">
@@ -22,7 +24,7 @@ const AllApplications = async ({ totalApplications, jobId, filter }: Props) => {
       </div>
 
       <div className="grid w-full grid-cols-3 gap-4">
-        {results.applications.map((result, index) => (
+        {applications.map((result, index) => (
           <ApplicationCard
             key={index}
             _id={result._id}

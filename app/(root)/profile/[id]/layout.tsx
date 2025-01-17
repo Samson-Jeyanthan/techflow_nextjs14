@@ -18,7 +18,11 @@ async function layout({
 
   return (
     <main className="flex w-full flex-col gap-12 py-8">
-      <UserProfileHeader userInfo={userInfo} currentUserId={currentUser?._id} />
+      <UserProfileHeader
+        userInfo={userInfo}
+        currentUserId={currentUser?._id}
+        isHiring={userInfo?.totalCreatedJobs > 0}
+      />
       <UserStats
         userInfo={userInfo}
         badges={userInfo?.badgeCounts}

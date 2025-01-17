@@ -11,13 +11,28 @@ import {
 } from "../ui/dialog";
 import { MdClose } from "react-icons/md";
 
-const ApplyJobModal = ({ userDetails, jobId }: any) => {
+const ApplyJobModal = ({ userDetails, jobId, applicationInfo }: any) => {
   const [open, setOpen] = useState(false);
 
+  const parsedUserDetails = userDetails && JSON.parse(userDetails || "");
+  const parsedApplicationInfo = applicationInfo && JSON.parse(applicationInfo);
+
+  const hasApplied = parsedApplicationInfo?.applications?.some(
+    (application: any) => application.applicant._id === parsedUserDetails._id
+  );
+
+  const handleClick = () => {
+    if (!hasApplied) {
+      setOpen(true);
+    } else {
+      setOpen(false);
+    }
+  };
+
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={handleClick}>
       <DialogTrigger className="mt-4 rounded-full bg-primary-100 p-3 px-4 text-sm font-medium text-light-900">
-        Apply for this job
+        {hasApplied ? "You have already applied" : "Apply for this job"}
       </DialogTrigger>
       <DialogContent
         aria-describedby={undefined}

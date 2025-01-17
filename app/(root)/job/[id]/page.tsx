@@ -6,7 +6,10 @@ import {
   RenderTag,
 } from "@/components/shared";
 import { Button } from "@/components/ui/button";
-import { getJobByIdAction } from "@/lib/actions/job.action";
+import {
+  getAllApplicationsAction,
+  getJobByIdAction,
+} from "@/lib/actions/job.action";
 import { getUserById } from "@/lib/actions/user.action";
 import { formatCountValue, getFormattedDate, getTimestamp } from "@/lib/utils";
 import {
@@ -25,7 +28,10 @@ import { MdEdit } from "react-icons/md";
 const JobDetailPage = async ({ params, searchParams }: TURLProps) => {
   const { userId: clerkId } = auth();
   const result = await getJobByIdAction({ jobId: params.id });
-
+  const applicationResults = await getAllApplicationsAction({
+    jobId: params.id,
+    sortBy: searchParams?.filter,
+  });
   let mongoUser;
 
   if (clerkId) {
@@ -64,6 +70,7 @@ const JobDetailPage = async ({ params, searchParams }: TURLProps) => {
           <ApplyJobModal
             userDetails={JSON.stringify(mongoUser)}
             jobId={params.id}
+            applicationInfo={JSON.stringify(applicationResults)}
           />
         )}
 
@@ -130,7 +137,7 @@ const JobDetailPage = async ({ params, searchParams }: TURLProps) => {
         <AllApplications
           jobId={result?._id}
           totalApplications={result?.applications?.length}
-          filter={searchParams?.filter}
+          applications={applicationResults.applications}
         />
       )}
     </section>

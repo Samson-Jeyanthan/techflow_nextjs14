@@ -5,31 +5,42 @@ import Image from "next/image";
 import Link from "next/link";
 import { IoCalendarOutline } from "react-icons/io5";
 import { FollowButton } from "../buttons";
+import { JobsIcon } from "@/public/svgs";
 
 type Props = {
   userInfo: any;
   currentUserId: string;
+  isHiring?: boolean | undefined;
 };
 
-const UserProfileHeader = ({ userInfo, currentUserId }: Props) => {
+const UserProfileHeader = ({ userInfo, currentUserId, isHiring }: Props) => {
   const { userId: clerkId } = auth();
 
   return (
     <header className="flex flex-col-reverse items-start justify-between sm:flex-row">
       <div className="flex flex-col items-start gap-4 lg:flex-row">
-        <Image
-          src={userInfo?.user.avatar || "/images/default-user-profile-pic.png"}
-          alt="profile picture"
-          width={140}
-          height={140}
-          className="rounded-full bg-light-700 object-cover dark:bg-dark-400"
-        />
+        <div className="relative size-full">
+          <Image
+            src={
+              userInfo?.user.avatar || "/images/default-user-profile-pic.png"
+            }
+            alt="profile picture"
+            width={140}
+            height={140}
+            className="rounded-full bg-light-700 object-cover dark:bg-dark-400"
+          />
+          {isHiring && (
+            <span className="flex-center absolute bottom-0 right-2 z-10 size-9 rounded-full bg-white fill-black shadow dark:bg-dark-350 dark:fill-white">
+              <JobsIcon width="16px" height="16px" />
+            </span>
+          )}
+        </div>
 
-        <div className="mt-3">
+        <div className="mt-3 w-full">
           <h2 className="text-dark-100_light-800 text-xl font-semibold">
             {userInfo?.user.name}
           </h2>
-          <p className="text-dark-500_light-600 text-sm">
+          <p className="text-dark-500_light-600 text-sm lowercase">
             @{userInfo?.user.username}
           </p>
           {userInfo?.user.location && (

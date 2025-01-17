@@ -73,7 +73,7 @@ const ConnectionModal = ({ userInfo, modalFor, currentUserInfo }: Props) => {
                     userId={item.userId?.clerkId}
                     userName={item.userId?.username}
                   />
-                  {currentUser._id !== item.userId?._id && (
+                  {currentUser?._id !== item.userId?._id && (
                     <FollowButton
                       isSmall={true}
                       parsedFollowerId={currentUser._id}
@@ -86,7 +86,7 @@ const ConnectionModal = ({ userInfo, modalFor, currentUserInfo }: Props) => {
                   )}
                 </div>
               ))
-            : user.followings?.map((item: any, index: number) => (
+            : user?.followings?.map((item: any, index: number) => (
                 <div key={index} className="flex-between">
                   <UserProfileImg
                     isShowUsername={true}
@@ -94,7 +94,7 @@ const ConnectionModal = ({ userInfo, modalFor, currentUserInfo }: Props) => {
                     userId={item.userId?.clerkId}
                     userName={item.userId?.username}
                   />
-                  {currentUser._id !== item.userId?._id && (
+                  {currentUser?._id !== item.userId?._id && (
                     <FollowButton
                       isSmall={true}
                       parsedFollowerId={currentUser._id}

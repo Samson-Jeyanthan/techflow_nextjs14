@@ -69,7 +69,7 @@ const PostCard = async ({
         )}
       </header>
 
-      <p className="text-dark-100_light-850 mt-8">
+      <div className="text-dark-100_light-850 mt-8">
         {title === "" ? (
           <ParseHTML
             data={description}
@@ -78,7 +78,7 @@ const PostCard = async ({
         ) : (
           title
         )}
-      </p>
+      </div>
 
       <div className="flex w-full gap-2">
         {media?.length > 0 &&
@@ -95,12 +95,12 @@ const PostCard = async ({
       </div>
 
       {title !== "" && (
-        <p className="text-dark-100_light-850 font-regular mt-4 text-sm">
+        <div className="text-dark-100_light-850 font-regular mt-4 text-sm">
           <ParseHTML
             data={description}
             className="text-dark-100_light-850 text-sm"
           />
-        </p>
+        </div>
       )}
 
       {tags.length > 0 && (
