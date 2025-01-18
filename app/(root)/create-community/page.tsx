@@ -2,6 +2,11 @@ import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { getUserById } from "@/lib/actions/user.action";
 import { CommunityForm } from "@/components/forms";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Create a Community | Techflow",
+};
 
 const CreateCommunity = async () => {
   const { userId } = auth();

@@ -4,7 +4,12 @@ import { Button } from "@/components/ui/button";
 import { QANDAS_FILTERS } from "@/constants/filters";
 import { getAllCommunities } from "@/lib/actions/community.action";
 import { ISearchParamsProps } from "@/types/utils.types";
+import { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "All Communities | Techflow",
+};
 
 const CommunitiesPage = async ({ searchParams }: ISearchParamsProps) => {
   const results = await getAllCommunities({

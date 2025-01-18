@@ -2,6 +2,11 @@ import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { QuestionForm } from "@/components/forms";
 import { getUserById } from "@/lib/actions/user.action";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Ask a Question | Techflow",
+};
 
 const AskQuestion = async () => {
   const { userId } = auth();

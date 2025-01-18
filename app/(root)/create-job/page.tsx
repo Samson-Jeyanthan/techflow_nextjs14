@@ -1,8 +1,12 @@
 import { JobForm } from "@/components/forms";
 import { getUserById } from "@/lib/actions/user.action";
 import { auth } from "@clerk/nextjs/server";
+import { Metadata } from "next";
 import { redirect } from "next/navigation";
-import React from "react";
+
+export const metadata: Metadata = {
+  title: "Create a Job | Techflow",
+};
 
 const CreateJob = async () => {
   const { userId } = auth();

@@ -167,7 +167,7 @@ const Votes = ({
 
         {type === "question" && (
           <div
-            className="flex-center text-light-500_dark-500 cursor-pointer fill-dark-100 text-xl dark:fill-light-900"
+            className={`${hasSaved ? "dark:fill-white" : "dark:fill-dark-500"} flex-center text-light-500_dark-500 cursor-pointer fill-dark-200 text-xl`}
             onClick={handleSave}
           >
             {hasSaved ? (

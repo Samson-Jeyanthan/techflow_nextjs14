@@ -38,14 +38,16 @@ const CommunityPage = async ({ params, searchParams }: TURLProps) => {
             isLiked={post.likes.includes(mongoUser?._id)}
             likesCount={post.likes.length}
             commentsCounts={post.comments.length}
+            hasSaved={mongoUser?.saved.some(
+              (saved: any) => saved?._id.toString() === post?._id.toString()
+            )}
           />
         ))
       ) : (
         <NoResult
           title="There is no posts to show"
           description="Be the first to break the silence! 🚀 Ask a Question and kickstart the discussion. our query could be the next big thing others learn from. Get involved! 💡"
-          link="/create-post"
-          linkTitle="Create a Post"
+          noLink={true}
         />
       )}
     </div>
