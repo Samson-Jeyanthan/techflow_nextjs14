@@ -23,6 +23,7 @@ async function layout({
         <Filter
           filters={QANDAS_FILTERS}
           otherClasses="min-h-[48px] sm:min-w-[160px]"
+          containerClasses="hidden max-md:flex"
         />
       </div>
       <section className="mt-4 flex w-full flex-col items-center gap-8">
